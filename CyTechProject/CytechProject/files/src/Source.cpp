@@ -6,8 +6,8 @@
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 500.0f
 
-const int screenWidth = 800;
-const int screenHeight = 450;
+const int screenWidth = 1600;
+const int screenHeight = 900;
 
 typedef struct Dimension {
     int width;
@@ -72,13 +72,20 @@ typedef struct Player {
 
 class EnvItem {
 private:
-    char type;
+    int id;
+    char* type;
     Rectangle hitBox;
     Color color;
+public:
+    void setItem(int id, char* type, Rectangle hitBox, Color color) {
+        this->id = id;
+        this->type = type;
+        this->hitBox = hitBox;
+        this->color = color;
+    }
 };
 
 class Platforms : EnvItem {
-
 };
 
 typedef struct Platform {
@@ -92,8 +99,10 @@ Personnage verifPlatform(Personnage player, Platform* platform, float delta);
 
 int main(void)
 {
-
     InitWindow(screenWidth, screenHeight, "Premier test");
+
+    //EnvItem platform;
+    //platform.setItem(1, "plat", { 10,10,10,10 }, BLUE);
 
     Personnage player;
     player.setPersonnage({ 300, 100 }, true, 0, false, { 100, 40 });
@@ -110,7 +119,7 @@ int main(void)
     int platformLength = sizeof(platform) / sizeof(platform)[0];
 
     Camera2D camera = { 0 };
-    camera.target = { 400, 225 };
+    camera.target = { 800, 450 };
     camera.offset.x = screenWidth / 2.0f;
     camera.offset.y = screenHeight / 2.0f;
     camera.rotation = 0.0f;
