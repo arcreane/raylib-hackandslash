@@ -1,13 +1,14 @@
 #include "raylib.h"
 #include "raymath.h"
 //#include "Personnage.h"
-
+//JB was here
+//Henri is in your wall
 #define G 1000
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 500.0f
 
-const int screenWidth = 1600;
-const int screenHeight = 1900;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 typedef struct Dimension {
     int width;
