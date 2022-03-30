@@ -7,7 +7,7 @@
 #define PLAYER_HOR_SPD 500.0f
 
 const int screenWidth = 1600;
-const int screenHeight = 900;
+const int screenHeight = 1900;
 
 typedef struct Dimension {
     int width;
