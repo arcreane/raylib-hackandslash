@@ -2,6 +2,7 @@
 #include "raymath.h"
 //#include "Personnage.h"
 //JB was here
+//Henri is in your wall
 #define G 1000
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 500.0f
