@@ -111,7 +111,7 @@ int main(void)
     int platformLength = sizeof(platform) / sizeof(platform)[0];
 
     Camera2D camera = { 0 };
-    camera.target = { 800, 550 };
+    camera.target = { 800, 450 };
     camera.offset.x = screenWidth / 2.0f;
     camera.offset.y = screenHeight / 2.0f;
     camera.rotation = 0.0f;
