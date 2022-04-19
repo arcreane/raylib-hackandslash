@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
-//#include "Personnage.h"
+#include "../../Platform.h"
+#include "../../Personnage.h"
+
 //JB was here
 //Henri is in your wall
 #define G 1000
@@ -9,67 +11,6 @@
 
 const int screenWidth = 1600;
 const int screenHeight = 900;
-
-typedef struct Dimension {
-    int width;
-    int height;
-}Dimension;
-
-class Personnage {
-private:
-    Vector2 position;
-    bool orientation;
-    float speed;
-    bool canJump;
-    Dimension dimension;
-public:
-    void setPersonnage(Vector2 p, bool o, float s, bool cj, Dimension d) {
-        this->position = p;
-        this->orientation = o;
-        this->speed = s;
-        this->canJump = cj;
-        this->dimension = d;
-    }
-    void setPosition(Vector2 p) {
-        this->position = p;
-    }
-    void setOrientation(bool b) {
-        this->orientation = b;
-    }
-    void setSpeed(float s) {
-        this->speed = s;
-    }
-    void setCanJump(bool cj) {
-        this->canJump = cj;
-    }
-
-    Vector2 getPosition() {
-        return this->position;
-    }
-    bool getOrientation() {
-        return this->orientation;
-    }
-    float getSpeed() {
-        return this->speed;
-    }
-    bool getCanJump() {
-        return this->canJump;
-    }
-    Dimension getDimension() {
-        return this->dimension;
-    }
-
-    //void seDeplacer();
-};
-
-typedef struct Player {
-    Vector2 position;
-    float speed;
-    bool canJump;
-    int width;
-    int high;
-    Color color;
-} Player;
 
 class EnvItem {
 private:
@@ -86,17 +27,15 @@ public:
     }
 };
 
-class Platforms : EnvItem {
-};
 
-typedef struct Platform {
+/*typedef struct Platform {
     Rectangle rect;
     Color color;
-} Platform;
+} Platform;*/
 
 
-Personnage UpdatePlayer(Personnage player, Platform* platform, float delta);
-Personnage verifPlatform(Personnage player, Platform* platform, float delta);
+void UpdatePlayer(Personnage player, Platform* platform, float delta);
+void CheckCollisionPlatform(Personnage player, Platform* platform);
 
 int main(void)
 {
@@ -106,16 +45,19 @@ int main(void)
     //platform.setItem(1, "plat", { 10,10,10,10 }, BLUE);
 
     Personnage player;
-    player.setPersonnage({ 300, 100 }, true, 0, false, { 100, 40 });
+    player.setPersonnage({ 300, 100, 40, 40 }, true, 0, false);
 
-    Platform platform[] = {
-        {{300,350,200,10}, BLUE},
-        {{0,250,250,10}, GRAY},
-        {{550,250,250,10}, GRAY},
-        {{100,150,50,10}, GRAY},
-        {{650,150,50,10}, GRAY},
-        {{500,90,150,10}, RED}
-    };
+    Platform *platform;
+    platform[0].setPlatform({300, 350, 200, 10});
+    platform[1].setPlatform({0,250,250,10});
+    platform[2].setPlatform({550,250,250,10});
+    platform[3].setPlatform({100,150,50,10});
+    platform[4].setPlatform({650,150,50,10});
+    platform[5].setPlatform({500,90,150,10});
+    platform[6].setPlatform({ 300, 500, 200, 10 });
+    platform[7].setPlatform({ 300, 650, 200, 10 });
+    platform[8].setPlatform({ 300, 800, 200, 10 });
+    
 
     int platformLength = sizeof(platform) / sizeof(platform)[0];
 
@@ -136,9 +78,9 @@ int main(void)
         //----------------------------------------------------------------------------------
         float deltaTime = GetFrameTime();
 
-        for (int i = 0; i < platformLength; i++) DrawRectangleRec(platform[i].rect, platform[i].color);
+        for (int i = 0; i < platformLength; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
 
-        player = UpdatePlayer(player, platform, deltaTime);
+        UpdatePlayer(player, platform, deltaTime);
 
 
         // Draw
@@ -169,7 +111,7 @@ int main(void)
 
 }
 
-Personnage UpdatePlayer(Personnage player, Platform* platform, float delta)
+void UpdatePlayer(Personnage player, Platform* platform, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -195,31 +137,16 @@ Personnage UpdatePlayer(Personnage player, Platform* platform, float delta)
         player.setPosition({ player.getPosition().x, (float)dim.height });
     }
 
-    player = verifPlatform(player, platform, delta);
-
-    return player;
+    CheckCollisionPlatform(player, platform);
 }
 
-Personnage verifPlatform(Personnage player, Platform* platform, float delta)
-{
-    float px = player.getPosition().x;
-    float py = player.getPosition().y;
-    float speed = player.getSpeed();
-    Dimension dim = player.getDimension();
-
-    for (int i = 0; i < sizeof(platform); i++)
-    { 
-        Platform* plat = platform + i;
-        if (px >= plat->rect.x - dim.width / 2 &&
-            px <= plat->rect.x + plat->rect.width + dim.width / 2 &&
-            py <= plat->rect.y &&
-            py + speed * delta > plat->rect.y)
-        {
-            player.setPosition({ px, plat->rect.y });
+void CheckCollisionPlatform(Personnage player, Platform* platform) {
+    for (int i = 0; sizeof(platform); i++) {
+        if (player.getX() >= platform[i].getXd() && player.getXDroite() <= platform[i].getXDroite()
+            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed()) >= platform[i].getY()) {
             player.setSpeed(0);
+            player.setYBas(platform[i].getY());
             player.setCanJump(true);
         }
     }
-
-    return player;
 }

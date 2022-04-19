@@ -36,7 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CytechProject\files\src\Source.cpp" />
-    <ClCompile Include="Perso.cpp" />
+    <ClCompile Include="Personnage.cpp" />
+    <ClCompile Include="Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\raylib\raylib.vcxproj">
@@ -46,7 +47,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Perso.h" />
+    <ClInclude Include="Dimension.h" />
+    <ClInclude Include="Personnage.h" />
+    <ClInclude Include="Platform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
