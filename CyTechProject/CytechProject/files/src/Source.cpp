@@ -3,9 +3,16 @@
 #include "../../Platform.h"
 #include "../../Joueur.h"
 #include "../../Mob.h"
+#include "../../Arme.h"
 
 //JB was here
 //Henri is in your wall
+
+typedef struct PlayArme {
+    Joueur j;
+    Arme a;
+}PlayArme;
+
 #define G 1000
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 500.0f
@@ -14,7 +21,7 @@ const int screenWidth = 1600;
 const int screenHeight = 900;
 
 
-Joueur UpdatePlayer(Joueur player, Platform platform[9], float delta);
+PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta);
 
 int main(void)
@@ -23,6 +30,9 @@ int main(void)
 
     Joueur player;
     player.setPersonnage({ 300, 100, 40, 40 });
+
+    Arme arme;
+    arme.setArme({ 60, 40 }, 30, 20);
 
     Mob mob[3];
     mob[0].setPersonnage({ 750, 200, 50, 50 });
@@ -68,7 +78,9 @@ int main(void)
 
         for (int i = 0; i < platformLength; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
 
-        player = UpdatePlayer(player, platform, deltaTime);
+        PlayArme pa = UpdatePlayer(player, platform, arme, deltaTime);
+        player = pa.j;
+        arme = pa.a;
 
         for (int i = 0; i < 3; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
@@ -95,6 +107,16 @@ int main(void)
             }
 
             DrawRectangleRec(mob[i].getRectangle(), RED);
+        }
+
+        if (arme.getEtat() == true) {
+            if (arme.getActive() > 0) {
+                DrawRectangleRec(arme.getRectangle(), YELLOW);
+            }
+            arme.setCd();
+            if (arme.getCd() == 0) {
+                arme.setOff();
+            }
         }
 
 
@@ -127,7 +149,7 @@ int main(void)
 
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[9], float delta)
+PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -139,7 +161,13 @@ Joueur UpdatePlayer(Joueur player, Platform platform[9], float delta)
         player.setX(player.getX() + PLAYER_HOR_SPD * delta);
         player.setOrientation(true);
     }
-    if (IsKeyDown(KEY_SPACE) && player.getCanJump()) player.setSpeed(player.getSpeed() - PLAYER_JUMP_SPD);
+    if (IsKeyDown(KEY_UP) && player.getCanJump()) player.setSpeed(player.getSpeed() - PLAYER_JUMP_SPD);
+    if (IsKeyDown(KEY_SPACE)) {
+        if (player.getOrientation() == true) arme.setOn({ player.getXDroite(), player.getY() });
+        else {
+            arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
+        }
+    }
 
     player.setY(player.getY() + player.getSpeed() * delta);
     player.setSpeed(player.getSpeed() + G * delta);
@@ -161,7 +189,10 @@ Joueur UpdatePlayer(Joueur player, Platform platform[9], float delta)
 
     player = CheckCollisionPlatform(player, platform, delta);
 
-    return player;
+    PlayArme pa;
+    pa.j = player;
+    pa.a = arme;
+    return pa;
 }
 
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) {
