@@ -149,6 +149,14 @@ int main(void)
             }
         }
 
+        if (IsKeyDown(KEY_J)) {
+            if (IsKeyDown(KEY_K)) {
+                if (IsKeyDown(KEY_I)) {
+                    DrawRectangleRec({0,0,100,100}, PURPLE);
+                }
+            }
+        }
+
         //testAnim
         framesCounter++;
 
@@ -248,7 +256,7 @@ Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) 
 }
 
 Arme UpdateArme(Joueur player, Arme arme) {
-    if (IsKeyDown(KEY_SPACE) && !arme.getEtat()) {
+    if (IsKeyDown(KEY_J) && !arme.getEtat()) {
         if (player.getOrientation() == true) {
             arme.setOn({ player.getXDroite(), player.getY() });
             arme.setDirection(true);
