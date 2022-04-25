@@ -22,7 +22,7 @@ const int screenWidth = 1600;
 const int screenHeight = 900;
 
 
-PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta);
 Arme UpdateArme(Joueur player, Arme arme);
 
@@ -88,8 +88,7 @@ int main(void)
 
         for (int i = 0; i < platformLength; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
 
-        PlayArme pa = UpdatePlayer(player, platform, arme, deltaTime);
-        player = pa.j;
+        player = UpdatePlayer(player, platform, arme, deltaTime);
 
         arme = UpdateArme(player, arme);
 
@@ -175,7 +174,7 @@ int main(void)
 
 }
 
-PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -209,9 +208,7 @@ PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delt
 
     player = CheckCollisionPlatform(player, platform, delta);
 
-    PlayArme pa;
-    pa.j = player;
-    return pa;
+    return player;
 }
 
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) {
@@ -227,13 +224,12 @@ Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) 
 }
 
 Arme UpdateArme(Joueur player, Arme arme) {
-    if (IsKeyDown(KEY_SPACE)) {
+    if (IsKeyDown(KEY_SPACE) && !arme.getEtat()) {
         if (player.getOrientation() == true) {
             arme.setOn({ player.getXDroite(), player.getY() });
             arme.setDirection(true);
         }
         if (player.getOrientation() == false) {
-            DrawRectangleRec({ 0,0,100,100 }, PURPLE);
             arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
             arme.setDirection(false);
         }
