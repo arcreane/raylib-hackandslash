@@ -20,6 +20,10 @@ void Arme::setOff() {
 	this->time = 0;
 }
 
+void Arme::setDirection(bool d) {
+	this->direction = d;
+}
+
 void Arme::setCd() {
 	this->time++;
 }
@@ -34,6 +38,10 @@ Rectangle Arme::getRectangle() {
 
 float Arme::getWidth() {
 	return this->hitBox.width;
+}
+
+bool Arme::getDirection() {
+	return this->direction;
 }
 
 int Arme::getCd() {
