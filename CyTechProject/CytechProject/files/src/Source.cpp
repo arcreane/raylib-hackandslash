@@ -21,9 +21,6 @@ int main(void)
 {
     InitWindow(screenWidth, screenHeight, "Premier test");
 
-    //EnvItem platform;
-    //platform.setItem(1, "plat", { 10,10,10,10 }, BLUE);
-
     Joueur player;
     player.setPersonnage({ 300, 100, 40, 40 });
 
@@ -49,8 +46,6 @@ int main(void)
     platform[7].setPlatform({ 300, 650, 200, 10 });
     platform[8].setPlatform({ 300, 800, 200, 10 });
 
-    Rectangle mob1 = { 750, 200, 50, 50 };
-    
 
     int platformLength = sizeof(platform) / sizeof(platform)[0];
 
@@ -76,7 +71,7 @@ int main(void)
         player = UpdatePlayer(player, platform, deltaTime);
 
         for (int i = 0; i < 3; i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle())) {
+            if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
                 mobPassif[i].setIsAlive(false);
             }
 
@@ -86,7 +81,7 @@ int main(void)
         }
 
         for (int i = 0; i < 3; i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mob[i].getRectangle())) {
+            if (CheckCollisionRecs(player.getRectangle(), mob[i].getRectangle()) && mob[i].getIsAlive()) {
                 player.setIsAlive(false);
                 player.setPersonnage({ 300, 100, 40, 40 });
 
@@ -136,8 +131,14 @@ Joueur UpdatePlayer(Joueur player, Platform platform[9], float delta)
 {
     Dimension dim = player.getDimension();
 
-    if (IsKeyDown(KEY_LEFT)) player.setX(player.getX() - PLAYER_HOR_SPD * delta);
-    if (IsKeyDown(KEY_RIGHT)) player.setX(player.getX() + PLAYER_HOR_SPD * delta);
+    if (IsKeyDown(KEY_LEFT)) {
+        player.setX(player.getX() - PLAYER_HOR_SPD * delta);
+        player.setOrientation(false);
+    }
+    if (IsKeyDown(KEY_RIGHT)) {
+        player.setX(player.getX() + PLAYER_HOR_SPD * delta);
+        player.setOrientation(true);
+    }
     if (IsKeyDown(KEY_SPACE) && player.getCanJump()) player.setSpeed(player.getSpeed() - PLAYER_JUMP_SPD);
 
     player.setY(player.getY() + player.getSpeed() * delta);
