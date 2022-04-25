@@ -20,6 +20,9 @@ typedef struct PlayArme {
 
 const int screenWidth = 1600;
 const int screenHeight = 900;
+int currentFrame = 0;
+int framesCounter = 0;
+int framesSpeed = 8;
 
 
 Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
@@ -71,8 +74,13 @@ int main(void)
 
     //Test Anim
     Vector2 position = { 350.0f, 280.0f };
-    Texture2D fireball = LoadTexture("../CyTechProject/CyTechProject/files/ressources/chaosFireball02.png");
-    Rectangle frameRec = { 0.0f, 0.0f, (float)fireball.width, (float)fireball.height };
+    Texture2D RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop00.png");
+    Texture2D RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop01.png");
+    Texture2D RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop02.png");
+    Texture2D RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop03.png");
+    Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop04.png");
+    Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop05.png");
+    Rectangle frameRec = { 0.0f, 0.0f, (float)RunLoop1.width, (float)RunLoop1.height };
 
 
 
@@ -141,6 +149,16 @@ int main(void)
             }
         }
 
+        //testAnim
+        framesCounter++;
+
+        if (framesCounter >= (60 / framesSpeed))
+        {
+            framesCounter = 0;
+            currentFrame++;
+
+            if (currentFrame > 5) currentFrame = 0;
+        }
 
 
         // Draw
@@ -152,7 +170,13 @@ int main(void)
         DrawText("Test", 20, 20, 20, DARKGRAY);
 
         //testAnim
-        DrawTextureRec(fireball, frameRec, position, LIGHTGRAY);
+        if (currentFrame == 0) DrawTextureRec(RunLoop0, frameRec, position, LIGHTGRAY);
+        if (currentFrame == 1) DrawTextureRec(RunLoop1, frameRec, position, LIGHTGRAY);
+        if (currentFrame == 2) DrawTextureRec(RunLoop2, frameRec, position, LIGHTGRAY);
+        if (currentFrame == 3) DrawTextureRec(RunLoop3, frameRec, position, LIGHTGRAY);
+        if (currentFrame == 4) DrawTextureRec(RunLoop4, frameRec, position, LIGHTGRAY);
+        if (currentFrame == 5) DrawTextureRec(RunLoop5, frameRec, position, LIGHTGRAY);
+
 
         BeginMode2D(camera);
 
