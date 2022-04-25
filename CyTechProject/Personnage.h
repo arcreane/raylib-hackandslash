@@ -37,6 +37,7 @@ public:
     float getWidth();
     float getHeight();
     bool getIsAlive();
+    Dimension getCenter();
 
     //void seDeplacer();
 };

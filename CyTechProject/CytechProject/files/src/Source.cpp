@@ -73,7 +73,6 @@ int main(void)
     camera.zoom = 1.0f;
 
     //Test Anim
-    Vector2 position = { 350.0f, 280.0f };
     Texture2D RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop00.png");
     Texture2D RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop01.png");
     Texture2D RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop02.png");
@@ -81,7 +80,7 @@ int main(void)
     Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop04.png");
     Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop05.png");
     Rectangle frameRec = { 0.0f, 0.0f, (float)RunLoop1.width, (float)RunLoop1.height };
-
+    
 
 
     SetTargetFPS(60);
@@ -158,6 +157,7 @@ int main(void)
         }
 
         //testAnim
+        Vector2 position = { player.getX(),player.getY() };
         framesCounter++;
 
         if (framesCounter >= (60 / framesSpeed))
