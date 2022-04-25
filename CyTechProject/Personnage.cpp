@@ -1,11 +1,13 @@
 #include "Personnage.h"
 
-void Personnage::setPersonnage(Rectangle p, bool o, float s, bool cj) {
+void Personnage::setPersonnage(Rectangle p) {
         this->pos_dim = p;
-        this->orientation = o;
-        this->speed = s;
-        this->canJump = cj;
-    }
+        this->orientation = true;
+        this->speed = 0;
+        this->canJump = false;
+        this->isAlive = true;
+}
+
 void Personnage::setPosition(Vector2 p) {
     this->pos_dim.x = p.x;
     this->pos_dim.y = p.y;
@@ -32,6 +34,10 @@ void Personnage::setSpeed(float s) {
 }
 void Personnage::setCanJump(bool cj) {
     this->canJump = cj;
+}
+
+void Personnage::setIsAlive(bool ia) {
+    this->isAlive = ia;
 }
 
 
@@ -75,4 +81,8 @@ float Personnage::getXDroite() {
 
 float Personnage::getYBas() {
     return (this->pos_dim.y + this->pos_dim.height);
+}
+
+bool Personnage::getIsAlive() {
+    return this->isAlive;
 }

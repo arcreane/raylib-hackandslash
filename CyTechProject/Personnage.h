@@ -4,13 +4,15 @@
 
 #pragma once
 class Personnage {
-private:
+protected:
     Rectangle pos_dim;
     bool orientation;
     float speed;
     bool canJump;
+    bool isAlive;
+
 public:
-    void setPersonnage(Rectangle p, bool o, float s, bool cj);
+    void setPersonnage(Rectangle p);
 
     void setPosition(Vector2 p);
     void setX(float x);
@@ -20,6 +22,7 @@ public:
     void setOrientation(bool b);
     void setSpeed(float s);
     void setCanJump(bool cj);
+    void setIsAlive(bool ia);
 
     Rectangle getRectangle();
     Vector2 getPosition();
@@ -33,6 +36,7 @@ public:
     Dimension getDimension();
     float getWidth();
     float getHeight();
+    bool getIsAlive();
 
     //void seDeplacer();
 };

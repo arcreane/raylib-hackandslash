@@ -1,7 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "../../Platform.h"
-#include "../../Personnage.h"
+#include "../../Joueur.h"
+#include "../../Mob.h"
 
 //JB was here
 //Henri is in your wall
@@ -12,30 +13,9 @@
 const int screenWidth = 1600;
 const int screenHeight = 900;
 
-class EnvItem {
-private:
-    int id;
-    char* type;
-    Rectangle hitBox;
-    Color color;
-public:
-    void setItem(int id, char* type, Rectangle hitBox, Color color) {
-        this->id = id;
-        this->type = type;
-        this->hitBox = hitBox;
-        this->color = color;
-    }
-};
 
-
-/*typedef struct Platform {
-    Rectangle rect;
-    Color color;
-} Platform;*/
-
-
-Personnage UpdatePlayer(Personnage player, Platform platform[9], float delta);
-Personnage CheckCollisionPlatform(Personnage player, Platform platform[9], float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[9], float delta);
+Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta);
 
 int main(void)
 {
@@ -44,8 +24,19 @@ int main(void)
     //EnvItem platform;
     //platform.setItem(1, "plat", { 10,10,10,10 }, BLUE);
 
-    Personnage player;
-    player.setPersonnage({ 300, 100, 40, 40 }, true, 0, false);
+    Joueur player;
+    player.setPersonnage({ 300, 100, 40, 40 });
+
+    Mob mob[3];
+    mob[0].setPersonnage({ 750, 200, 50, 50 });
+    mob[1].setPersonnage({ 500, 40, 50, 50 });
+    mob[2].setPersonnage({ 375, 600, 50, 50 });
+
+    Mob mobPassif[3];
+    mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
+    mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
+    mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
+
 
     Platform platform[9];
     platform[0].setPlatform({300, 350, 200, 10});
@@ -58,7 +49,7 @@ int main(void)
     platform[7].setPlatform({ 300, 650, 200, 10 });
     platform[8].setPlatform({ 300, 800, 200, 10 });
 
-    Rectangle mob = { 750, 200, 50, 50 };
+    Rectangle mob1 = { 750, 200, 50, 50 };
     
 
     int platformLength = sizeof(platform) / sizeof(platform)[0];
@@ -84,11 +75,33 @@ int main(void)
 
         player = UpdatePlayer(player, platform, deltaTime);
 
-        if (CheckCollisionRecs(player.getRectangle(), mob)) {
-            mob = { 0, 0, 0, 0 };
+        for (int i = 0; i < 3; i++) {
+            if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle())) {
+                mobPassif[i].setIsAlive(false);
+            }
+
+            if (mobPassif[i].getIsAlive()) {
+                DrawRectangleRec(mobPassif[i].getRectangle(), GREEN);
+            }
         }
 
-        DrawRectangleRec(mob, RED);
+        for (int i = 0; i < 3; i++) {
+            if (CheckCollisionRecs(player.getRectangle(), mob[i].getRectangle())) {
+                player.setIsAlive(false);
+                player.setPersonnage({ 300, 100, 40, 40 });
+
+                mob[0].setPersonnage({ 750, 200, 50, 50 });
+                mob[1].setPersonnage({ 500, 40, 50, 50 });
+                mob[2].setPersonnage({ 375, 600, 50, 50 });
+
+                mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
+                mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
+                mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
+            }
+
+            DrawRectangleRec(mob[i].getRectangle(), RED);
+        }
+
 
 
         // Draw
@@ -119,7 +132,7 @@ int main(void)
 
 }
 
-Personnage UpdatePlayer(Personnage player, Platform platform[9], float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[9], float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -150,7 +163,7 @@ Personnage UpdatePlayer(Personnage player, Platform platform[9], float delta)
     return player;
 }
 
-Personnage CheckCollisionPlatform(Personnage player, Platform platform[9], float delta) {
+Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) {
     for (int i = 0; i <= sizeof(platform); i++) {
         if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
             && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta) > platform[i].getY()) {
