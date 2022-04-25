@@ -4,6 +4,7 @@
 #include "../../Joueur.h"
 #include "../../Mob.h"
 #include "../../Arme.h"
+#include "../../Animation_Joueur.h"
 
 //JB was here
 //Henri is in your wall
@@ -65,6 +66,13 @@ int main(void)
     camera.offset.y = screenHeight / 2.0f;
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
+
+    //Test Anim
+    Vector2 position = { 350.0f, 280.0f };
+    Texture2D fireball = LoadTexture("../CyTechProject/CyTechProject/files/ressources/chaosFireball02.png");
+    Rectangle frameRec = { 0.0f, 0.0f, (float)fireball.width, (float)fireball.height };
+
+
 
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
@@ -134,6 +142,9 @@ int main(void)
         ClearBackground(LIGHTGRAY);
 
         DrawText("Test", 20, 20, 20, DARKGRAY);
+
+        //testAnim
+        DrawTextureRec(fireball, frameRec, position, LIGHTGRAY);
 
         BeginMode2D(camera);
 
