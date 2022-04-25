@@ -86,3 +86,7 @@ float Personnage::getYBas() {
 bool Personnage::getIsAlive() {
     return this->isAlive;
 }
+
+Dimension Personnage::getCenter() {
+    return { this->pos_dim.x + this->getWidth() / 2, this->pos_dim.y + this->getHeight() / 2 }
+}
