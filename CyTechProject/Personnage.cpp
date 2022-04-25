@@ -16,8 +16,13 @@ void Personnage::setX(float x) {
 void Personnage::setY(float y) {
     this->pos_dim.y = y;
 }
+
+void Personnage::setXDroite(float x) {
+    this->pos_dim.x = x - this->pos_dim.width;
+}
+
 void Personnage::setYBas(float y) {
-    this->pos_dim.y = y + this->pos_dim.height;
+    this->pos_dim.y = y - this->pos_dim.height;
 }
 void Personnage::setOrientation(bool b) {
     this->orientation = b;
@@ -27,6 +32,11 @@ void Personnage::setSpeed(float s) {
 }
 void Personnage::setCanJump(bool cj) {
     this->canJump = cj;
+}
+
+
+Rectangle Personnage::getRectangle() {
+    return this->pos_dim;
 }
 
 Vector2 Personnage::getPosition() {

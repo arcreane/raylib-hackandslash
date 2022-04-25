@@ -34,8 +34,8 @@ public:
 } Platform;*/
 
 
-void UpdatePlayer(Personnage player, Platform* platform, float delta);
-void CheckCollisionPlatform(Personnage player, Platform* platform);
+Personnage UpdatePlayer(Personnage player, Platform platform[9], float delta);
+Personnage CheckCollisionPlatform(Personnage player, Platform platform[9], float delta);
 
 int main(void)
 {
@@ -47,7 +47,7 @@ int main(void)
     Personnage player;
     player.setPersonnage({ 300, 100, 40, 40 }, true, 0, false);
 
-    Platform *platform;
+    Platform platform[9];
     platform[0].setPlatform({300, 350, 200, 10});
     platform[1].setPlatform({0,250,250,10});
     platform[2].setPlatform({550,250,250,10});
@@ -57,6 +57,8 @@ int main(void)
     platform[6].setPlatform({ 300, 500, 200, 10 });
     platform[7].setPlatform({ 300, 650, 200, 10 });
     platform[8].setPlatform({ 300, 800, 200, 10 });
+
+    Rectangle mob = { 750, 200, 50, 50 };
     
 
     int platformLength = sizeof(platform) / sizeof(platform)[0];
@@ -80,7 +82,13 @@ int main(void)
 
         for (int i = 0; i < platformLength; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
 
-        UpdatePlayer(player, platform, deltaTime);
+        player = UpdatePlayer(player, platform, deltaTime);
+
+        if (CheckCollisionRecs(player.getRectangle(), mob)) {
+            mob = { 0, 0, 0, 0 };
+        }
+
+        DrawRectangleRec(mob, RED);
 
 
         // Draw
@@ -94,7 +102,7 @@ int main(void)
         BeginMode2D(camera);
 
         Rectangle playerRect = { player.getPosition().x - (float)(player.getDimension().width / 2), player.getPosition().y - (float)player.getDimension().height, (float)player.getDimension().width, (float)player.getDimension().height };
-        DrawRectangleRec(playerRect, BLUE);
+        DrawRectangleRec(player.getRectangle(), BLUE);
 
         EndMode2D();
 
@@ -111,42 +119,45 @@ int main(void)
 
 }
 
-void UpdatePlayer(Personnage player, Platform* platform, float delta)
+Personnage UpdatePlayer(Personnage player, Platform platform[9], float delta)
 {
     Dimension dim = player.getDimension();
 
-    if (IsKeyDown(KEY_LEFT)) player.setPosition({ player.getPosition().x - PLAYER_HOR_SPD * delta, player.getPosition().y });
-    if (IsKeyDown(KEY_RIGHT)) player.setPosition({ player.getPosition().x + PLAYER_HOR_SPD * delta, player.getPosition().y });
+    if (IsKeyDown(KEY_LEFT)) player.setX(player.getX() - PLAYER_HOR_SPD * delta);
+    if (IsKeyDown(KEY_RIGHT)) player.setX(player.getX() + PLAYER_HOR_SPD * delta);
     if (IsKeyDown(KEY_SPACE) && player.getCanJump()) player.setSpeed(player.getSpeed() - PLAYER_JUMP_SPD);
 
-    player.setPosition({ player.getPosition().x, player.getPosition().y + player.getSpeed() * delta });
+    player.setY(player.getY() + player.getSpeed() * delta);
     player.setSpeed(player.getSpeed() + G * delta);
     player.setCanJump(false);
 
-    if (player.getPosition().y > screenHeight)
+    if (player.getYBas() > screenHeight)
     {
         player.setSpeed(0);
-        player.setPosition({ player.getPosition().x, screenHeight });
+        player.setYBas(screenHeight);
         player.setCanJump(true);
     }
 
-    if (player.getPosition().x < dim.width / 2) player.setPosition({ (float)dim.width / 2, player.getPosition().y });
-    if (player.getPosition().x > screenWidth - dim.width / 2) player.setPosition({ (float)screenWidth - (float)dim.width / 2, player.getPosition().y });
-    if (player.getPosition().y < dim.height) {
+    if (player.getX() < 0) player.setX(0);
+    if (player.getXDroite() > screenWidth) player.setXDroite((float)screenWidth);
+    if (player.getY() < 0) {
         player.setSpeed(0);
-        player.setPosition({ player.getPosition().x, (float)dim.height });
+        player.setY(0);
     }
 
-    CheckCollisionPlatform(player, platform);
+    player = CheckCollisionPlatform(player, platform, delta);
+
+    return player;
 }
 
-void CheckCollisionPlatform(Personnage player, Platform* platform) {
-    for (int i = 0; sizeof(platform); i++) {
-        if (player.getX() >= platform[i].getXd() && player.getXDroite() <= platform[i].getXDroite()
-            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed()) >= platform[i].getY()) {
+Personnage CheckCollisionPlatform(Personnage player, Platform platform[9], float delta) {
+    for (int i = 0; i <= sizeof(platform); i++) {
+        if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
+            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta) > platform[i].getY()) {
             player.setSpeed(0);
             player.setYBas(platform[i].getY());
             player.setCanJump(true);
         }
     }
+    return player;
 }
