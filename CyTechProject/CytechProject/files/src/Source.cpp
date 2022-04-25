@@ -23,6 +23,8 @@ const int screenHeight = 900;
 
 PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta);
+Arme UpdateArme(Joueur player, Arme arme);
+
 
 int main(void)
 {
@@ -32,7 +34,7 @@ int main(void)
     player.setPersonnage({ 300, 100, 40, 40 });
 
     Arme arme;
-    arme.setArme({ 60, 40 }, 30, 20);
+    arme.setArme({ 60, 40 }, 100, 50);
 
     Mob mob[3];
     mob[0].setPersonnage({ 750, 200, 50, 50 });
@@ -80,7 +82,8 @@ int main(void)
 
         PlayArme pa = UpdatePlayer(player, platform, arme, deltaTime);
         player = pa.j;
-        arme = pa.a;
+
+        arme = UpdateArme(player, arme);
 
         for (int i = 0; i < 3; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
@@ -116,6 +119,12 @@ int main(void)
         }
 
         if (arme.getEtat() == true) {
+            if (arme.getDirection() == true) {
+                arme.setOn({ player.getXDroite(), player.getY() });
+            }
+            else {
+                arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
+            }
             if (arme.getActive() > 0) {
                 DrawRectangleRec(arme.getRectangle(), YELLOW);
             }
@@ -168,12 +177,6 @@ PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delt
         player.setOrientation(true);
     }
     if (IsKeyDown(KEY_UP) && player.getCanJump()) player.setSpeed(player.getSpeed() - PLAYER_JUMP_SPD);
-    if (IsKeyDown(KEY_SPACE)) {
-        if (player.getOrientation() == true) arme.setOn({ player.getXDroite(), player.getY() });
-        else {
-            arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
-        }
-    }
 
     player.setY(player.getY() + player.getSpeed() * delta);
     player.setSpeed(player.getSpeed() + G * delta);
@@ -197,7 +200,6 @@ PlayArme UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delt
 
     PlayArme pa;
     pa.j = player;
-    pa.a = arme;
     return pa;
 }
 
@@ -211,4 +213,20 @@ Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) 
         }
     }
     return player;
+}
+
+Arme UpdateArme(Joueur player, Arme arme) {
+    if (IsKeyDown(KEY_SPACE)) {
+        if (player.getOrientation() == true) {
+            arme.setOn({ player.getXDroite(), player.getY() });
+            arme.setDirection(true);
+        }
+        if (player.getOrientation() == false) {
+            DrawRectangleRec({ 0,0,100,100 }, PURPLE);
+            arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
+            arme.setDirection(false);
+        }
+    }
+
+    return arme;
 }
