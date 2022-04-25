@@ -37,7 +37,7 @@ public:
     float getWidth();
     float getHeight();
     bool getIsAlive();
-    Dimension getCenter();
+    Vector2 getCenter();
 
     //void seDeplacer();
 };
