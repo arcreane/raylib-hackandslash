@@ -88,5 +88,5 @@ bool Personnage::getIsAlive() {
 }
 
 Vector2 Personnage::getCenter() {
-    return { this->pos_dim.x + this->getWidth() / 2, this->pos_dim.y + this->getHeight() / 2 };
+    return { this->pos_dim.x + this->pos_dim.width / 2, this->pos_dim.y + this->pos_dim.height / 2 };
 }
