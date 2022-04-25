@@ -106,7 +106,13 @@ int main(void)
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
             }
 
-            DrawRectangleRec(mob[i].getRectangle(), RED);
+            if (CheckCollisionRecs(arme.getRectangle(), mob[i].getRectangle()) && arme.getEtat()) {
+                mob[i].setIsAlive(false);
+            }
+
+            if (mob[i].getIsAlive()) {
+                DrawRectangleRec(mob[i].getRectangle(), RED);
+            }
         }
 
         if (arme.getEtat() == true) {
@@ -114,7 +120,7 @@ int main(void)
                 DrawRectangleRec(arme.getRectangle(), YELLOW);
             }
             arme.setCd();
-            if (arme.getCd() == 0) {
+            if (arme.getCd() <= 0) {
                 arme.setOff();
             }
         }
