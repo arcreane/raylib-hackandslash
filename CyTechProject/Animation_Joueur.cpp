@@ -5,6 +5,9 @@ void Animation_Joueur::Init_animation_joueur()
 {
     this->frameRecDroite = { 112.0f, -119.0f, 34, 40 };
     this->frameRecGauche = { 112.0f, -119.0f, -34, 40 };
+    this->frameRecDroiteAttaque = { 112.0f, -119.0f, 134, 40 };
+    this->frameRecGaucheAttaque = { 112.0f, -119.0f, -134, 40 };
+
     this->RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop00.png");
     this->RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop01.png");
     
@@ -28,6 +31,16 @@ void Animation_Joueur::Init_animation_joueur()
     this->Jump4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/jumpFlip204.png");
     this->Jump5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/jumpFlip205.png");
     this->Jump6 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/jumpFlip206.png");
+
+    this->Attaque0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/ladderSlashFire00.png");
+    this->Attaque1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/ladderSlashFire01.png");
+    this->Attaque2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/ladderSlashFire02.png");
+    this->Attaque3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/ladderSlashFire03.png");
+    this->Attaque4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/ladderSlashFire04.png");
+    this->Attaque5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/ladderSlashFire05.png");
+   
+
+
 }
 
 
@@ -99,3 +112,22 @@ void Animation_Joueur::animation_jump_gauche(Vector2 position, int currentFrame)
 }
 
 
+void Animation_Joueur::animation_attaque_droite(Vector2 position, int currentFrame)
+{
+    if (currentFrame == 0) DrawTextureRec(this->Attaque0, this->frameRecDroiteAttaque, position, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->Attaque1, this->frameRecDroiteAttaque, position, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->Attaque2, this->frameRecDroiteAttaque, position, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->Attaque3, this->frameRecDroiteAttaque, position, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->Attaque4, this->frameRecDroiteAttaque, position, WHITE);
+    if (currentFrame >= 5) DrawTextureRec(this->Attaque5, this->frameRecDroiteAttaque, position, WHITE);
+}
+
+void Animation_Joueur::animation_attaque_gauche(Vector2 position, int currentFrame)
+{
+    if (currentFrame == 0) DrawTextureRec(this->Attaque0, this->frameRecGaucheAttaque, {position.x -105, position.y}, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->Attaque1, this->frameRecGaucheAttaque, {position.x -105, position.y}, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->Attaque2, this->frameRecGaucheAttaque, {position.x -105, position.y}, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->Attaque3, this->frameRecGaucheAttaque, {position.x -105, position.y}, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->Attaque4, this->frameRecGaucheAttaque, {position.x -105, position.y}, WHITE);
+    if (currentFrame >= 5) DrawTextureRec(this->Attaque5, this->frameRecGaucheAttaque, {position.x -105, position.y}, WHITE);
+}
