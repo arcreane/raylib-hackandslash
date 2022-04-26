@@ -114,12 +114,12 @@ void Animation_Joueur::animation_jump_gauche(Vector2 position, int currentFrame)
 
 void Animation_Joueur::animation_attaque_droite(Vector2 position, int currentFrame)
 {
-    if (currentFrame == 0) DrawTextureRec(this->Attaque0, this->frameRecDroiteAttaque, position, WHITE);
-    if (currentFrame == 1) DrawTextureRec(this->Attaque1, this->frameRecDroiteAttaque, position, WHITE);
-    if (currentFrame == 2) DrawTextureRec(this->Attaque2, this->frameRecDroiteAttaque, position, WHITE);
-    if (currentFrame == 3) DrawTextureRec(this->Attaque3, this->frameRecDroiteAttaque, position, WHITE);
-    if (currentFrame == 4) DrawTextureRec(this->Attaque4, this->frameRecDroiteAttaque, position, WHITE);
-    if (currentFrame >= 5) DrawTextureRec(this->Attaque5, this->frameRecDroiteAttaque, position, WHITE);
+    if (currentFrame == 0) DrawTextureRec(this->Attaque0, this->frameRecDroiteAttaque, {position.x +1, position.y}, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->Attaque1, this->frameRecDroiteAttaque, {position.x +1, position.y}, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->Attaque2, this->frameRecDroiteAttaque, {position.x +1, position.y}, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->Attaque3, this->frameRecDroiteAttaque, {position.x +1, position.y}, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->Attaque4, this->frameRecDroiteAttaque, {position.x +1, position.y}, WHITE);
+    if (currentFrame >= 5) DrawTextureRec(this->Attaque5, this->frameRecDroiteAttaque, {position.x +1, position.y}, WHITE);
 }
 
 void Animation_Joueur::animation_attaque_gauche(Vector2 position, int currentFrame)
