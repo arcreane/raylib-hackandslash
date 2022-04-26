@@ -136,9 +136,9 @@ int main(void)
             else {
                 arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
             }
-            if (arme.getActive() > 0) {
+            /*if (arme.getActive() > 0) {
                 DrawRectangleRec(arme.getRectangle(), YELLOW);
-            }
+            }*/
             arme.setCd();
             if (arme.getCd() <= 0) {
                 arme.setOff();
