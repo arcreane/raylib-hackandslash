@@ -9,10 +9,6 @@
 //JB was here
 //Henri is in your wall
 
-typedef struct PlayArme {
-    Joueur j;
-    Arme a;
-}PlayArme;
 
 #define G 1000
 #define PLAYER_JUMP_SPD 550.0f
@@ -79,7 +75,7 @@ int main(void)
     Texture2D RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop03.png");
     Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop04.png");
     Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop05.png");
-    Rectangle frameRec = { 112.0f, -119.0f, (float)RunLoop1.width-200, (float)RunLoop1.height };
+    Rectangle frameRec = { 112.0f, -119.0f, 56, 40 };
     
 
 
@@ -186,12 +182,12 @@ int main(void)
 
 
         //testAnim
-        if (currentFrame == 0) DrawTextureRec(RunLoop0, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 1) DrawTextureRec(RunLoop1, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 2) DrawTextureRec(RunLoop2, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 3) DrawTextureRec(RunLoop3, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 4) DrawTextureRec(RunLoop4, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 5) DrawTextureRec(RunLoop5, frameRec, position, LIGHTGRAY);
+        if (currentFrame == 0) DrawTextureRec(RunLoop0, frameRec, position, WHITE);
+        if (currentFrame == 1) DrawTextureRec(RunLoop1, frameRec, position, WHITE);
+        if (currentFrame == 2) DrawTextureRec(RunLoop2, frameRec, position, WHITE);
+        if (currentFrame == 3) DrawTextureRec(RunLoop3, frameRec, position, WHITE);
+        if (currentFrame == 4) DrawTextureRec(RunLoop4, frameRec, position, WHITE);
+        if (currentFrame == 5) DrawTextureRec(RunLoop5, frameRec, position, WHITE);
 
 
         EndMode2D();
