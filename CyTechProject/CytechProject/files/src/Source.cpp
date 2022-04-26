@@ -36,7 +36,7 @@ int main(void)
     Animation_Joueur animation_joueur;
 
     Joueur player;
-    player.setPersonnage({ 300, 100, 25, 40 });
+    player.setPersonnage({ 300, 100, 28, 40 });
 
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 50);
