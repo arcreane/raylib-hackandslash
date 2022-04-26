@@ -3,8 +3,8 @@
 
 void Animation_Joueur::Init_animation_joueur()
 {
-    this->frameRecDroite = { 112.0f, -119.0f, 56, 40 };
-    this->frameRecGauche = { 112.0f, -119.0f, -56, 40 };
+    this->frameRecDroite = { 112.0f, -119.0f, 35, 40 };
+    this->frameRecGauche = { 112.0f, -119.0f, -35, 40 };
     this->RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop00.png");
     this->RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop01.png");
     
@@ -52,7 +52,7 @@ void Animation_Joueur::animation_run_gauche(Vector2 position, int currentFrame)
     if (currentFrame == 5) DrawTextureRec(this->RunLoop5, this->frameRecGauche, position, WHITE);
 }
 
-void Animation_Joueur::animation_immobile(Vector2 position, int currentFrame)
+void Animation_Joueur::animation_immobile_droite(Vector2 position, int currentFrame)
 {
     if (currentFrame == 0) DrawTextureRec(this->Immobile0, this->frameRecDroite, position, WHITE);
     if (currentFrame == 1) DrawTextureRec(this->Immobile1, this->frameRecDroite, position, WHITE);
@@ -62,6 +62,19 @@ void Animation_Joueur::animation_immobile(Vector2 position, int currentFrame)
     if (currentFrame == 5) DrawTextureRec(this->Immobile5, this->frameRecDroite, position, WHITE);
     if (currentFrame == 6) DrawTextureRec(this->Immobile6, this->frameRecDroite, position, WHITE);
 }
+
+void Animation_Joueur::animation_immobile_gauche(Vector2 position, int currentFrame)
+{
+    if (currentFrame == 0) DrawTextureRec(this->Immobile0, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->Immobile1, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->Immobile2, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->Immobile3, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->Immobile4, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 5) DrawTextureRec(this->Immobile5, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 6) DrawTextureRec(this->Immobile6, this->frameRecGauche, position, WHITE);
+}
+
+
 
 void Animation_Joueur::animation_jump_droite(Vector2 position, int currentFrame)
 {

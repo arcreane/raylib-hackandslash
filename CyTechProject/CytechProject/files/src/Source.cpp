@@ -193,7 +193,8 @@ int main(void)
 
         if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !(player.getCanJump())) animation_joueur.animation_jump_droite(player.getPosition(), currentFrameImmobile);
         if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && !(player.getCanJump())) animation_joueur.animation_jump_gauche(player.getPosition(), currentFrameImmobile);
-        if ((!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) || (IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT)) /* && player.getCanJump()*/) animation_joueur.animation_immobile(player.getPosition(), currentFrameImmobile);
+        if (((!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) || ((IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT)))) && player.getOrientation()) animation_joueur.animation_immobile_droite(player.getPosition(), currentFrameImmobile);
+        if (((!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) || ((IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT)))) && !(player.getOrientation())) animation_joueur.animation_immobile_gauche(player.getPosition(), currentFrameImmobile);
         if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && player.getCanJump()) animation_joueur.animation_run_droite(player.getPosition(), currentFrame);
         if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && player.getCanJump()) animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 
@@ -231,7 +232,7 @@ Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
     player.setSpeed(player.getSpeed() + G * delta);
     player.setCanJump(false);
 
-    if (player.getYBas() > screenHeight)
+    if (player.getYBas() >= screenHeight)
     {
         player.setSpeed(0);
         player.setYBas(screenHeight);

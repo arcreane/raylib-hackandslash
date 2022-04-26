@@ -11,7 +11,8 @@ private:
 public:
 	void Init_animation_joueur();
 	void animation_run_gauche(Vector2 position, int currentFrame);
-	void animation_immobile(Vector2 position, int currentFrame);
+	void animation_immobile_droite(Vector2 position, int currentFrame);
+	void animation_immobile_gauche(Vector2 position, int currentFrame);
 	void animation_jump_droite(Vector2 position, int currentFrame);
 	void animation_jump_gauche(Vector2 position, int currentFrame);
 	void animation_run_droite(Vector2 position, int currentFrame);
