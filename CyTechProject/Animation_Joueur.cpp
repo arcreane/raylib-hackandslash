@@ -11,8 +11,18 @@ void Animation_Joueur::Init_animation_joueur()
     this->RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop03.png");
     this->RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop04.png");
     this->RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop05.png");
-
+    
+    this->Immobile1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOut01.png");
+    this->Immobile0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOut00.png");
+    this->Immobile2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOut02.png");
+    this->Immobile3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp00.png");
+    this->Immobile4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp01.png");
+    this->Immobile5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp02.png");
+    this->Immobile6 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp03.png");
 }
+
+
+
 void Animation_Joueur::animation_run_droite(Vector2 position, int currentFrame)
 {
     if (currentFrame == 0) DrawTextureRec(this->RunLoop0, this->frameRecDroite, position, WHITE);
@@ -32,4 +42,16 @@ void Animation_Joueur::animation_run_gauche(Vector2 position, int currentFrame)
     if (currentFrame == 4) DrawTextureRec(this->RunLoop4, this->frameRecGauche, position, WHITE);
     if (currentFrame == 5) DrawTextureRec(this->RunLoop5, this->frameRecGauche, position, WHITE);
 }
+
+void Animation_Joueur::animation_immobile(Vector2 position, int currentFrame)
+{
+    if (currentFrame == 0) DrawTextureRec(this->Immobile0, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->Immobile1, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->Immobile2, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->Immobile3, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->Immobile4, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 5) DrawTextureRec(this->Immobile5, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 6) DrawTextureRec(this->Immobile6, this->frameRecDroite, position, WHITE);
+}
+
 

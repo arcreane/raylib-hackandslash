@@ -22,6 +22,7 @@ typedef struct PlayArme {
 const int screenWidth = 1600;
 const int screenHeight = 900;
 int currentFrame = 0;
+int currentFrameImmobile = 0;
 int framesCounter = 0;
 
 
@@ -163,8 +164,10 @@ int main(void)
         {
             framesCounter = 0;
             currentFrame++;
+            currentFrameImmobile++;
 
             if (currentFrame > 5) currentFrame = 0;
+            if (currentFrameImmobile > 6) currentFrameImmobile = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -188,9 +191,9 @@ int main(void)
 
 #pragma region DrawAnimation
 
-       
-        if (IsKeyDown(KEY_RIGHT)) animation_joueur.animation_run_droite(player.getPosition(), currentFrame);
-        if (IsKeyDown(KEY_LEFT)) animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
+        if (!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) /* && player.getCanJump()*/) animation_joueur.animation_immobile(player.getPosition(), currentFrameImmobile);
+        if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) animation_joueur.animation_run_droite(player.getPosition(), currentFrame);
+        if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT)) animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 
 #pragma endregion DrawAnimation
 
