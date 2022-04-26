@@ -17,12 +17,12 @@ typedef struct PlayArme {
 #define G 1000
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 500.0f
+#define FRAMES_SPEED 8
 
 const int screenWidth = 1600;
 const int screenHeight = 900;
 int currentFrame = 0;
 int framesCounter = 0;
-int framesSpeed = 8;
 
 
 Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
@@ -73,13 +73,13 @@ int main(void)
     camera.zoom = 1.0f;
 
     //Test Anim
-    Texture2D RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop00.png");
-    Texture2D RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop01.png");
-    Texture2D RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop02.png");
-    Texture2D RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop03.png");
-    Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop04.png");
-    Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop05.png");
-    Rectangle frameRec = { 112.0f, -119.0f, (float)RunLoop1.width-200, (float)RunLoop1.height };
+    Texture2D RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop00.png");
+    Texture2D RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop01.png");
+    Texture2D RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop02.png");
+    Texture2D RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop03.png");
+    Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop04.png");
+    Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop05.png");
+    Rectangle frameRec = { 112.0f, -119.0f, 56, 40 };
     
 
 
@@ -160,7 +160,7 @@ int main(void)
         Vector2 position = { player.getX(),player.getY() };
         framesCounter++;
 
-        if (framesCounter >= (60 / framesSpeed))
+        if (framesCounter >= (60 / FRAMES_SPEED))
         {
             framesCounter = 0;
             currentFrame++;
