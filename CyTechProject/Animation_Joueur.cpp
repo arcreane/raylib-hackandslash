@@ -1,89 +1,57 @@
 #include "Animation_Joueur.h"
 #include "raylib.h"
 
-#define MAX_FRAME_SPEED     15
-#define MIN_FRAME_SPEED      1
-
-/*int main(void)
+void Animation_Joueur::Init_animation_joueur()
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    this->frameRecDroite = { 112.0f, -119.0f, 56, 40 };
+    this->frameRecGauche = { 112.0f, -119.0f, -56, 40 };
+    this->RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop01.png");
+    this->RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop00.png");
+    this->RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop02.png");
+    this->RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop03.png");
+    this->RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop04.png");
+    this->RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop05.png");
+    
+    this->Immobile1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOut01.png");
+    this->Immobile0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOut00.png");
+    this->Immobile2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOut02.png");
+    this->Immobile3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp00.png");
+    this->Immobile4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp01.png");
+    this->Immobile5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp02.png");
+    this->Immobile6 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/timeOutLookUp03.png");
+}
 
-    InitWindow(screenWidth, screenHeight, "raylib [texture] example - texture rectangle");
 
-    // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-    Texture2D scarfy = LoadTexture("resources/scarfy.png");        // Texture loading
 
-    Vector2 position = { 350.0f, 280.0f };
-    Rectangle frameRec = { 0.0f, 0.0f, (float)scarfy.width / 6, (float)scarfy.height };
-    int currentFrame = 0;
+void Animation_Joueur::animation_run_droite(Vector2 position, int currentFrame)
+{
+    if (currentFrame == 0) DrawTextureRec(this->RunLoop0, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->RunLoop1, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->RunLoop2, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->RunLoop3, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->RunLoop4, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 5) DrawTextureRec(this->RunLoop5, this->frameRecDroite, position, WHITE);
+}
 
-    int framesCounter = 0;
-    int framesSpeed = 8;            // Number of spritesheet frames shown by second
+void Animation_Joueur::animation_run_gauche(Vector2 position, int currentFrame)
+{
+    if (currentFrame == 0) DrawTextureRec(this->RunLoop0, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->RunLoop1, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->RunLoop2, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->RunLoop3, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->RunLoop4, this->frameRecGauche, position, WHITE);
+    if (currentFrame == 5) DrawTextureRec(this->RunLoop5, this->frameRecGauche, position, WHITE);
+}
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+void Animation_Joueur::animation_immobile(Vector2 position, int currentFrame)
+{
+    if (currentFrame == 0) DrawTextureRec(this->Immobile0, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 1) DrawTextureRec(this->Immobile1, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 2) DrawTextureRec(this->Immobile2, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 3) DrawTextureRec(this->Immobile3, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 4) DrawTextureRec(this->Immobile4, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 5) DrawTextureRec(this->Immobile5, this->frameRecDroite, position, WHITE);
+    if (currentFrame == 6) DrawTextureRec(this->Immobile6, this->frameRecDroite, position, WHITE);
+}
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        // Update
-        //----------------------------------------------------------------------------------
-        framesCounter++;
 
-        if (framesCounter >= (60 / framesSpeed))
-        {
-            framesCounter = 0;
-            currentFrame++;
-
-            if (currentFrame > 5) currentFrame = 0;
-
-            frameRec.x = (float)currentFrame * (float)scarfy.width / 6;
-        }
-
-        if (IsKeyPressed(KEY_RIGHT)) framesSpeed++;
-        else if (IsKeyPressed(KEY_LEFT)) framesSpeed--;
-
-        if (framesSpeed > MAX_FRAME_SPEED) framesSpeed = MAX_FRAME_SPEED;
-        else if (framesSpeed < MIN_FRAME_SPEED) framesSpeed = MIN_FRAME_SPEED;
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-
-        DrawTexture(scarfy, 15, 40, WHITE);
-        DrawRectangleLines(15, 40, scarfy.width, scarfy.height, LIME);
-        DrawRectangleLines(15 + (int)frameRec.x, 40 + (int)frameRec.y, (int)frameRec.width, (int)frameRec.height, RED);
-
-        DrawText("FRAME SPEED: ", 165, 210, 10, DARKGRAY);
-        DrawText(TextFormat("%02i FPS", framesSpeed), 575, 210, 10, DARKGRAY);
-        DrawText("PRESS RIGHT/LEFT KEYS to CHANGE SPEED!", 290, 240, 10, DARKGRAY);
-
-        for (int i = 0; i < MAX_FRAME_SPEED; i++)
-        {
-            if (i < framesSpeed) DrawRectangle(250 + 21 * i, 205, 20, 20, RED);
-            DrawRectangleLines(250 + 21 * i, 205, 20, 20, MAROON);
-        }
-
-        DrawTextureRec(scarfy, frameRec, position, WHITE);  // Draw part of the texture
-
-        DrawText("(c) Scarfy sprite by Eiden Marsal", screenWidth - 200, screenHeight - 20, 10, GRAY);
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
-    }
-
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    UnloadTexture(scarfy);       // Texture unloading
-
-    CloseWindow();                // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
-
-    return 0;
-}*/

@@ -13,12 +13,13 @@
 #define G 1000
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 500.0f
+#define FRAMES_SPEED 8
 
 const int screenWidth = 1600;
 const int screenHeight = 900;
 int currentFrame = 0;
+int currentFrameImmobile = 0;
 int framesCounter = 0;
-int framesSpeed = 8;
 
 
 Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
@@ -29,6 +30,10 @@ Arme UpdateArme(Joueur player, Arme arme);
 int main(void)
 {
     InitWindow(screenWidth, screenHeight, "Premier test");
+
+#pragma region Initialisation
+
+    Animation_Joueur animation_joueur;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 40, 40 });
@@ -68,24 +73,20 @@ int main(void)
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
-    //Test Anim
-    Texture2D RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop00.png");
-    Texture2D RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop01.png");
-    Texture2D RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop02.png");
-    Texture2D RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop03.png");
-    Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop04.png");
-    Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop05.png");
-    Rectangle frameRec = { 112.0f, -119.0f, 56, 40 };
-    
+#pragma region initAnim
 
+    animation_joueur.Init_animation_joueur();
+#pragma endregion initAnim
+
+#pragma endregion initialisation
 
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
-    // Main game loop
+#pragma region MainGameLoop
     while (!WindowShouldClose())
     {
-        // Update
+#pragma region Update
         //----------------------------------------------------------------------------------
         float deltaTime = GetFrameTime();
 
@@ -152,20 +153,23 @@ int main(void)
             }
         }
 
-        //testAnim
-        Vector2 position = { player.getX(),player.getY() };
+#pragma region UpdateAnimation
         framesCounter++;
 
-        if (framesCounter >= (60 / framesSpeed))
+        if (framesCounter >= (60 / FRAMES_SPEED))
         {
             framesCounter = 0;
             currentFrame++;
+            currentFrameImmobile++;
 
             if (currentFrame > 5) currentFrame = 0;
+            if (currentFrameImmobile > 6) currentFrameImmobile = 0;
         }
+#pragma endregion UpdateAnimation
 
+#pragma endregion Update
 
-        // Draw
+#pragma region Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
@@ -181,25 +185,23 @@ int main(void)
         
 
 
-        //testAnim
-        if (currentFrame == 0) DrawTextureRec(RunLoop0, frameRec, position, WHITE);
-        if (currentFrame == 1) DrawTextureRec(RunLoop1, frameRec, position, WHITE);
-        if (currentFrame == 2) DrawTextureRec(RunLoop2, frameRec, position, WHITE);
-        if (currentFrame == 3) DrawTextureRec(RunLoop3, frameRec, position, WHITE);
-        if (currentFrame == 4) DrawTextureRec(RunLoop4, frameRec, position, WHITE);
-        if (currentFrame == 5) DrawTextureRec(RunLoop5, frameRec, position, WHITE);
+#pragma region DrawAnimation
 
+        if (!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) /* && player.getCanJump()*/) animation_joueur.animation_immobile(player.getPosition(), currentFrameImmobile);
+        if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) animation_joueur.animation_run_droite(player.getPosition(), currentFrame);
+        if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT)) animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
+
+#pragma endregion DrawAnimation
 
         EndMode2D();
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
+#pragma endregion Draw 
     }
+#pragma endregion MainGameLoop
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+
 
     return 0;
 
