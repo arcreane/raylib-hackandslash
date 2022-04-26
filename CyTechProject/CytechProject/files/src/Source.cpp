@@ -79,7 +79,7 @@ int main(void)
     Texture2D RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop03.png");
     Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop04.png");
     Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/runLoop05.png");
-    Rectangle frameRec = { 0.0f, 0.0f, (float)RunLoop1.width, (float)RunLoop1.height };
+    Rectangle frameRec = { 112.0f, -119.0f, (float)RunLoop1.width-200, (float)RunLoop1.height };
     
 
 
@@ -177,6 +177,14 @@ int main(void)
 
         DrawText("Test", 20, 20, 20, DARKGRAY);
 
+
+
+        BeginMode2D(camera);
+
+        Rectangle playerRect = { player.getPosition().x - (float)(player.getDimension().width / 2), player.getPosition().y - (float)player.getDimension().height, (float)player.getDimension().width, (float)player.getDimension().height };
+        
+
+
         //testAnim
         if (currentFrame == 0) DrawTextureRec(RunLoop0, frameRec, position, LIGHTGRAY);
         if (currentFrame == 1) DrawTextureRec(RunLoop1, frameRec, position, LIGHTGRAY);
@@ -185,11 +193,6 @@ int main(void)
         if (currentFrame == 4) DrawTextureRec(RunLoop4, frameRec, position, LIGHTGRAY);
         if (currentFrame == 5) DrawTextureRec(RunLoop5, frameRec, position, LIGHTGRAY);
 
-
-        BeginMode2D(camera);
-
-        Rectangle playerRect = { player.getPosition().x - (float)(player.getDimension().width / 2), player.getPosition().y - (float)player.getDimension().height, (float)player.getDimension().width, (float)player.getDimension().height };
-        DrawRectangleRec(player.getRectangle(), BLUE);
 
         EndMode2D();
 
