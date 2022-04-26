@@ -9,10 +9,6 @@
 //JB was here
 //Henri is in your wall
 
-typedef struct PlayArme {
-    Joueur j;
-    Arme a;
-}PlayArme;
 
 #define G 1000
 #define PLAYER_JUMP_SPD 550.0f
@@ -40,7 +36,7 @@ int main(void)
     Animation_Joueur animation_joueur;
 
     Joueur player;
-    player.setPersonnage({ 300, 100, 40, 40 });
+    player.setPersonnage({ 300, 100, 25, 40 });
 
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 50);
