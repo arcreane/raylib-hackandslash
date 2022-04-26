@@ -36,7 +36,7 @@ int main(void)
     Animation_Joueur animation_joueur;
 
     Joueur player;
-    player.setPersonnage({ 300, 100, 40, 40 });
+    player.setPersonnage({ 300, 100, 25, 40 });
 
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 50);
@@ -227,7 +227,7 @@ Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
     player.setSpeed(player.getSpeed() + G * delta);
     player.setCanJump(false);
 
-    if (player.getYBas() > screenHeight)
+    if (player.getYBas() >= screenHeight)
     {
         player.setSpeed(0);
         player.setYBas(screenHeight);

@@ -3,8 +3,8 @@
 
 void Animation_Joueur::Init_animation_joueur()
 {
-    this->frameRecDroite = { 112.0f, -119.0f, 56, 40 };
-    this->frameRecGauche = { 112.0f, -119.0f, -56, 40 };
+    this->frameRecDroite = { 112.0f, -119.0f, 34, 40 };
+    this->frameRecGauche = { 112.0f, -119.0f, -34, 40 };
     this->RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop00.png");
     this->RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop01.png");
     
