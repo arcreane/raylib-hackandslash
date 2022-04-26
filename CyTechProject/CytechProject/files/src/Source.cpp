@@ -167,6 +167,7 @@ int main(void)
             if (currentFrame > 5) currentFrame = 0;
         }
 #pragma endregion UpdateAnimation
+
 #pragma endregion Update
 
 #pragma region Draw
@@ -189,6 +190,7 @@ int main(void)
 
        
         if (IsKeyDown(KEY_RIGHT)) animation_joueur.animation_run_droite(player.getPosition(), currentFrame);
+        if (IsKeyDown(KEY_LEFT)) animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 
 #pragma endregion DrawAnimation
 
