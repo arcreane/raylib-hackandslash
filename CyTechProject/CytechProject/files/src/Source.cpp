@@ -34,6 +34,10 @@ int main(void)
 {
     InitWindow(screenWidth, screenHeight, "Premier test");
 
+#pragma region Initialisation
+
+    Animation_Joueur animation_joueur;
+
     Joueur player;
     player.setPersonnage({ 300, 100, 40, 40 });
 
@@ -72,24 +76,20 @@ int main(void)
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
-    //Test Anim
-    Texture2D RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop00.png");
-    Texture2D RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop01.png");
-    Texture2D RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop02.png");
-    Texture2D RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop03.png");
-    Texture2D RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop04.png");
-    Texture2D RunLoop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop05.png");
-    Rectangle frameRec = { 112.0f, -119.0f, 56, 40 };
-    
+#pragma region initAnim
 
+    animation_joueur.Init_animation_joueur();
+#pragma endregion initAnim
+
+#pragma endregion initialisation
 
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
-    // Main game loop
+#pragma region MainGameLoop
     while (!WindowShouldClose())
     {
-        // Update
+#pragma region Update
         //----------------------------------------------------------------------------------
         float deltaTime = GetFrameTime();
 
@@ -156,8 +156,7 @@ int main(void)
             }
         }
 
-        //testAnim
-        Vector2 position = { player.getX(),player.getY() };
+#pragma region UpdateAnimation
         framesCounter++;
 
         if (framesCounter >= (60 / FRAMES_SPEED))
@@ -167,9 +166,10 @@ int main(void)
 
             if (currentFrame > 5) currentFrame = 0;
         }
+#pragma endregion UpdateAnimation
+#pragma endregion Update
 
-
-        // Draw
+#pragma region Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
@@ -185,25 +185,22 @@ int main(void)
         
 
 
-        //testAnim
-        if (currentFrame == 0) DrawTextureRec(RunLoop0, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 1) DrawTextureRec(RunLoop1, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 2) DrawTextureRec(RunLoop2, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 3) DrawTextureRec(RunLoop3, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 4) DrawTextureRec(RunLoop4, frameRec, position, LIGHTGRAY);
-        if (currentFrame == 5) DrawTextureRec(RunLoop5, frameRec, position, LIGHTGRAY);
+#pragma region DrawAnimation
 
+       
+        if (IsKeyDown(KEY_RIGHT)) animation_joueur.animation_run_droite(player.getPosition(), currentFrame);
+
+#pragma endregion DrawAnimation
 
         EndMode2D();
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
+#pragma endregion Draw 
     }
+#pragma endregion MainGameLoop
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+
 
     return 0;
 
