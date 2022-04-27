@@ -163,10 +163,6 @@ int main(void)
             }
         }
 
-        if(player.getSpeed() > 0) {
-            DrawRectangleRec({ 0,0,1000,500 }, PURPLE);
-        }
-
 #pragma region UpdateAnimation
         framesCounter++;
 
@@ -292,25 +288,23 @@ Joueur CheckCollisionBlocPlein(Joueur player, Platform box[1], float delta) {
         if (player.getXDroite() > box[i].getXd() && IsKeyDown(KEY_RIGHT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getX() < box[i].getXDroite()-1) player.setXDroite(box[i].getXd());
         if (player.getX() < box[i].getXDroite() && IsKeyDown(KEY_LEFT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getXDroite() > box[i].getXd()) {
             player.setX(box[i].getXDroite());
-            DrawRectangleRec({ 0,0,50,50 }, RED);
         }
 
         if (player.getYBas() >= box[i].getY() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getY() < box[i].getYBas() - G*delta)
         {
-            if (true) {
+            if (player.getSpeed() >= 0) {
                 player.setSpeed(0);
                 player.setYBas(box[i].getY());
                 player.setCanJump(true);
             }
         }  
         
-        if (player.getY() < box[i].getYBas() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getYBas() > box[i].getY() +1)
+        if (player.getY() < box[i].getYBas() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getYBas() > box[i].getY()+20)
         {
-            
-            player.setSpeed(0);
-            player.setY(box[i].getYBas());
-            DrawRectangleRec({ 0,0,1800,900 }, RED);
-            
+            if (player.getSpeed()) {
+                player.setSpeed(0);
+                player.setY(box[i].getYBas());
+            }
         }
     }
     return player;
