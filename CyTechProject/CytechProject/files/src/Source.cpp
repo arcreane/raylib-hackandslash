@@ -163,6 +163,10 @@ int main(void)
             }
         }
 
+        if(player.getSpeed() > 0) {
+            DrawRectangleRec({ 0,0,1000,500 }, PURPLE);
+        }
+
 #pragma region UpdateAnimation
         framesCounter++;
 
@@ -291,13 +295,13 @@ Joueur CheckCollisionBlocPlein(Joueur player, Platform box[1], float delta) {
             DrawRectangleRec({ 0,0,50,50 }, RED);
         }
 
-        if (player.getYBas() > box[i].getY() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getY() < box[i].getYBas() - G*delta)
+        if (player.getYBas() >= box[i].getY() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getY() < box[i].getYBas() - G*delta)
         {
-            //if (IsKeyUp(KEY_RIGHT) || player.getSpeed() > 0) {
-            player.setSpeed(0);
-            player.setYBas(box[i].getY());
-            player.setCanJump(true);
-            
+            if (true) {
+                player.setSpeed(0);
+                player.setYBas(box[i].getY());
+                player.setCanJump(true);
+            }
         }  
         
         if (player.getY() < box[i].getYBas() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getYBas() > box[i].getY() +1)
