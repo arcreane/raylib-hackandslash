@@ -2,9 +2,10 @@
 #include "raymath.h"
 #include "../../Platform.h"
 #include "../../Joueur.h"
-#include "../../Mob.h"
+#include "../../mobPath1.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
+#include <vector>
 
 //JB was here
 //Henri is in your wall
@@ -44,11 +45,12 @@ int main(void)
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 50);
 
-    Mob mob[NB_MOB];
-    mob[0].setPersonnage({ 750, 200, 50, 50 });
-    mob[1].setPersonnage({ 500, 40, 50, 50 });
-    mob[2].setPersonnage({ 375, 600, 50, 50 });
-    mob[3].setPersonnage({0,855,1600,5});
+    std::vector<Mob* > mob;
+    //input données
+    mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
+    mob.push_back(new Mob({ 375, 600, 50, 50 }));
+    mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
+    mob.push_back(new Mob({ 0,855,1600,5 }));
 
     Mob mobPassif[NB_MOB_PASSIF];
     mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
@@ -137,26 +139,29 @@ int main(void)
             }
         }
 
-        for (int i = 0; i < NB_MOB; i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mob[i].getRectangle()) && mob[i].getIsAlive()) {
+        for (unsigned i = 0; i < mob.size(); i++) {
+            if (CheckCollisionRecs(player.getRectangle(), mob[i]->getRectangle()) && mob[i]->getIsAlive()) {
                 player.setIsAlive(false);
                 player.setPersonnage({ 300, 100, 28, 40 });
 
-                mob[0].setPersonnage({ 750, 200, 50, 50 });
-                mob[1].setPersonnage({ 500, 40, 50, 50 });
-                mob[2].setPersonnage({ 375, 600, 50, 50 });
+                mob[0]->setMob({ 750, 200, 50, 50 }, true, 700, 800);
+                mob[1]->setMob({ 500, 40, 50, 50 });
+                mob[2]->setMob({ 375, 600, 50, 50 }, true, 300, 450);
 
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                 mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
             }
 
-            if (CheckCollisionRecs(arme.getRectangle(), mob[i].getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
-                mob[i].setIsAlive(false);
+            if (CheckCollisionRecs(arme.getRectangle(), mob[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
+                mob[i]->setIsAlive(false);
             }
 
-            if (mob[i].getIsAlive()) {
-                DrawRectangleRec(mob[i].getRectangle(), RED);
+            if (mob[i]->getIsAlive()) {
+                
+                mob[i]->pathMob();
+                Rectangle tmp = mob[i]->getRectangle();
+                DrawRectangleRec(tmp, RED);
             }
         }
 
@@ -253,6 +258,11 @@ int main(void)
 #pragma endregion MainGameLoop
 
     CloseWindow();        // Close window and OpenGL context
+
+    //delete mob données
+    for (unsigned i = 0; i < mob.size(); i++) {
+        delete mob[i];
+    }
 
 
     return 0;
