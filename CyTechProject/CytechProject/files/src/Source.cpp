@@ -15,6 +15,8 @@
 #define PLAYER_HOR_SPD 300.0f
 #define FRAMES_SPEED 8
 #define NB_PLATFORM 13
+#define NB_MOB 4
+#define NB_MOB_PASSIF 3
 
 const int screenWidth = 1600;
 const int screenHeight = 900;
@@ -42,12 +44,13 @@ int main(void)
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 50);
 
-    Mob mob[3];
+    Mob mob[NB_MOB];
     mob[0].setPersonnage({ 750, 200, 50, 50 });
     mob[1].setPersonnage({ 500, 40, 50, 50 });
     mob[2].setPersonnage({ 375, 600, 50, 50 });
+    mob[3].setPersonnage({0,855,1600,5});
 
-    Mob mobPassif[3];
+    Mob mobPassif[NB_MOB_PASSIF];
     mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
     mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
     mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
@@ -106,7 +109,7 @@ int main(void)
 
         
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < NB_MOB_PASSIF; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
                 mobPassif[i].setIsAlive(false);
             }
@@ -116,10 +119,10 @@ int main(void)
             }
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < NB_MOB; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mob[i].getRectangle()) && mob[i].getIsAlive()) {
                 player.setIsAlive(false);
-                player.setPersonnage({ 300, 100, 40, 40 });
+                player.setPersonnage({ 300, 100, 28, 40 });
 
                 mob[0].setPersonnage({ 750, 200, 50, 50 });
                 mob[1].setPersonnage({ 500, 40, 50, 50 });
@@ -190,7 +193,7 @@ int main(void)
 
 
 
-        DrawText("Test", 20, 20, 20, DARKGRAY);
+        //DrawText("Test", 20, 20, 20, DARKGRAY);
 
 
 
