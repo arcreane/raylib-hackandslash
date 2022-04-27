@@ -121,7 +121,7 @@ int main(void)
 
         DrawTexture(background, 0, 0, WHITE);
 
-        for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
+        //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
 
         player = UpdatePlayer(player, platform, arme, deltaTime);
 
