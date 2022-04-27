@@ -144,8 +144,11 @@ int main(void)
                 player.setPersonnage({ 300, 100, 28, 40 });
 
                 mob[0]->setMob({ 750, 200, 50, 50 }, true, 700, 800);
+                mob[0]->setIsAlive(true);
                 mob[1]->setMob({ 500, 40, 50, 50 });
+                mob[1]->setIsAlive(true);
                 mob[2]->setMob({ 375, 600, 50, 50 }, true, 300, 450);
+                mob[2]->setIsAlive(true);
 
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                 mobPassif[1].setPersonnage({ 0, 200, 50, 50 });

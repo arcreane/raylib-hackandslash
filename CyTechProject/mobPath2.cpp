@@ -19,6 +19,6 @@ void MobPath2::pathMob(Joueur player) {
     float playerY = player.getY();
 
     float distance = sqrt((playerX - mobX) * (playerX - mobX) + (playerY - mobY) * (playerY - mobY));
-    this->setX(this->getX() + (playerX - mobX) / distance);
-    this->setY(this->getY() + (playerY - mobY) / distance);
+    this->setX(this->getX() + 5*(playerX - mobX) / distance);
+    this->setY(this->getY() + 5*(playerY - mobY) / distance);
 }
