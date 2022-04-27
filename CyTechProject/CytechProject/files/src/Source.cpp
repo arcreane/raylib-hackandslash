@@ -22,8 +22,9 @@ int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
 
-Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[9], Platform box[1], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta);
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[1], float delta);
 Arme UpdateArme(Joueur player, Arme arme);
 
 
@@ -63,6 +64,11 @@ int main(void)
     platform[7].setPlatform({ 300, 650, 200, 10 });
     platform[8].setPlatform({ 300, 800, 200, 10 });
 
+    Platform box[3];
+    box[0].setPlatform({ 1000,800,50,50 });
+    box[1].setPlatform({ 1500,800,100,100 });
+    box[2].setPlatform({ 500,700,100,150 });
+
 
     int platformLength = sizeof(platform) / sizeof(platform)[0];
 
@@ -91,10 +97,14 @@ int main(void)
         float deltaTime = GetFrameTime();
 
         for (int i = 0; i < platformLength; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
+        for (int i = 0; i < 3; i++) DrawRectangleRec(box[i].getRectangle(), DARKPURPLE);
 
-        player = UpdatePlayer(player, platform, arme, deltaTime);
+        player = UpdatePlayer(player, platform, box, arme, deltaTime);
 
         arme = UpdateArme(player, arme);
+
+        DrawRectangleRec(player.getRectangle(), BLUE);
+        DrawRectangleRec({350,300,100,100}, BLACK);
 
         for (int i = 0; i < 3; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
@@ -109,7 +119,7 @@ int main(void)
         for (int i = 0; i < 3; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mob[i].getRectangle()) && mob[i].getIsAlive()) {
                 player.setIsAlive(false);
-                player.setPersonnage({ 300, 100, 40, 40 });
+                player.setPersonnage({ 300, 100, 28, 40 });
 
                 mob[0].setPersonnage({ 750, 200, 50, 50 });
                 mob[1].setPersonnage({ 500, 40, 50, 50 });
@@ -224,10 +234,8 @@ int main(void)
 
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[9], Platform box[1], Arme arme, float delta)
 {
-    Dimension dim = player.getDimension();
-
     if (IsKeyDown(KEY_LEFT)) {
         player.setX(player.getX() - PLAYER_HOR_SPD * delta);
         player.setOrientation(false);
@@ -257,6 +265,7 @@ Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
     }
 
     player = CheckCollisionPlatform(player, platform, delta);
+    player = CheckCollisionBlocPlein(player, box, delta);
 
     return player;
 }
@@ -268,6 +277,36 @@ Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) 
             player.setSpeed(0);
             player.setYBas(platform[i].getY());
             player.setCanJump(true);
+        }
+    }
+    return player;
+}
+
+
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[1], float delta) {
+    for (int i = 0; i < 3; i++) {
+        if (player.getXDroite() > box[i].getXd() && IsKeyDown(KEY_RIGHT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getX() < box[i].getXDroite()-1) player.setXDroite(box[i].getXd());
+        if (player.getX() < box[i].getXDroite() && IsKeyDown(KEY_LEFT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getXDroite() > box[i].getXd()) {
+            player.setX(box[i].getXDroite());
+            DrawRectangleRec({ 0,0,50,50 }, RED);
+        }
+
+        if (player.getYBas() > box[i].getY() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getY() < box[i].getYBas() - G*delta)
+        {
+            //if (IsKeyUp(KEY_RIGHT) || player.getSpeed() > 0) {
+            player.setSpeed(0);
+            player.setYBas(box[i].getY());
+            player.setCanJump(true);
+            
+        }  
+        
+        if (player.getY() < box[i].getYBas() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getYBas() > box[i].getY() +1)
+        {
+            
+            player.setSpeed(0);
+            player.setY(box[i].getYBas());
+            DrawRectangleRec({ 0,0,1800,900 }, RED);
+            
         }
     }
     return player;
