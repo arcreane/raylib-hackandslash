@@ -1,8 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "../../Platform.h"
-#include "../../Joueur.h"
 #include "../../mobPath1.h"
+#include "../../mobPath2.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
 #include <vector>
@@ -16,7 +16,6 @@
 #define PLAYER_HOR_SPD 300.0f
 #define FRAMES_SPEED 8
 #define NB_PLATFORM 13
-#define NB_MOB 4
 #define NB_MOB_PASSIF 3
 
 const int screenWidth = 1600;
@@ -48,7 +47,7 @@ int main(void)
     std::vector<Mob* > mob;
     //input données
     mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
-    mob.push_back(new Mob({ 375, 600, 50, 50 }));
+    mob.push_back(new MobPath2({ 375, 600, 50, 50 }));
     mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
     mob.push_back(new Mob({ 0,855,1600,5 }));
 
@@ -61,15 +60,15 @@ int main(void)
 
     Platform platform[NB_PLATFORM];
     float a;
-    platform[0].setPlatform({ 0, 405, 905, 10 });                         //bonne
-    platform[1].setPlatform({ 0,227,268,10 });                            //bonne
+    platform[0].setPlatform({ 0, 405, 905, 10 });                        
+    platform[1].setPlatform({ 0,227,268,10 });                            
     a = 1121;
     platform[2].setPlatform({ a,405,(screenWidth - a),10 });
     a = 1333;
     platform[3].setPlatform({ a,137,(screenWidth - a),10 });
     a = 1495;
     platform[4].setPlatform({ a,275,(screenWidth - a),10 });
-    platform[5].setPlatform({ 430,93,315,10 });                           //bonne
+    platform[5].setPlatform({ 430,93,315,10 });                           
     a = 1386;
     platform[6].setPlatform({ a, 630, (screenWidth - a), 10 });
     platform[7].setPlatform({ 963, 540, 318, 10 });
@@ -81,12 +80,12 @@ int main(void)
 
     /*Platform platform[NB_PLATFORM];
     float a;
-    platform[0].setPlatform({ 160, 855, 640, 10 });                         //bonne
-    platform[1].setPlatform({ 0,138,316,10 });                            //bonne
+    platform[0].setPlatform({ 160, 855, 640, 10 });                         
+    platform[1].setPlatform({ 0,138,316,10 });                           
     platform[2].setPlatform({ 0,271,209,10 });
     platform[3].setPlatform({ 0,407,52,10 });
     platform[4].setPlatform({ 0,495,905,10 });
-    platform[5].setPlatform({ 693,450,212,10 });                           //bonne
+    platform[5].setPlatform({ 693,450,212,10 });                      
     platform[6].setPlatform({ 745, 405, 54, 10 });
     platform[7].setPlatform({ 1067, 313, 1438 - 1067, 10 });
     platform[8].setPlatform({ 905, 541, 54, 10 });
@@ -145,8 +144,11 @@ int main(void)
                 player.setPersonnage({ 300, 100, 28, 40 });
 
                 mob[0]->setMob({ 750, 200, 50, 50 }, true, 700, 800);
+                mob[0]->setIsAlive(true);
                 mob[1]->setMob({ 500, 40, 50, 50 });
+                mob[1]->setIsAlive(true);
                 mob[2]->setMob({ 375, 600, 50, 50 }, true, 300, 450);
+                mob[2]->setIsAlive(true);
 
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                 mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
@@ -159,7 +161,7 @@ int main(void)
 
             if (mob[i]->getIsAlive()) {
                 
-                mob[i]->pathMob();
+                mob[i]->pathMob(player);
                 Rectangle tmp = mob[i]->getRectangle();
                 DrawRectangleRec(tmp, RED);
             }

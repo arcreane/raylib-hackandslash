@@ -24,7 +24,7 @@ bool MobPath1::getOrientation()
     return this->orientation;
 }
 
-void MobPath1::pathMob()
+void MobPath1::pathMob(Joueur player)
 {
     if (this->orientation) {
         this->setX(this->getX() + 1);
