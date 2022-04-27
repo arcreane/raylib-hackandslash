@@ -59,15 +59,15 @@ int main(void)
 
     Platform platform[NB_PLATFORM];
     float a;
-    platform[0].setPlatform({ 0, 405, 905, 10 });                         
-    platform[1].setPlatform({ 0,227,268,10 });                            
+    platform[0].setPlatform({ 0, 405, 905, 10 });                           
+    platform[1].setPlatform({ 0,227,268,10 });                              
     a = 1121;
     platform[2].setPlatform({ a,405,(screenWidth - a),10 });
     a = 1333;
     platform[3].setPlatform({ a,137,(screenWidth - a),10 });
     a = 1495;
     platform[4].setPlatform({ a,275,(screenWidth - a),10 });
-    platform[5].setPlatform({ 430,93,315,10 });                           
+    platform[5].setPlatform({ 430,93,315,10 });                             
     a = 1386;
     platform[6].setPlatform({ a, 630, (screenWidth - a), 10 });
     platform[7].setPlatform({ 963, 540, 318, 10 });
@@ -79,12 +79,12 @@ int main(void)
 
     /*Platform platform[NB_PLATFORM];
     float a;
-    platform[0].setPlatform({ 160, 855, 640, 10 });                       
-    platform[1].setPlatform({ 0,138,316,10 });                            
+    platform[0].setPlatform({ 160, 855, 640, 10 });                         
+    platform[1].setPlatform({ 0,138,316,10 });                              
     platform[2].setPlatform({ 0,271,209,10 });
     platform[3].setPlatform({ 0,407,52,10 });
     platform[4].setPlatform({ 0,495,905,10 });
-    platform[5].setPlatform({ 693,450,212,10 });                          
+    platform[5].setPlatform({ 693,450,212,10 });                            
     platform[6].setPlatform({ 745, 405, 54, 10 });
     platform[7].setPlatform({ 1067, 313, 1438 - 1067, 10 });
     platform[8].setPlatform({ 905, 541, 54, 10 });
