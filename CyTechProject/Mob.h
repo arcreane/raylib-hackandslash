@@ -1,4 +1,5 @@
 #include "Personnage.h"
+#include <vector>
 
 #pragma once
 class Mob : public Personnage {
@@ -8,6 +9,7 @@ public:
 	virtual void setMob(Rectangle rec, bool o, float d, float a);
 	virtual void setMob(Rectangle rec);
 	virtual void pathMob() {};
+
 	Mob(Rectangle rec);
 	Mob();
 };
