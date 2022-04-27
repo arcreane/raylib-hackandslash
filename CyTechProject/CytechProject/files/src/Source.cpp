@@ -166,7 +166,7 @@ int main(void)
             
             if (currentFrame > 5) currentFrame = 0;
             if (currentFrameImmobile > 6) currentFrameImmobile = 0;
-            if (currentFrameAttaque > 12) currentFrameAttaque = -1;
+            if (currentFrameAttaque > 6) currentFrameAttaque = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -191,21 +191,21 @@ int main(void)
 #pragma region DrawAnimation
 
         if (IsKeyPressed(KEY_J))currentFrameAttaque = 0;
-        if (arme.getCd()>0 && arme.getEtat() && arme.getDirection())
+        if (arme.getCd()>0 && arme.getEtat() && arme.getActive()>0 && arme.getDirection())
             animation_joueur.animation_attaque_droite(player.getPosition(), currentFrameAttaque);
-        if (arme.getEtat()>0 && arme.getEtat() && !arme.getDirection())
+        if (arme.getCd()>0 && arme.getEtat() && arme.getActive()>0 && !arme.getDirection())
             animation_joueur.animation_attaque_gauche(player.getPosition(), currentFrameAttaque);
-        if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !player.getCanJump() && !arme.getEtat())
+        if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !player.getCanJump())
             animation_joueur.animation_jump_droite(player.getPosition(), currentFrameImmobile);
-        if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && !player.getCanJump() && !arme.getEtat())
+        if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && !player.getCanJump())
             animation_joueur.animation_jump_gauche(player.getPosition(), currentFrameImmobile);
-        if (((!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) || ((IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT)))) && player.getOrientation() && !arme.getEtat())
+        if (((!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) || ((IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT)))) && player.getOrientation())
             animation_joueur.animation_immobile_droite(player.getPosition(), currentFrameImmobile);
-        if (((!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) || ((IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT)))) && !player.getOrientation() && !arme.getEtat())
+        if (((!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)) || ((IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT)))) && !player.getOrientation())
             animation_joueur.animation_immobile_gauche(player.getPosition(), currentFrameImmobile);
-        if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && player.getCanJump() && !arme.getEtat())
+        if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && player.getCanJump())
             animation_joueur.animation_run_droite(player.getPosition(), currentFrame );
-        if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && player.getCanJump() && !arme.getEtat())
+        if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && player.getCanJump())
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 
 #pragma endregion DrawAnimation
