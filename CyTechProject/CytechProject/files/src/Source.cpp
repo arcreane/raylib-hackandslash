@@ -14,6 +14,7 @@
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 300.0f
 #define FRAMES_SPEED 8
+#define NB_PLATFORM 13
 
 const int screenWidth = 1600;
 const int screenHeight = 900;
@@ -22,8 +23,8 @@ int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
 
-Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme attaque, float delta);
-Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme attaque, float delta);
+Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
 Arme UpdateArme(Joueur player, Arme arme);
 
 
@@ -51,20 +52,27 @@ int main(void)
     mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
     mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
 
+    Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png");
 
-    Platform platform[9];
-    platform[0].setPlatform({300, 350, 200, 10});
-    platform[1].setPlatform({0,250,250,10});
-    platform[2].setPlatform({550,250,250,10});
-    platform[3].setPlatform({100,150,50,10});
-    platform[4].setPlatform({650,150,50,10});
-    platform[5].setPlatform({500,90,150,10});
-    platform[6].setPlatform({ 300, 500, 200, 10 });
-    platform[7].setPlatform({ 300, 650, 200, 10 });
-    platform[8].setPlatform({ 300, 800, 200, 10 });
-
-
-    int platformLength = sizeof(platform) / sizeof(platform)[0];
+    Platform platform[NB_PLATFORM];
+    float a;
+    platform[0].setPlatform({ 0, 405, 905, 10 });                         //bonne
+    platform[1].setPlatform({ 0,227,268,10 });                            //bonne
+    a = 1121;
+    platform[2].setPlatform({ a,405,(screenWidth - a),10 });
+    a = 1333;
+    platform[3].setPlatform({ a,137,(screenWidth - a),10 });
+    a = 1495;
+    platform[4].setPlatform({ a,275,(screenWidth - a),10 });
+    platform[5].setPlatform({ 430,93,315,10 });                           //bonne
+    a = 1386;
+    platform[6].setPlatform({ a, 630, (screenWidth - a), 10 });
+    platform[7].setPlatform({ 963, 540, 265, 10 });
+    platform[8].setPlatform({ 587, 676, 213, 10 });
+    platform[9].setPlatform({ 415, 617, 70, 10 });
+    platform[10].setPlatform({ 53, 631, 213, 10 });
+    platform[11].setPlatform({ 0, 318, 48, 10 });
+    platform[12].setPlatform({ 0, 363, 102, 10 });
 
     Camera2D camera = { 0 };
     camera.target = { 800, 450 };
@@ -90,7 +98,9 @@ int main(void)
         //----------------------------------------------------------------------------------
         float deltaTime = GetFrameTime();
 
-        for (int i = 0; i < platformLength; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
+        DrawTexture(background, 0, 0, WHITE);
+
+        for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
 
         player = UpdatePlayer(player, platform, arme, deltaTime);
 
@@ -178,6 +188,8 @@ int main(void)
 
         ClearBackground(LIGHTGRAY);
 
+
+
         DrawText("Test", 20, 20, 20, DARKGRAY);
 
 
@@ -223,10 +235,9 @@ int main(void)
 
 
     return 0;
-
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme arme, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -263,8 +274,8 @@ Joueur UpdatePlayer(Joueur player, Platform platform[9], Arme arme, float delta)
     return player;
 }
 
-Joueur CheckCollisionPlatform(Joueur player, Platform platform[9], float delta) {
-    for (int i = 0; i <= sizeof(platform); i++) {
+Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta) {
+    for (int i = 0; i <= NB_PLATFORM; i++) {
         if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
             && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta) > platform[i].getY()) {
             player.setSpeed(0);
