@@ -70,12 +70,30 @@ int main(void)
     platform[5].setPlatform({ 430,93,315,10 });                           //bonne
     a = 1386;
     platform[6].setPlatform({ a, 630, (screenWidth - a), 10 });
-    platform[7].setPlatform({ 963, 540, 265, 10 });
+    platform[7].setPlatform({ 963, 540, 318, 10 });
     platform[8].setPlatform({ 587, 676, 213, 10 });
     platform[9].setPlatform({ 415, 617, 70, 10 });
     platform[10].setPlatform({ 53, 631, 213, 10 });
     platform[11].setPlatform({ 0, 318, 48, 10 });
     platform[12].setPlatform({ 0, 363, 102, 10 });
+
+    /*Platform platform[NB_PLATFORM];
+    float a;
+    platform[0].setPlatform({ 160, 855, 640, 10 });                         //bonne
+    platform[1].setPlatform({ 0,138,316,10 });                            //bonne
+    platform[2].setPlatform({ 0,271,209,10 });
+    platform[3].setPlatform({ 0,407,52,10 });
+    platform[4].setPlatform({ 0,495,905,10 });
+    platform[5].setPlatform({ 693,450,212,10 });                           //bonne
+    platform[6].setPlatform({ 745, 405, 54, 10 });
+    platform[7].setPlatform({ 1067, 313, 1438 - 1067, 10 });
+    platform[8].setPlatform({ 905, 541, 54, 10 });
+    a = 906;
+    platform[9].setPlatform({ a, 673, screenWidth - a, 10 });
+    platform[10].setPlatform({ 800, 810, 54, 10 });
+    platform[11].setPlatform({ 852, 764, 54, 10 });
+
+    Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png");*/
 
     Camera2D camera = { 0 };
     camera.target = { 800, 450 };
