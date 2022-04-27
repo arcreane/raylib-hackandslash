@@ -67,7 +67,7 @@ int main(void)
     platform[5].setPlatform({ 430,93,315,10 });                           //bonne
     a = 1386;
     platform[6].setPlatform({ a, 630, (screenWidth - a), 10 });
-    platform[7].setPlatform({ 963, 540, 265, 10 });
+    platform[7].setPlatform({ 963, 540, 318, 10 });
     platform[8].setPlatform({ 587, 676, 213, 10 });
     platform[9].setPlatform({ 415, 617, 70, 10 });
     platform[10].setPlatform({ 53, 631, 213, 10 });
