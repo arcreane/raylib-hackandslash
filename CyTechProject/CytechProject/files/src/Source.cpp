@@ -147,9 +147,9 @@ int main(void)
                 arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
             }
             arme.setCd();
-            if (arme.getActive() > 0) {
+            /*if (arme.getActive() > 0) {
                 DrawRectangleRec(arme.getRectangle(), YELLOW);
-            }
+            }*/
             if (arme.getCd() <= 0) {
                 arme.setOff();
             }
