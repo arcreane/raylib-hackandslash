@@ -35,6 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation_Zombie.cpp" />
     <ClCompile Include="Arme.cpp" />
     <ClCompile Include="Animation_Joueur.cpp" />
     <ClCompile Include="CytechProject\files\src\Source.cpp" />
@@ -53,6 +54,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation_Zombie.h" />
     <ClInclude Include="Arme.h" />
     <ClInclude Include="Animation_Joueur.h" />
     <ClInclude Include="Dimension.h" />

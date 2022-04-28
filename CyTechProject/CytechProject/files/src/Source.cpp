@@ -5,7 +5,9 @@
 #include "../../mobPath2.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
+#include "../../Animation_Zombie.h"
 #include <vector>
+
 
 //JB was here
 //Henri is in your wall
@@ -38,6 +40,7 @@ int main(void)
 #pragma region Initialisation
 
     Animation_Joueur animation_joueur;
+    Animation_Zombie animation_zombie;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -47,9 +50,9 @@ int main(void)
 
     std::vector<Mob* > mob;
     //input données
-    mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
+    mob.push_back(new MobPath1({ 750, 200, 50, 50 }, false, 700, 800));
     mob.push_back(new MobPath2({ 500, 40, 50, 50 }));
-    mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
+    mob.push_back(new MobPath1({ 375, 600, 50, 50 }, false, 300, 450));
     mob.push_back(new Mob({ 0,855,1600,5 }));
 
     Mob mobPassif[NB_MOB_PASSIF];
@@ -105,7 +108,7 @@ int main(void)
     camera.zoom = 1.0f;
 
 #pragma region initAnim
-    //for (unsigned i = 0; i < mob.size(); i++) { mob[i].Init_animation_zombie(); }
+    animation_zombie.Init_animation_zombie();
     animation_joueur.Init_animation_joueur();
 #pragma endregion initAnim
 
@@ -123,7 +126,7 @@ int main(void)
 
         DrawTexture(background, 0, 0, WHITE);
 
-        //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
+        //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), LIME);
 
         player = UpdatePlayer(player, platform, arme, deltaTime);
 
@@ -150,7 +153,7 @@ int main(void)
                 mob[1]->setIsAlive(true);
                 mob[2]->setMob({ 375, 600, 50, 50 }, true, 300, 450);
                 mob[2]->setIsAlive(true);
-
+                
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                 mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
@@ -207,7 +210,7 @@ int main(void)
             if (currentFrame > 5) currentFrame = 0;
             if (currentFrameImmobile > 6) currentFrameImmobile = 0;
             if (currentFrameAttaque > 6) currentFrameAttaque = 0;
-            if (currentFrameZombie > 4) currentFrameZombie = 0;
+            if (currentFrameZombie > 3) currentFrameZombie = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -234,10 +237,15 @@ int main(void)
 #pragma region DrawAnimation
 
         for (unsigned i = 0; i < mob.size(); i++) {
-            if (mob[i]->getOrientation() && mob[i]->getIsAlive()) mob[i]->animation_run_droite(mob[i]->getPosition(), currentFrameZombie);
-            if (!mob[i]->getOrientation() && mob[i]->getIsAlive()) mob[i]->animation_run_gauche(mob[i]->getPosition(), currentFrameZombie);
+            if (mob[i]->getIsAlive()) {
+                if (mob[i]->getType() == "zombie") {
+                    if (mob[i]->getOrientation())
+                        animation_zombie.animation_run_droite(mob[i]->getPosition(), currentFrameZombie);
+                    else
+                        animation_zombie.animation_run_gauche(mob[i]->getPosition(), currentFrameZombie);
+                }
+            }
         }
-
 
 #pragma region Joueur
         if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;
@@ -258,6 +266,7 @@ int main(void)
         if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && player.getCanJump() && ((arme.getEtat() && arme.getActive() <= 0) || !arme.getEtat()))
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 #pragma endregion Joueur
+
         arme = UpdateArme(player, arme);
 #pragma endregion DrawAnimation
 
