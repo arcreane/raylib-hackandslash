@@ -3,7 +3,7 @@
 
 void Mob::setRectangle(Rectangle rec) {
     this->pos_dim = rec;
-}   
+}
 
 void Mob::setMob(Rectangle rec, bool o, float d, float a)
 {
