@@ -20,6 +20,7 @@
 #define PLAYER_HOR_SPD 300.0f
 #define FRAMES_SPEED 8
 #define NB_PLATFORM 13
+#define NB_BOX 3
 #define NB_MOB_PASSIF 3
 
 const int screenWidth = 1600;
@@ -31,8 +32,9 @@ int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme attaque, float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta);
 Arme UpdateArme(Joueur player, Arme arme);
 
 
@@ -51,7 +53,7 @@ int main(void)
     player.setPersonnage({ 300, 100, 28, 40 });
 
     Arme arme;
-    arme.setArme({ 60, 40 }, 100, 50);
+    arme.setArme({ 60, 40 }, 100, 35);
 
     std::vector<Mob* > mob;
     //input données
@@ -105,6 +107,11 @@ int main(void)
 
     Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png");*/
 
+    Platform box[NB_BOX];
+    box[0].setPlatform({0,315,54,45});
+    box[1].setPlatform({ 0,359,54,45 });
+    box[2].setPlatform({ 54,359,54,45 });
+
     Camera2D camera = { 0 };
     camera.target = { 800, 450 };
     camera.offset.x = screenWidth / 2.0f;
@@ -133,9 +140,10 @@ int main(void)
 
         DrawTexture(background, 0, 0, WHITE);
 
-        //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), LIME);
+        //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
+        //for (int i = 0; i < NB_BOX; i++) DrawRectangleRec(box[i].getRectangle(), PURPLE);
 
-        player = UpdatePlayer(player, platform, arme, deltaTime);
+        player = UpdatePlayer(player, platform, box, arme, deltaTime);
 
         
 
@@ -304,7 +312,7 @@ int main(void)
     return 0;
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme arme, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -337,17 +345,45 @@ Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme arme, fl
     }
 
     player = CheckCollisionPlatform(player, platform, delta);
+    player = CheckCollisionBlocPlein(player, box, delta);
 
     return player;
 }
 
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta) {
     for (int i = 0; i <= NB_PLATFORM; i++) {
-        if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
-            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta) > platform[i].getY()) {
+        if (player.getX() > platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
+            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta +3) >= platform[i].getY()) {
             player.setSpeed(0);
             player.setYBas(platform[i].getY());
             player.setCanJump(true);
+        }
+    }
+    return player;
+}
+
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta) {
+    for (int i = 0; i < NB_BOX; i++) {
+        if (player.getXDroite() > box[i].getXd() && IsKeyDown(KEY_RIGHT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getX() < box[i].getXDroite() - 1) player.setXDroite(box[i].getXd());
+        if (player.getX() < box[i].getXDroite() && IsKeyDown(KEY_LEFT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getXDroite() > box[i].getXd()) {
+            player.setX(box[i].getXDroite());
+        }
+
+        if (player.getYBas() >= box[i].getY() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getY() < box[i].getYBas() - G * delta)
+        {
+            if (player.getSpeed() >= 0) {
+                player.setSpeed(0);
+                player.setYBas(box[i].getY());
+                player.setCanJump(true);
+            }
+        }
+
+        if (player.getY() < box[i].getYBas() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getYBas() > box[i].getY() + 20)
+        {
+            if (player.getSpeed()) {
+                player.setSpeed(0);
+                player.setY(box[i].getYBas());
+            }
         }
     }
     return player;
