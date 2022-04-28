@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Dimension.h"
+#include "Platform.h"
+
 
 #pragma once
 class Personnage {
@@ -38,6 +40,10 @@ public:
     float getHeight();
     bool getIsAlive();
     Vector2 getCenter();
+    float getDistance(Vector2 coords) const;
+    Platform* getClosestPlatform();
+    Vector2 getDepart(Platform *p);
+    Vector2 getArrivee(Platform* p);
 
     //void seDeplacer();
 };

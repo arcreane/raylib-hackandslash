@@ -90,3 +90,31 @@ bool Personnage::getIsAlive() {
 Vector2 Personnage::getCenter() {
     return { this->pos_dim.x + this->pos_dim.width / 2, this->pos_dim.y + this->pos_dim.height / 2 };
 }
+
+float Personnage::getDistance(Vector2 coords) const
+{
+    return sqrt(pow(coords.x + this->pos_dim.x, 2) + pow(coords.y + this->pos_dim.y, 2));
+}
+
+Platform* Personnage::getClosestPlatform()
+{
+    // Interer a travers la liste de plateforme
+    // a refaire quand on en a une
+    return nullptr;
+}
+
+Vector2 Personnage::getDepart(Platform* p)
+{
+    Vector2 depart;
+    depart.x = p->getPosition().x;
+    depart.y = p->getPosition().y - this->getHeight();
+    return depart;
+}
+
+Vector2 Personnage::getArrivee(Platform* p)
+{
+    Vector2 depart;
+    depart.x = p->getPosition().x + p->getDimension().width;
+    depart.y = p->getPosition().y - this->getHeight();
+    return depart;
+}

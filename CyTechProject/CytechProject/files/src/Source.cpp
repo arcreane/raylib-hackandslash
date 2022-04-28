@@ -1,10 +1,11 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "../../Platform.h"
-#include "../../Joueur.h"
-#include "../../Mob.h"
+#include "../../mobPath1.h"
+#include "../../mobPath2.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
+#include <vector>
 
 //JB was here
 //Henri is in your wall
@@ -15,7 +16,7 @@
 #define PLAYER_HOR_SPD 300.0f
 #define FRAMES_SPEED 8
 #define NB_PLATFORM 13
-#define NB_MOB 4
+#define NB_BOX 3
 #define NB_MOB_PASSIF 3
 
 const int screenWidth = 1600;
@@ -25,8 +26,9 @@ int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme attaque, float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta);
 Arme UpdateArme(Joueur player, Arme arme);
 
 
@@ -44,11 +46,12 @@ int main(void)
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 50);
 
-    Mob mob[NB_MOB];
-    mob[0].setPersonnage({ 750, 200, 50, 50 });
-    mob[1].setPersonnage({ 500, 40, 50, 50 });
-    mob[2].setPersonnage({ 375, 600, 50, 50 });
-    mob[3].setPersonnage({0,855,1600,5});
+    std::vector<Mob* > mob;
+    //input données
+    mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
+    mob.push_back(new MobPath2({ 500, 40, 50, 50 }));
+    mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
+    mob.push_back(new Mob({ 0,855,1600,5 }));
 
     Mob mobPassif[NB_MOB_PASSIF];
     mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
@@ -59,15 +62,15 @@ int main(void)
 
     Platform platform[NB_PLATFORM];
     float a;
-    platform[0].setPlatform({ 0, 405, 905, 10 });                           
-    platform[1].setPlatform({ 0,227,268,10 });                              
+    platform[0].setPlatform({ 0, 405, 905, 10 });                        
+    platform[1].setPlatform({ 0,227,268,10 });                            
     a = 1121;
     platform[2].setPlatform({ a,405,(screenWidth - a),10 });
     a = 1333;
     platform[3].setPlatform({ a,137,(screenWidth - a),10 });
     a = 1495;
     platform[4].setPlatform({ a,275,(screenWidth - a),10 });
-    platform[5].setPlatform({ 430,93,315,10 });                             
+    platform[5].setPlatform({ 430,93,315,10 });                           
     a = 1386;
     platform[6].setPlatform({ a, 630, (screenWidth - a), 10 });
     platform[7].setPlatform({ 963, 540, 318, 10 });
@@ -80,11 +83,11 @@ int main(void)
     /*Platform platform[NB_PLATFORM];
     float a;
     platform[0].setPlatform({ 160, 855, 640, 10 });                         
-    platform[1].setPlatform({ 0,138,316,10 });                              
+    platform[1].setPlatform({ 0,138,316,10 });                           
     platform[2].setPlatform({ 0,271,209,10 });
     platform[3].setPlatform({ 0,407,52,10 });
     platform[4].setPlatform({ 0,495,905,10 });
-    platform[5].setPlatform({ 693,450,212,10 });                            
+    platform[5].setPlatform({ 693,450,212,10 });                      
     platform[6].setPlatform({ 745, 405, 54, 10 });
     platform[7].setPlatform({ 1067, 313, 1438 - 1067, 10 });
     platform[8].setPlatform({ 905, 541, 54, 10 });
@@ -94,6 +97,11 @@ int main(void)
     platform[11].setPlatform({ 852, 764, 54, 10 });
 
     Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png");*/
+
+    Platform box[NB_BOX];
+    box[0].setPlatform({0,315,54,45});
+    box[1].setPlatform({ 0,359,54,45 });
+    box[2].setPlatform({ 54,359,54,45 });
 
     Camera2D camera = { 0 };
     camera.target = { 800, 450 };
@@ -122,8 +130,9 @@ int main(void)
         DrawTexture(background, 0, 0, WHITE);
 
         //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
+        //for (int i = 0; i < NB_BOX; i++) DrawRectangleRec(box[i].getRectangle(), PURPLE);
 
-        player = UpdatePlayer(player, platform, arme, deltaTime);
+        player = UpdatePlayer(player, platform, box, arme, deltaTime);
 
         
 
@@ -137,26 +146,32 @@ int main(void)
             }
         }
 
-        for (int i = 0; i < NB_MOB; i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mob[i].getRectangle()) && mob[i].getIsAlive()) {
+        for (unsigned i = 0; i < mob.size(); i++) {
+            if (CheckCollisionRecs(player.getRectangle(), mob[i]->getRectangle()) && mob[i]->getIsAlive()) {
                 player.setIsAlive(false);
                 player.setPersonnage({ 300, 100, 28, 40 });
 
-                mob[0].setPersonnage({ 750, 200, 50, 50 });
-                mob[1].setPersonnage({ 500, 40, 50, 50 });
-                mob[2].setPersonnage({ 375, 600, 50, 50 });
+                mob[0]->setMob({ 750, 200, 50, 50 }, true, 700, 800);
+                mob[0]->setIsAlive(true);
+                mob[1]->setMob({ 500, 40, 50, 50 });
+                mob[1]->setIsAlive(true);
+                mob[2]->setMob({ 375, 600, 50, 50 }, true, 300, 450);
+                mob[2]->setIsAlive(true);
 
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                 mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
             }
 
-            if (CheckCollisionRecs(arme.getRectangle(), mob[i].getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
-                mob[i].setIsAlive(false);
+            if (CheckCollisionRecs(arme.getRectangle(), mob[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
+                mob[i]->setIsAlive(false);
             }
 
-            if (mob[i].getIsAlive()) {
-                DrawRectangleRec(mob[i].getRectangle(), RED);
+            if (mob[i]->getIsAlive()) {
+                
+                mob[i]->pathMob(player);
+                Rectangle tmp = mob[i]->getRectangle();
+                DrawRectangleRec(tmp, RED);
             }
         }
 
@@ -254,11 +269,16 @@ int main(void)
 
     CloseWindow();        // Close window and OpenGL context
 
+    //delete mob données
+    for (unsigned i = 0; i < mob.size(); i++) {
+        delete mob[i];
+    }
+
 
     return 0;
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme arme, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -291,17 +311,45 @@ Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme arme, fl
     }
 
     player = CheckCollisionPlatform(player, platform, delta);
+    player = CheckCollisionBlocPlein(player, box, delta);
 
     return player;
 }
 
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta) {
     for (int i = 0; i <= NB_PLATFORM; i++) {
-        if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
-            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta) > platform[i].getY()) {
+        if (player.getX() > platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
+            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta +10) >= platform[i].getY()) {
             player.setSpeed(0);
             player.setYBas(platform[i].getY());
             player.setCanJump(true);
+        }
+    }
+    return player;
+}
+
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta) {
+    for (int i = 0; i < NB_BOX; i++) {
+        if (player.getXDroite() > box[i].getXd() && IsKeyDown(KEY_RIGHT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getX() < box[i].getXDroite() - 1) player.setXDroite(box[i].getXd());
+        if (player.getX() < box[i].getXDroite() && IsKeyDown(KEY_LEFT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getXDroite() > box[i].getXd()) {
+            player.setX(box[i].getXDroite());
+        }
+
+        if (player.getYBas() >= box[i].getY() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getY() < box[i].getYBas() - G * delta)
+        {
+            if (player.getSpeed() >= 0) {
+                player.setSpeed(0);
+                player.setYBas(box[i].getY());
+                player.setCanJump(true);
+            }
+        }
+
+        if (player.getY() < box[i].getYBas() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getYBas() > box[i].getY() + 20)
+        {
+            if (player.getSpeed()) {
+                player.setSpeed(0);
+                player.setY(box[i].getYBas());
+            }
         }
     }
     return player;

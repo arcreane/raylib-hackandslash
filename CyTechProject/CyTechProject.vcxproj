@@ -40,6 +40,8 @@
     <ClCompile Include="CytechProject\files\src\Source.cpp" />
     <ClCompile Include="Joueur.cpp" />
     <ClCompile Include="Mob.cpp" />
+    <ClCompile Include="mobPath1.cpp" />
+    <ClCompile Include="mobPath2.cpp" />
     <ClCompile Include="Personnage.cpp" />
     <ClCompile Include="Platform.cpp" />
   </ItemGroup>
@@ -56,6 +58,8 @@
     <ClInclude Include="Dimension.h" />
     <ClInclude Include="Joueur.h" />
     <ClInclude Include="Mob.h" />
+    <ClInclude Include="mobPath1.h" />
+    <ClInclude Include="mobPath2.h" />
     <ClInclude Include="Personnage.h" />
     <ClInclude Include="Platform.h" />
   </ItemGroup>
