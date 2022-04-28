@@ -9,7 +9,8 @@ private:
 	Rectangle pos_dim;
 public:
 	void setPlatform(Rectangle pd);
-
+	Platform(Rectangle rec);
+	Platform();
 	Rectangle getRectangle();
 	Vector2 getPosition();
 	float getY();

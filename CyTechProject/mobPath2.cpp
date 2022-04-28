@@ -27,3 +27,7 @@ void MobPath2::pathMob(Joueur player) {
         this->setOrientation(false);
     }
 }
+
+Mob* MobPath2::copy() {
+    return new MobPath2(this->pos_dim);
+}

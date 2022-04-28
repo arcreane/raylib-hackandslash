@@ -29,3 +29,7 @@ void MobPath1::pathMob(Joueur player)
         }
     }
 }
+
+Mob* MobPath1::copy() {
+    return (new MobPath1(this->pos_dim,this->orientation,this->dep,this->arr));
+}

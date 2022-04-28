@@ -5,7 +5,9 @@
 #include "../../mobPath2.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
+#include "../../Map.h"
 #include <vector>
+#include <string>
 
 //JB was here
 //Henri is in your wall
@@ -15,8 +17,6 @@
 #define PLAYER_JUMP_SPD 550.0f
 #define PLAYER_HOR_SPD 300.0f
 #define FRAMES_SPEED 8
-#define NB_PLATFORM 13
-#define NB_BOX 3
 #define NB_MOB_PASSIF 3
 
 const int screenWidth = 1600;
@@ -26,9 +26,9 @@ int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme attaque, float delta);
-Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
-Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta);
+Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, Platform box[NB_MAX_BOX], Arme attaque, float delta);
+Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_MAX_BOX], float delta);
 Arme UpdateArme(Joueur player, Arme arme);
 
 
@@ -46,62 +46,84 @@ int main(void)
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 50);
 
-    std::vector<Mob* > mob;
+    Map maps[5];
     //input données
-    mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
-    mob.push_back(new MobPath2({ 500, 40, 50, 50 }));
-    mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
-    mob.push_back(new Mob({ 0,855,1600,5 }));
+    //mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
+    //mob.push_back(new MobPath2({ 500, 40, 50, 50 }));
+    //mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
+    //mob.push_back(new Mob({ 0,855,1600,5 }));
 
     Mob mobPassif[NB_MOB_PASSIF];
     mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
     mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
     mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
 
-    /*Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png");
 
-    Platform platform[NB_PLATFORM];
+    //      Map 1
+    //  Load Background
+    maps[1].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png"));
+    //  Platforms
     float a;
-    platform[0].setPlatform({ 0, 405, 905, 10 });                        
-    platform[1].setPlatform({ 0,227,268,10 });                            
+    maps[1].addPlatformMap({ 0, 405, 905, 10 });
+    maps[1].addPlatformMap({ 0,227,268,10 });
     a = 1121;
-    platform[2].setPlatform({ a,405,(screenWidth - a),10 });
+    maps[1].addPlatformMap({ a,405,(screenWidth - a),10 });
     a = 1333;
-    platform[3].setPlatform({ a,137,(screenWidth - a),10 });
+    maps[1].addPlatformMap({ a,137,(screenWidth - a),10 });
     a = 1495;
-    platform[4].setPlatform({ a,275,(screenWidth - a),10 });
-    platform[5].setPlatform({ 430,93,315,10 });                           
+    maps[1].addPlatformMap({ a,275,(screenWidth - a),10 });
+    maps[1].addPlatformMap({ 430,93,315,10 });
     a = 1386;
-    platform[6].setPlatform({ a, 630, (screenWidth - a), 10 });
-    platform[7].setPlatform({ 963, 540, 318, 10 });
-    platform[8].setPlatform({ 587, 676, 213, 10 });
-    platform[9].setPlatform({ 415, 617, 70, 10 });
-    platform[10].setPlatform({ 53, 631, 213, 10 });
-    platform[11].setPlatform({ 0, 318, 48, 10 });
-    platform[12].setPlatform({ 0, 363, 102, 10 });*/
+    maps[1].addPlatformMap({ a, 630, (screenWidth - a), 10 });
+    maps[1].addPlatformMap({ 963, 540, 318, 10 });
+    maps[1].addPlatformMap( { 587, 676, 213, 10 });
+    maps[1].addPlatformMap( { 415, 617, 70, 10 });
+    maps[1].addPlatformMap( { 53, 631, 213, 10 });
+    maps[1].addPlatformMap( { 0, 318, 48, 10 });
+    maps[1].addPlatformMap( { 0, 363, 102, 10 });
+    // Mobs
+    maps[1].addMobMap(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
+    maps[1].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
+    maps[1].addMobMap(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
+    maps[1].addMobMap(new Mob({ 0,855,1600,5 }));
 
-    Platform platform[NB_PLATFORM];
-    float a;
-    platform[0].setPlatform({ 160, 855, 640, 10 });                         
-    platform[1].setPlatform({ 0,138,316,10 });                           
-    platform[2].setPlatform({ 0,271,209,10 });
-    platform[3].setPlatform({ 0,407,52,10 });
-    platform[4].setPlatform({ 0,495,905,10 });
-    platform[5].setPlatform({ 693,450,212,10 });                      
-    platform[6].setPlatform({ 745, 405, 54, 10 });
-    platform[7].setPlatform({ 1067, 313, 1438 - 1067, 10 });
-    platform[8].setPlatform({ 905, 541, 54, 10 });
+    maps[2].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png"));
+    maps[2].addPlatformMap({ 160, 855, 640, 10 });
+    maps[2].addPlatformMap({ 0,138,316,10 });
+    maps[2].addPlatformMap({ 0,271,209,10 });
+    maps[2].addPlatformMap({ 0,407,52,10 });
+    maps[2].addPlatformMap({ 0,495,905,10 });
+    maps[2].addPlatformMap({ 693,450,212,10 });
+    maps[2].addPlatformMap({ 745, 405, 54, 10 });
+    maps[2].addPlatformMap({ 1067, 313, 1438 - 1067, 10 });
+    maps[2].addPlatformMap({ 905, 541, 54, 10 });
     a = 906;
-    platform[9].setPlatform({ a, 673, screenWidth - a, 10 });
-    platform[10].setPlatform({ 800, 810, 54, 10 });
-    platform[11].setPlatform({ 852, 764, 54, 10 });
+    maps[2].addPlatformMap({ a, 673, screenWidth - a, 10 });
+    maps[2].addPlatformMap({ 800, 810, 54, 10 });
+    maps[2].addPlatformMap({ 852, 764, 54, 10 });
+    maps[2].addMobMap(new Mob({ 0,855,1600,5 }));
 
-    Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png");
+    maps[3].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map3.png"));
+    maps[3].addPlatformMap({ 0, 180, 317, 10 });
+    maps[3].addPlatformMap({ 0,315,531,10 });
+    maps[3].addPlatformMap({ 0,448,1013,10 });
+    maps[3].addPlatformMap({ 0,855,1600,10 });
 
-    Platform box[NB_BOX];
+
+    Platform box[NB_MAX_BOX];
     box[0].setPlatform({0,315,54,45});
     box[1].setPlatform({ 0,359,54,45 });
     box[2].setPlatform({ 54,359,54,45 });
+
+    int indicMap = 1;
+    int indicLim = 2;
+
+    std::vector<Mob* >mobC;
+
+    mobC.resize(0);
+    for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
+        mobC.push_back((*maps[indicMap].getMob(j)).copy());
+    }
 
     Camera2D camera = { 0 };
     camera.target = { 800, 450 };
@@ -127,12 +149,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         float deltaTime = GetFrameTime();
 
-        DrawTexture(background, 0, 0, WHITE);
+        maps[indicMap].afficheBackground();
 
-        //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
-        //for (int i = 0; i < NB_BOX; i++) DrawRectangleRec(box[i].getRectangle(), PURPLE);
+        //for (int i = 0; i < NB_MAX_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
+        //for (int i = 0; i < NB_MAX_BOX; i++) DrawRectangleRec(box[i].getRectangle(), PURPLE);
 
-        player = UpdatePlayer(player, platform, box, arme, deltaTime);
+        player = UpdatePlayer(player, maps[indicMap].getPlatforms(), box, arme, deltaTime);
 
         
 
@@ -146,32 +168,34 @@ int main(void)
             }
         }
 
-        for (unsigned i = 0; i < mob.size(); i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mob[i]->getRectangle()) && mob[i]->getIsAlive()) {
+        for (unsigned i = 0; i < mobC.size(); i++) {
+            if (CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) {
                 player.setIsAlive(false);
                 player.setPersonnage({ 300, 100, 28, 40 });
+                if (indicMap == indicLim) {
+                    indicMap = 0;
+                }
+                indicMap += 1;
 
-                mob[0]->setMob({ 750, 200, 50, 50 }, true, 700, 800);
-                mob[0]->setIsAlive(true);
-                mob[1]->setMob({ 500, 40, 50, 50 });
-                mob[1]->setIsAlive(true);
-                mob[2]->setMob({ 375, 600, 50, 50 }, true, 300, 450);
-                mob[2]->setIsAlive(true);
+                mobC.resize(0);
+                for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
+                    mobC.push_back((* maps[indicMap].getMob(j)).copy());
+                }
 
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                 mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
+                break;
             }
 
-            if (CheckCollisionRecs(arme.getRectangle(), mob[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
-                mob[i]->setIsAlive(false);
+            if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
+                mobC[i]->setIsAlive(false);
             }
 
-            if (mob[i]->getIsAlive()) {
-                mob[i]->pathMob(player);
-                Rectangle tmp = mob[i]->getRectangle();
+            if (mobC[i]->getIsAlive()) {
+                mobC[i]->pathMob(player);
+                Rectangle tmp = mobC[i]->getRectangle();
                 DrawRectangleRec(tmp, RED);
-                printf("\n%d, %s", i, mob[i]->getOrientation() ? "true" : "false");
             }
         }
 
@@ -270,19 +294,20 @@ int main(void)
     CloseWindow();        // Close window and OpenGL context
 
     //delete mob données
-    for (unsigned i = 0; i < mob.size(); i++) {
-        delete mob[i];
+    for (unsigned i = 0; i < mobC.size(); i++) {
+        delete mobC[i];
     }
 
 
     return 0;
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, std::vector<Platform> platform, Platform box[NB_MAX_BOX], Arme arme, float delta)
 {
     Dimension dim = player.getDimension();
 
     if (IsKeyDown(KEY_LEFT)) {
+
         player.setX(player.getX() - PLAYER_HOR_SPD * delta);
         player.setOrientation(false);
     }
@@ -316,8 +341,8 @@ Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[
     return player;
 }
 
-Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta) {
-    for (int i = 0; i <= NB_PLATFORM; i++) {
+Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform> platform, float delta) {
+    for (int i = 0; i < platform.size(); i++) {
         if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
             && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta) > platform[i].getY()) {
             player.setSpeed(0);
@@ -328,8 +353,8 @@ Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], flo
     return player;
 }
 
-Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta) {
-    for (int i = 0; i < NB_BOX; i++) {
+Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_MAX_BOX], float delta) {
+    for (int i = 0; i < NB_MAX_BOX; i++) {
         if (player.getXDroite() > box[i].getXd() && IsKeyDown(KEY_RIGHT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getX() < box[i].getXDroite() - 1) player.setXDroite(box[i].getXd());
         if (player.getX() < box[i].getXDroite() && IsKeyDown(KEY_LEFT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getXDroite() > box[i].getXd()) {
             player.setX(box[i].getXDroite());

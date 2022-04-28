@@ -1,5 +1,13 @@
 #include "Platform.h"
 
+Platform::Platform(Rectangle rec) {
+	pos_dim = rec;
+}
+
+Platform::Platform() {
+	pos_dim = { 0,0,0,0 };
+}
+
 void Platform::setPlatform(Rectangle pd) {
 	this->pos_dim = pd;
 }
