@@ -24,6 +24,7 @@ int currentFrame = 0;
 int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
+int currentFrameZombie = 0;
 
 Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
@@ -104,7 +105,7 @@ int main(void)
     camera.zoom = 1.0f;
 
 #pragma region initAnim
-
+    //for (unsigned i = 0; i < mob.size(); i++) { mob[i].Init_animation_zombie(); }
     animation_joueur.Init_animation_joueur();
 #pragma endregion initAnim
 
@@ -199,12 +200,14 @@ int main(void)
             framesCounter = 0;
             currentFrame++;
             currentFrameImmobile++;
-            currentFrameAttaque ++;
+            currentFrameAttaque++;
+            currentFrameZombie++;
             
             
             if (currentFrame > 5) currentFrame = 0;
             if (currentFrameImmobile > 6) currentFrameImmobile = 0;
             if (currentFrameAttaque > 6) currentFrameAttaque = 0;
+            if (currentFrameZombie > 4) currentFrameZombie = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -230,6 +233,13 @@ int main(void)
 
 #pragma region DrawAnimation
 
+        for (unsigned i = 0; i < mob.size(); i++) {
+            if (mob[i]->getOrientation() && mob[i]->getIsAlive()) mob[i]->animation_run_droite(mob[i]->getPosition(), currentFrameZombie);
+            if (!mob[i]->getOrientation() && mob[i]->getIsAlive()) mob[i]->animation_run_gauche(mob[i]->getPosition(), currentFrameZombie);
+        }
+
+
+#pragma region Joueur
         if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;
         if (arme.getCd()>0 && arme.getEtat() && arme.getActive()>0 && arme.getDirection())
             animation_joueur.animation_attaque_droite(player.getPosition(), currentFrameAttaque);
@@ -247,7 +257,7 @@ int main(void)
             animation_joueur.animation_run_droite(player.getPosition(), currentFrame );
         if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && player.getCanJump() && ((arme.getEtat() && arme.getActive() <= 0) || !arme.getEtat()))
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
-
+#pragma endregion Joueur
         arme = UpdateArme(player, arme);
 #pragma endregion DrawAnimation
 
