@@ -56,7 +56,7 @@ int main(void)
     mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
     mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
 
-    Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png");
+    /*Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png");
 
     Platform platform[NB_PLATFORM];
     float a;
@@ -76,9 +76,9 @@ int main(void)
     platform[9].setPlatform({ 415, 617, 70, 10 });
     platform[10].setPlatform({ 53, 631, 213, 10 });
     platform[11].setPlatform({ 0, 318, 48, 10 });
-    platform[12].setPlatform({ 0, 363, 102, 10 });
+    platform[12].setPlatform({ 0, 363, 102, 10 });*/
 
-    /*Platform platform[NB_PLATFORM];
+    Platform platform[NB_PLATFORM];
     float a;
     platform[0].setPlatform({ 160, 855, 640, 10 });                         
     platform[1].setPlatform({ 0,138,316,10 });                           
@@ -94,7 +94,7 @@ int main(void)
     platform[10].setPlatform({ 800, 810, 54, 10 });
     platform[11].setPlatform({ 852, 764, 54, 10 });
 
-    Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png");*/
+    Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png");
 
     Camera2D camera = { 0 };
     camera.target = { 800, 450 };
@@ -160,10 +160,10 @@ int main(void)
             }
 
             if (mob[i]->getIsAlive()) {
-                
                 mob[i]->pathMob(player);
                 Rectangle tmp = mob[i]->getRectangle();
                 DrawRectangleRec(tmp, RED);
+                printf("\n%d, %s", i, mob[i]->getOrientation() ? "true" : "false");
             }
         }
 

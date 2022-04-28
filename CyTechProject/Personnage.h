@@ -32,7 +32,7 @@ public:
     float getY();
     float getXDroite();
     float getYBas();
-    bool getOrientation();
+    virtual bool getOrientation();
     float getSpeed();
     bool getCanJump();
     Dimension getDimension();

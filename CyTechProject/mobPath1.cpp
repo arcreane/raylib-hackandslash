@@ -14,16 +14,6 @@ void MobPath1::setMob(Rectangle rec, bool o, float d, float a) {
     this->arr = a;
 }
 
-void MobPath1::setOrientation(bool o)
-{
-    this->orientation = o;
-}
-
-bool MobPath1::getOrientation()
-{
-    return this->orientation;
-}
-
 void MobPath1::pathMob(Joueur player)
 {
     if (this->orientation) {
