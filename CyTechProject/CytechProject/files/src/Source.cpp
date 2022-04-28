@@ -53,7 +53,7 @@ int main(void)
     player.setPersonnage({ 300, 100, 28, 40 });
 
     Arme arme;
-    arme.setArme({ 60, 40 }, 100, 50);
+    arme.setArme({ 60, 40 }, 100, 35);
 
     std::vector<Mob* > mob;
     //input données
