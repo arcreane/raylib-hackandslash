@@ -10,7 +10,6 @@ void Animation_Joueur::Init_animation_joueur()
 
     this->RunLoop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop00.png");
     this->RunLoop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop01.png");
-    
     this->RunLoop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop02.png");
     this->RunLoop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop03.png");
     this->RunLoop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/runLoop04.png");

@@ -5,7 +5,11 @@
 #include "../../mobPath2.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
+#include "../../Animation_Zombie.h"
+#include "../../Animation_Ghost.h"
+#include "../../Animation_RatKing.h"
 #include <vector>
+
 
 //JB was here
 //Henri is in your wall
@@ -25,6 +29,8 @@ int currentFrame = 0;
 int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
+int currentFrameZombie = 0;
+int currentFrameRatKing = 0;
 
 Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
@@ -38,7 +44,10 @@ int main(void)
 
 #pragma region Initialisation
 
+    Animation_RatKing animation_ratKing;
     Animation_Joueur animation_joueur;
+    Animation_Zombie animation_zombie;
+    Animation_Ghost animation_ghost;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -48,9 +57,9 @@ int main(void)
 
     std::vector<Mob* > mob;
     //input données
-    mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
-    mob.push_back(new MobPath2({ 500, 40, 50, 50 }));
-    mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
+    mob.push_back(new MobPath1({ 750, 200, 33, 48 }, false, 700, 800));
+    mob.push_back(new MobPath2({ 500, 40, 32, 28 }));
+    mob.push_back(new MobPath1({ 375, 600, 33, 48 }, false, 300, 450));
     mob.push_back(new Mob({ 0,855,1600,5 }));
 
     Mob mobPassif[NB_MOB_PASSIF];
@@ -111,8 +120,10 @@ int main(void)
     camera.zoom = 1.0f;
 
 #pragma region initAnim
-
+    animation_zombie.Init_animation_zombie();
     animation_joueur.Init_animation_joueur();
+    animation_ghost.Init_animation_ghost();
+    animation_ratKing.Init_animation_ratKing();
 #pragma endregion initAnim
 
 #pragma endregion initialisation
@@ -151,13 +162,13 @@ int main(void)
                 player.setIsAlive(false);
                 player.setPersonnage({ 300, 100, 28, 40 });
 
-                mob[0]->setMob({ 750, 200, 50, 50 }, true, 700, 800);
+                mob[0]->setMob({ 750, 200, 33, 48 }, true, 700, 800);
                 mob[0]->setIsAlive(true);
-                mob[1]->setMob({ 500, 40, 50, 50 });
+                mob[1]->setMob({ 500, 40, 29, 28 });
                 mob[1]->setIsAlive(true);
-                mob[2]->setMob({ 375, 600, 50, 50 }, true, 300, 450);
+                mob[2]->setMob({ 375, 600, 33, 48 }, true, 300, 450);
                 mob[2]->setIsAlive(true);
-
+                
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                 mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
@@ -170,8 +181,8 @@ int main(void)
             if (mob[i]->getIsAlive()) {
                 
                 mob[i]->pathMob(player);
-                Rectangle tmp = mob[i]->getRectangle();
-                DrawRectangleRec(tmp, RED);
+                //Rectangle tmp = mob[i]->getRectangle();
+                //DrawRectangleRec(tmp, RED);
             }
         }
 
@@ -207,12 +218,16 @@ int main(void)
             framesCounter = 0;
             currentFrame++;
             currentFrameImmobile++;
-            currentFrameAttaque ++;
+            currentFrameAttaque++;
+            currentFrameZombie++;
+            currentFrameRatKing++;
             
             
             if (currentFrame > 5) currentFrame = 0;
             if (currentFrameImmobile > 6) currentFrameImmobile = 0;
             if (currentFrameAttaque > 6) currentFrameAttaque = 0;
+            if (currentFrameZombie > 3) currentFrameZombie = 0;
+            if (currentFrameRatKing > 15) currentFrameRatKing = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -238,6 +253,24 @@ int main(void)
 
 #pragma region DrawAnimation
 
+        for (unsigned i = 0; i < mob.size(); i++) {
+            if (mob[i]->getIsAlive()) {
+                if (mob[i]->getType() == "ratKing") {
+                    if (mob[i]->getOrientation())
+                        animation_ratKing.animation_run_droite(mob[i]->getPosition(), currentFrameRatKing);
+                    else
+                        animation_ratKing.animation_run_gauche(mob[i]->getPosition(), currentFrameRatKing);
+                }
+                if (mob[i]->getType() == "ghost") {
+                    if (mob[i]->getOrientation())
+                        animation_ghost.animation_run_droite(mob[i]->getPosition(), currentFrameZombie);
+                    else          
+                        animation_ghost.animation_run_gauche(mob[i]->getPosition(), currentFrameZombie);
+                }
+            }
+        }
+
+#pragma region Joueur
         if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;
         if (arme.getCd()>0 && arme.getEtat() && arme.getActive()>0 && arme.getDirection())
             animation_joueur.animation_attaque_droite(player.getPosition(), currentFrameAttaque);
@@ -255,6 +288,7 @@ int main(void)
             animation_joueur.animation_run_droite(player.getPosition(), currentFrame );
         if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && player.getCanJump() && ((arme.getEtat() && arme.getActive() <= 0) || !arme.getEtat()))
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
+#pragma endregion Joueur
 
         arme = UpdateArme(player, arme);
 #pragma endregion DrawAnimation

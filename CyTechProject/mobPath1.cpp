@@ -5,6 +5,7 @@ MobPath1::MobPath1(Rectangle rec, bool o, float d, float a) {
     orientation = o;
     dep = d;
     arr = a;
+    this->type = "ratKing";
 }
 
 void MobPath1::setMob(Rectangle rec, bool o, float d, float a) {
@@ -14,15 +15,7 @@ void MobPath1::setMob(Rectangle rec, bool o, float d, float a) {
     this->arr = a;
 }
 
-void MobPath1::setOrientation(bool o)
-{
-    this->orientation = o;
-}
 
-bool MobPath1::getOrientation()
-{
-    return this->orientation;
-}
 
 void MobPath1::pathMob(Joueur player)
 {
@@ -39,3 +32,4 @@ void MobPath1::pathMob(Joueur player)
         }
     }
 }
+
