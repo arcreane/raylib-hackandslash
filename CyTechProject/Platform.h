@@ -1,6 +1,6 @@
 #include "raylib.h"
 #include "raymath.h"
-#include "Dimension.h"
+#include "Struct.h"
 
 #pragma once
 class Platform

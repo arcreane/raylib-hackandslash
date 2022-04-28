@@ -3,7 +3,8 @@
 #include "../../Platform.h"
 #include "../../mobPath1.h"
 #include "../../mobPath2.h"
-#include "../../Arme.h"
+#include "../../ArmeCAC.h"
+#include "../../ArmeDistance.h"
 #include "../../Animation_Joueur.h"
 #include <vector>
 
@@ -26,10 +27,10 @@ int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme attaque, float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], ArmeCAC attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
 Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta);
-Arme UpdateArme(Joueur player, Arme arme);
+ArmeCAC UpdateArme(Joueur player, ArmeCAC arme);
 
 
 int main(void)
@@ -43,8 +44,10 @@ int main(void)
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
 
-    Arme arme;
-    arme.setArme({ 60, 40 }, 100, 50);
+    ArmeCAC arme;
+    arme.setArme({ 60, 40 }, 70, 35);
+
+    ArmeDistance item;
 
     std::vector<Mob* > mob;
     //input données
@@ -183,21 +186,15 @@ int main(void)
                 arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
             }
             arme.setCd();
-            /*if (arme.getActive() > 0) {
+            if (arme.getActive() > 0) {
                 DrawRectangleRec(arme.getRectangle(), YELLOW);
-            }*/
+            }
             if (arme.getCd() <= 0) {
                 arme.setOff();
             }
         }
 
-        if (IsKeyDown(KEY_J)) {
-            if (IsKeyDown(KEY_K)) {
-                if (IsKeyDown(KEY_I)) {
-                    DrawRectangleRec({0,0,100,100}, PURPLE);
-                }
-            }
-        }
+        DrawCircle(900, 450, 50, PURPLE);
 
 #pragma region UpdateAnimation
         framesCounter++;
@@ -278,7 +275,7 @@ int main(void)
     return 0;
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], ArmeCAC arme, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -319,7 +316,7 @@ Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta) {
     for (int i = 0; i <= NB_PLATFORM; i++) {
         if (player.getX() > platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
-            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta +10) >= platform[i].getY()) {
+            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta +3) >= platform[i].getY()) {
             player.setSpeed(0);
             player.setYBas(platform[i].getY());
             player.setCanJump(true);
@@ -355,7 +352,7 @@ Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta)
     return player;
 }
 
-Arme UpdateArme(Joueur player, Arme arme) {
+ArmeCAC UpdateArme(Joueur player, ArmeCAC arme) {
     if (IsKeyDown(KEY_J) && !arme.getEtat()) {
         if (player.getOrientation() == true) {
             arme.setOn({ player.getXDroite(), player.getY() });

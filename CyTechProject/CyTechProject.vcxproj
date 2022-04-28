@@ -37,6 +37,8 @@
   <ItemGroup>
     <ClCompile Include="Arme.cpp" />
     <ClCompile Include="Animation_Joueur.cpp" />
+    <ClCompile Include="ArmeCAC.cpp" />
+    <ClCompile Include="ArmeDistance.cpp" />
     <ClCompile Include="CytechProject\files\src\Source.cpp" />
     <ClCompile Include="Joueur.cpp" />
     <ClCompile Include="Mob.cpp" />
@@ -55,7 +57,9 @@
   <ItemGroup>
     <ClInclude Include="Arme.h" />
     <ClInclude Include="Animation_Joueur.h" />
-    <ClInclude Include="Dimension.h" />
+    <ClInclude Include="ArmeCAC.h" />
+    <ClInclude Include="ArmeDistance.h" />
+    <ClInclude Include="Struct.h" />
     <ClInclude Include="Joueur.h" />
     <ClInclude Include="Mob.h" />
     <ClInclude Include="mobPath1.h" />
