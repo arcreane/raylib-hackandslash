@@ -1,8 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "../../Platform.h"
-#include "../../mobPath1.h"
-#include "../../mobPath2.h"
+#include "../../RatKing.h"
+#include "../../Ghost.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
 #include "../../Map.h"
@@ -90,9 +90,9 @@ int main(void)
     maps[1].addBoxMap({ 0,359,54,45 });
     maps[1].addBoxMap({ 54,359,54,45 });
     //  Mobs depart et type
-    maps[1].addMobMap(new MobPath1({ 750, 200, 33, 48 }, true, 700, 800));
-    maps[1].addMobMap(new MobPath2({ 500, 40, 32, 28 }));
-    maps[1].addMobMap(new MobPath1({ 375, 600, 33, 48 }, true, 300, 450));
+    maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
+    maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Mob({ 0,855,1600,5 }));
 
     maps[2].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png"));
@@ -110,7 +110,7 @@ int main(void)
     maps[2].addPlatformMap({ 800, 810, 54, 10 });
     maps[2].addPlatformMap({ 852, 764, 54, 10 });
     maps[2].addMobMap(new Mob({ 0,855,1600,5 }));
-    maps[2].addMobMap(new MobPath2({ 500, 40, 32, 28 }));
+    maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     maps[3].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map3.png"));
     maps[3].addPlatformMap({ 0, 180, 317, 10 });

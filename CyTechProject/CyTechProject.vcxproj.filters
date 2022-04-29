@@ -36,10 +36,10 @@
     <ClCompile Include="Animation_Joueur.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="mobPath1.cpp">
+    <ClCompile Include="RatKing.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="mobPath2.cpp">
+    <ClCompile Include="Ghost.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
@@ -77,10 +77,10 @@
     <ClInclude Include="Animation_Joueur.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="mobPath1.h">
+    <ClInclude Include="RatKing.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="mobPath2.h">
+    <ClInclude Include="Ghost.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">

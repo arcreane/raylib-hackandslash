@@ -44,8 +44,8 @@
     <ClCompile Include="Joueur.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mob.cpp" />
-    <ClCompile Include="mobPath1.cpp" />
-    <ClCompile Include="mobPath2.cpp" />
+    <ClCompile Include="RatKing.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Personnage.cpp" />
     <ClCompile Include="Platform.cpp" />
   </ItemGroup>
@@ -66,8 +66,8 @@
     <ClInclude Include="Joueur.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mob.h" />
-    <ClInclude Include="mobPath1.h" />
-    <ClInclude Include="mobPath2.h" />
+    <ClInclude Include="RatKing.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Personnage.h" />
     <ClInclude Include="Platform.h" />
   </ItemGroup>
