@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "audio.h"
+#include "Audio.h"
 
 
 void Audio::Init() {

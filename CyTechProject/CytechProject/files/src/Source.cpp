@@ -8,7 +8,8 @@
 #include "../../Animation_Zombie.h"
 #include "../../Animation_Ghost.h"
 #include "../../Animation_RatKing.h"
-#include "../../audio.h"
+#include "../../Audio.h"
+#include "../../Afficheur.h"
 #include <vector>
 
 
@@ -51,6 +52,7 @@ int main(void)
     Animation_Ghost animation_ghost;
 
     Audio audio;
+    Afficheur text;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -130,6 +132,7 @@ int main(void)
 #pragma endregion initAnim
 
     audio.Init();
+    text.Load();
 
 #pragma endregion initialisation
 
@@ -151,6 +154,8 @@ int main(void)
         player = UpdatePlayer(player, platform, box, arme, deltaTime);
 
         audio.Update();
+
+        text.Print(1, "Bienvenue", RED);
 
 
         for (int i = 0; i < NB_MOB_PASSIF; i++) {
@@ -308,6 +313,7 @@ int main(void)
 #pragma endregion MainGameLoop
 
     audio.Free();
+    text.Unload();
 
     CloseWindow();        // Close window and OpenGL context
 
