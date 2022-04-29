@@ -26,11 +26,7 @@ void MobPath2::pathMob(Joueur player) {
     float distance = sqrt((playerX - mobX) * (playerX - mobX) + (playerY - mobY) * (playerY - mobY));
     this->setX(this->getX() + 2.5*(playerX - mobX) / distance);
     this->setY(this->getY() + 2.5*(playerY - mobY) / distance);
-    if (this->getX() < 0) {
-        this->setOrientation(true);
-    } else {
-        this->setOrientation(false);
-    }
+
 }
 
 Mob* MobPath2::copy() {
