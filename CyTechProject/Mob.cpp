@@ -15,6 +15,11 @@ void Mob::setMob(Rectangle rec)
     this->pos_dim = rec;
 }
 
+bool Mob::getIsKillable()
+{
+    return this->isKillable;
+}
+
 std::string Mob::getType()
 {
     return this->type;

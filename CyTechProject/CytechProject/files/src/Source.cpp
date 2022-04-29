@@ -198,7 +198,7 @@ int main(void)
             }
 
             if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
-                mobC[i]->setIsAlive(false);
+                if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
             if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mobC[i]->getRectangle()) && item.getActive()) {
