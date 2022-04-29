@@ -271,19 +271,19 @@ int main(void)
 
 #pragma region DrawAnimation
 
-        for (unsigned i = 0; i < mob.size(); i++) {
-            if (mob[i]->getIsAlive()) {
-                if (mob[i]->getType() == "ratKing") {
-                    if (mob[i]->getOrientation())
-                        animation_ratKing.animation_run_droite(mob[i]->getPosition(), currentFrameRatKing);
+        for (unsigned i = 0; i < mobC.size(); i++) {
+            if (mobC[i]->getIsAlive()) {
+                if (mobC[i]->getType() == "ratKing") {
+                    if (mobC[i]->getOrientation())
+                        animation_ratKing.animation_run_droite(mobC[i]->getPosition(), currentFrameRatKing);
                     else
-                        animation_ratKing.animation_run_gauche(mob[i]->getPosition(), currentFrameRatKing);
+                        animation_ratKing.animation_run_gauche(mobC[i]->getPosition(), currentFrameRatKing);
                 }
-                if (mob[i]->getType() == "ghost") {
-                    if (mob[i]->getOrientation())
-                        animation_ghost.animation_run_droite(mob[i]->getPosition(), currentFrameZombie);
+                if (mobC[i]->getType() == "ghost") {
+                    if (mobC[i]->getOrientation())
+                        animation_ghost.animation_run_droite(mobC[i]->getPosition(), currentFrameZombie);
                     else          
-                        animation_ghost.animation_run_gauche(mob[i]->getPosition(), currentFrameZombie);
+                        animation_ghost.animation_run_gauche(mobC[i]->getPosition(), currentFrameZombie);
                 }
             }
         }
