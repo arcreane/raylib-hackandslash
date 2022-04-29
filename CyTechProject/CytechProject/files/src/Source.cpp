@@ -12,6 +12,7 @@
 #include "../../Animation_Zombie.h"
 #include "../../Animation_Ghost.h"
 #include "../../Animation_RatKing.h"
+#include "../../Animation_Scythe.h"
 #include <vector>
 #include <string>
 
@@ -34,6 +35,7 @@ int framesCounter = 0;
 int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
+int currentFrameScythe = 0;
 
 Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, float delta);
 Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
@@ -51,6 +53,7 @@ int main(void)
     Animation_Joueur animation_joueur;
     Animation_Zombie animation_zombie;
     Animation_Ghost animation_ghost;
+    Animation_Scythe animation_scythe;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -224,6 +227,7 @@ int main(void)
     animation_joueur.Init_animation_joueur();
     animation_ghost.Init_animation_ghost();
     animation_ratKing.Init_animation_ratKing();
+    animation_scythe.Init_animation_scythe();
 #pragma endregion initAnim
 
 #pragma endregion initialisation
@@ -338,6 +342,7 @@ int main(void)
             currentFrameAttaque++;
             currentFrameZombie++;
             currentFrameRatKing++;
+            currentFrameScythe++;
             
             
             if (currentFrame > 5) currentFrame = 0;
@@ -345,6 +350,7 @@ int main(void)
             if (currentFrameAttaque > 6) currentFrameAttaque = 0;
             if (currentFrameZombie > 3) currentFrameZombie = 0;
             if (currentFrameRatKing > 15) currentFrameRatKing = 0;
+            if (currentFrameScythe > 7) currentFrameScythe = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -370,6 +376,12 @@ int main(void)
 
 #pragma region DrawAnimation
 
+        if (item.getDirection())
+            animation_scythe.animation_loop_droite(item.getPosition(),currentFrameScythe);
+        if (!item.getDirection())
+            animation_scythe.animation_loop_gauche(item.getPosition(), currentFrameScythe);
+            
+
         for (unsigned i = 0; i < mobC.size(); i++) {
             if (mobC[i]->getIsAlive()) {
                 if (mobC[i]->getType() == "ratKing") {
@@ -386,6 +398,7 @@ int main(void)
                 }
             }
         }
+
 
 #pragma region Joueur
         if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;

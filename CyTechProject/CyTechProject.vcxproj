@@ -51,6 +51,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Personnage.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Animation_Scythe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\raylib\raylib.vcxproj">
@@ -68,6 +69,7 @@
     <ClInclude Include="ArmeCAC.h" />
     <ClInclude Include="ArmeDistance.h" />
     <ClInclude Include="Lave.h" />
+    <ClInclude Include="Animation_Scythe.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="Joueur.h" />
     <ClInclude Include="Map.h" />
