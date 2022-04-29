@@ -13,6 +13,7 @@ public:
 	void setOut();
 	void updatePositon();
 
+	Vector2 getPosition();
 	float getX();
 	float getY();
 	float getRadius();

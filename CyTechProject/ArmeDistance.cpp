@@ -28,6 +28,11 @@ void ArmeDistance::updatePositon() {
 	this->hitBox.y = this->positionDepart.y + (0.05 * (time * 5 - 300)) * (0.05 * (time * 5 - 300));
 }
 
+
+Vector2 ArmeDistance::getPosition() {
+	return { this->hitBox.x, this->hitBox.y };
+}
+
 float ArmeDistance::getX()
 {
 	return this->hitBox.x;

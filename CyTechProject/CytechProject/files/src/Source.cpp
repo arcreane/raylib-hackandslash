@@ -169,7 +169,11 @@ int main(void)
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
             }
 
-            if (CheckCollisionRecs(arme.getRectangle(), mob[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
+            if (CheckCollisionRecs(arme.getRectangle(), mob[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()){
+                mob[i]->setIsAlive(false);
+            }
+
+            if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mob[i]->getRectangle()) && item.getActive()) {
                 mob[i]->setIsAlive(false);
             }
 
