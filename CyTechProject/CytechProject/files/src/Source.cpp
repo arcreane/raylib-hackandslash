@@ -80,7 +80,7 @@ int main(void)
     maps[1].addBoxMap({ 0,315,54,45 });
     maps[1].addBoxMap({ 0,359,54,45 });
     maps[1].addBoxMap({ 54,359,54,45 });
-    //  Mobs
+    //  Mobs depart et type
     maps[1].addMobMap(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
     maps[1].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
     maps[1].addMobMap(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
@@ -114,7 +114,7 @@ int main(void)
 
     std::vector<Mob* >mobC;
 
-    mobC.resize(0);
+    mobC.clear();
     for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
         mobC.push_back((*maps[indicMap].getMob(j)).copy());
     }
@@ -171,7 +171,7 @@ int main(void)
                 }
                 indicMap += 1;
 
-                mobC.resize(0);
+                mobC.clear();
                 for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
                     mobC.push_back((* maps[indicMap].getMob(j)).copy());
                 }
