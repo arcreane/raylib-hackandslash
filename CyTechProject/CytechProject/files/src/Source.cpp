@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "../../Platform.h"
+#include "../../ArmeCAC.h"
+#include "../../ArmeDistance.h"
 #include "../../RatKing.h"
 #include "../../Ghost.h"
 #include "../../Arme.h"
@@ -32,11 +34,11 @@ int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 
-Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, Arme attaque, float delta);
+Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, ArmeCAC attaque, float delta);
 Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
 Joueur CheckCollisionBlocPlein(Joueur player, std::vector<Platform> box, float delta);
-Arme UpdateArme(Joueur player, Arme arme);
-
+ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme);
+ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item);
 
 int main(void)
 {
@@ -52,9 +54,11 @@ int main(void)
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
 
-    Arme arme;
-    arme.setArme({ 60, 40 }, 100, 35);
-
+    ArmeCAC arme;
+    arme.setArme({ 60, 40 }, 70, 35);
+    ArmeDistance item;
+    item.setArme(20);
+    int timeItem = 0;
     Map maps[5];
 
     Mob mobPassif[NB_MOB_PASSIF];
@@ -204,29 +208,32 @@ int main(void)
             }
         }
 
-        if (arme.getEtat() == true) {
-            if (arme.getDirection() == true) {
+        if (arme.getEtat()) {
+            if (arme.getDirection()) {
                 arme.setOn({ player.getXDroite(), player.getY() });
             }
             else {
                 arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
             }
             arme.setCd();
-            /*if (arme.getActive() > 0) {
+            if (arme.getActive() > 0) {
                 DrawRectangleRec(arme.getRectangle(), YELLOW);
-            }*/
+            }
             if (arme.getCd() <= 0) {
                 arme.setOff();
             }
         }
 
-        if (IsKeyDown(KEY_J)) {
-            if (IsKeyDown(KEY_K)) {
-                if (IsKeyDown(KEY_I)) {
-                    DrawRectangleRec({0,0,100,100}, PURPLE);
-                }
+        if (item.getEtat()) {
+            DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+            item.setCd();
+            if (item.getCd() <= 0) {
+                item.setOff();
             }
+            item.updatePositon();
         }
+
+        DrawCircle(900, 450, 50, PURPLE);
 
 #pragma region UpdateAnimation
         framesCounter++;
@@ -308,7 +315,8 @@ int main(void)
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 #pragma endregion Joueur
 
-        arme = UpdateArme(player, arme);
+        arme = UpdateArmeCAC(player, arme);
+        item = UpdateArmeDistance(player, item);
 #pragma endregion DrawAnimation
 
         EndMode2D();
@@ -408,7 +416,7 @@ Joueur CheckCollisionBlocPlein(Joueur player, std::vector<Platform> box, float d
     return player;
 }
 
-Arme UpdateArme(Joueur player, Arme arme) {
+ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme) {
     if (IsKeyDown(KEY_J) && !arme.getEtat()) {
         if (player.getOrientation() == true) {
             arme.setOn({ player.getXDroite(), player.getY() });
@@ -421,4 +429,12 @@ Arme UpdateArme(Joueur player, Arme arme) {
     }
 
     return arme;
+}
+
+ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item) {
+    if (IsKeyDown(KEY_Y) && !item.getEtat()) {
+        item.setOn(player.getPosition());
+        item.setDirection(player.getOrientation());
+    }
+    return item;
 }
