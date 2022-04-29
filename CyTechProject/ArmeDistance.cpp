@@ -3,7 +3,7 @@
 void ArmeDistance::setArme(float radius)
 {
 	this->hitBox = { 0, 0, radius };
-	this->cooldown = 200;
+	this->cooldown = 150;
 	this->etat = false;
 	this->time = 0;
 	this->active = true;
