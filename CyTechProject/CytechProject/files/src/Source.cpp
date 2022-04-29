@@ -48,11 +48,12 @@ int main(void)
     arme.setArme({ 60, 40 }, 70, 35);
 
     ArmeDistance item;
+    item.setArme(20);
 
     std::vector<Mob* > mob;
     //input données
     mob.push_back(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
-    mob.push_back(new MobPath2({ 500, 40, 50, 50 }));
+    //mob.push_back(new MobPath2({ 500, 40, 50, 50 }));
     mob.push_back(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
     mob.push_back(new Mob({ 0,855,1600,5 }));
 
