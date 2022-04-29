@@ -8,6 +8,7 @@
 #include "../../Animation_Zombie.h"
 #include "../../Animation_Ghost.h"
 #include "../../Animation_RatKing.h"
+#include "../../audio.h"
 #include <vector>
 
 
@@ -48,6 +49,8 @@ int main(void)
     Animation_Joueur animation_joueur;
     Animation_Zombie animation_zombie;
     Animation_Ghost animation_ghost;
+
+    Audio audio;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -126,6 +129,8 @@ int main(void)
     animation_ratKing.Init_animation_ratKing();
 #pragma endregion initAnim
 
+    audio.Init();
+
 #pragma endregion initialisation
 
     SetTargetFPS(60);
@@ -145,7 +150,8 @@ int main(void)
 
         player = UpdatePlayer(player, platform, box, arme, deltaTime);
 
-        
+        audio.Update();
+
 
         for (int i = 0; i < NB_MOB_PASSIF; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
@@ -300,6 +306,8 @@ int main(void)
 
     }
 #pragma endregion MainGameLoop
+
+    audio.Free();
 
     CloseWindow();        // Close window and OpenGL context
 
