@@ -3,7 +3,7 @@
 void ArmeDistance::setArme(float radius)
 {
 	this->hitBox = { 0, 0, radius };
-	this->cooldown = 150;
+	this->cooldown = 500;
 	this->etat = false;
 	this->time = 0;
 	this->active = true;
@@ -15,6 +15,11 @@ void ArmeDistance::setOn(Vector2 pos) {
 	this->positionDepart.x = pos.x;
 	this->positionDepart.y = pos.y -200;
 	this->etat = true;
+	this->active = true;
+}
+
+void ArmeDistance::setOut() {
+	this->active = false;
 }
 
 void ArmeDistance::updatePositon() {
@@ -36,4 +41,8 @@ float ArmeDistance::getY()
 float ArmeDistance::getRadius()
 {
 	return this->hitBox.radius;
+}
+
+bool ArmeDistance::getActive() {
+	return this->active;
 }

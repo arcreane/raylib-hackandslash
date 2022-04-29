@@ -23,3 +23,7 @@ Rectangle ArmeCAC::getRectangle() {
 float ArmeCAC::getWidth() {
 	return this->hitBox.width;
 }
+
+int ArmeCAC::getActive() {
+	return (this->active - this->time);
+}

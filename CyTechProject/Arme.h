@@ -19,7 +19,6 @@ public:
 	bool getEtat();
 	bool getDirection();
 	int getCd();
-	int getActive();
 
 };
 

@@ -198,13 +198,20 @@ int main(void)
         }
 
         if (item.getEtat()) {
-            DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+            DrawRectangleRec({20,20,20,20}, RED);
             item.setCd();
+            if (item.getActive()) {
+                DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+                item.updatePositon();
+            }
+            if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
+                item.setOut();
+            }
             if (item.getCd() <= 0) {
                 item.setOff();
             }
-            item.updatePositon();
         }
+        else DrawRectangleRec({ 20,20,20,20 }, GREEN);
 
         DrawCircle(900, 450, 50, PURPLE);
 

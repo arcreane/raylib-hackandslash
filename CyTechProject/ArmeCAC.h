@@ -11,6 +11,7 @@ public:
 
 	Rectangle getRectangle();
 	float getWidth();
+	int getActive();
 
 };
 
