@@ -201,6 +201,10 @@ int main(void)
                 mobC[i]->setIsAlive(false);
             }
 
+            if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mob[i]->getRectangle()) && item.getActive()) {
+                mob[i]->setIsAlive(false);
+            }
+
             if (mobC[i]->getIsAlive()) {
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
