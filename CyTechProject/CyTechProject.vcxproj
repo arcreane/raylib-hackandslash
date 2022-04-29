@@ -40,7 +40,7 @@
     <ClCompile Include="Animation_Zombie.cpp" />
     <ClCompile Include="Arme.cpp" />
     <ClCompile Include="Animation_Joueur.cpp" />
-    <ClCompile Include="audio.cpp" />
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="CytechProject\files\src\Source.cpp" />
     <ClCompile Include="Joueur.cpp" />
     <ClCompile Include="Mob.cpp" />
@@ -62,7 +62,7 @@
     <ClInclude Include="Animation_Zombie.h" />
     <ClInclude Include="Arme.h" />
     <ClInclude Include="Animation_Joueur.h" />
-    <ClInclude Include="audio.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Dimension.h" />
     <ClInclude Include="Joueur.h" />
     <ClInclude Include="Mob.h" />
