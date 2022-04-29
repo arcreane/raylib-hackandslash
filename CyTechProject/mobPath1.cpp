@@ -15,8 +15,6 @@ void MobPath1::setMob(Rectangle rec, bool o, float d, float a) {
     this->arr = a;
 }
 
-
-
 void MobPath1::pathMob(Joueur player)
 {
     if (this->orientation) {
@@ -33,3 +31,6 @@ void MobPath1::pathMob(Joueur player)
     }
 }
 
+Mob* MobPath1::copy() {
+    return (new MobPath1(this->pos_dim,this->orientation,this->dep,this->arr));
+}

@@ -27,3 +27,7 @@ Mob::Mob(Rectangle rec) {
 Mob::Mob() {
     pos_dim = {0,0,0,0};
 }
+
+Mob* Mob::copy() {
+    return new Mob(this->pos_dim);
+}
