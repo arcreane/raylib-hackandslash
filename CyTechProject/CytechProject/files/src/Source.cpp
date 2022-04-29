@@ -34,7 +34,7 @@ int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 
-Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, ArmeCAC attaque, float delta);
+Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, float delta);
 Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
 Joueur CheckCollisionBlocPlein(Joueur player, std::vector<Platform> box, float delta);
 ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme);
@@ -163,7 +163,7 @@ int main(void)
         for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
-        player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), arme, deltaTime);
+        player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
         
 
@@ -338,7 +338,7 @@ int main(void)
     return 0;
 }
 
-Joueur UpdatePlayer(Joueur player, std::vector<Platform> platform, std::vector<Platform> box, Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, std::vector<Platform> platform, std::vector<Platform> box, float delta)
 {
     Dimension dim = player.getDimension();
 
