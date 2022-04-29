@@ -55,7 +55,7 @@ int main(void)
     Arme arme;
     arme.setArme({ 60, 40 }, 100, 35);
 
-    Map maps[5];
+    Map maps[6];
 
     Mob mobPassif[NB_MOB_PASSIF];
     mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
@@ -95,7 +95,10 @@ int main(void)
     maps[1].addMobMap(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
     maps[1].addMobMap(new Mob({ 0,855,1600,5 }));
 
+    //      Map 2
+    //  Load Background
     maps[2].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png"));
+    //  Platforms
     maps[2].addPlatformMap({ 160, 855, 640, 10 });
     maps[2].addPlatformMap({ 0,138,316,10 });
     maps[2].addPlatformMap({ 0,271,209,10 });
@@ -109,17 +112,93 @@ int main(void)
     maps[2].addPlatformMap({ a, 673, screenWidth - a, 10 });
     maps[2].addPlatformMap({ 800, 810, 54, 10 });
     maps[2].addPlatformMap({ 852, 764, 54, 10 });
+    //  Boxes
+    maps[2].addBoxMap({ 150,676,10,180 });
+    maps[2].addBoxMap({ 160,666,266,10 });
+    maps[2].addBoxMap({ 734,496,170,90 });
+    maps[2].addBoxMap({ 693,451,210,40 });
+    maps[2].addBoxMap({ 746,404,52,44 });
+    maps[2].addBoxMap({ 798,810,10,44 });
+    maps[2].addBoxMap({ 854,764,10,44 });
+    maps[2].addBoxMap({ 906,675,10,88 });
+    //  Mobs depart et type
     maps[2].addMobMap(new Mob({ 0,855,1600,5 }));
     maps[2].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
 
+    //      Map 3
+    //  Load Background
     maps[3].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map3.png"));
+    //  Platforms
     maps[3].addPlatformMap({ 0, 180, 317, 10 });
     maps[3].addPlatformMap({ 0,315,531,10 });
     maps[3].addPlatformMap({ 0,448,1013,10 });
     maps[3].addPlatformMap({ 0,855,1600,10 });
+    maps[3].addPlatformMap({ 482,138,476,10 });
+    a = 1226;
+    maps[3].addPlatformMap({ a,450,1600 - a,10 });
+    maps[3].addPlatformMap({ 803,585,689,10 });
+    maps[3].addPlatformMap({ 630,707,70,10 });
+    //  Boxes
+    maps[3].addBoxMap({ 0,675,106,44 });
+    maps[3].addBoxMap({ 0,720,160,44 });
+    maps[3].addBoxMap({ 0,765,320,44 });
+    maps[3].addBoxMap({ 0,810,480,44 });
+    maps[3].addBoxMap({ 1494,361,53,44 });
+    maps[3].addBoxMap({ 1440,406,106,44 });
+    //  Mobs depart et type
+    maps[3].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
 
-    int indicMap = 1;
-    int indicLim = 2;
+    //      Map 4
+    //  Load Background
+    maps[4].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map4.png"));
+    //  Platforms
+    maps[4].addPlatformMap({ 428, 406, 53*5, 10 });
+    a = 534;
+    maps[4].addPlatformMap({ a,855,1600 - a,10 });
+    maps[4].addPlatformMap({ 213, 270, 53 * 5, 10 });
+    maps[4].addPlatformMap({ 639, 136, 53 * 6, 10 });
+    //  Boxes
+    maps[4].addBoxMap({ 0,540,53*4,44*2 });
+    maps[4].addBoxMap({ 215,630,53 * 4,44 * 2 });
+    maps[4].addBoxMap({ 427,721,53 * 2,44 * 3 });
+    maps[4].addBoxMap({ 856,497,53,44 /2 });
+    maps[4].addBoxMap({ 908,475,35,44 / 2 });
+    maps[4].addBoxMap({ 942,453,70,44 / 2 });
+    maps[4].addBoxMap({ 1015,431,35,44 / 2 });
+    maps[4].addBoxMap({ 1050,409,315,44 / 2 });
+    maps[4].addBoxMap({ 1367,431,20,44 / 2 });
+    maps[4].addBoxMap({ 1388,453,84,44 / 2 });
+    maps[4].addBoxMap({ 1474,475,20,44 / 2 });
+    maps[4].addBoxMap({ 1494,497,53,44 / 2 });
+    //  Mobs depart et type
+    maps[4].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
+
+    //      Map 5
+    //  Load Background
+    maps[5].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map5.png"));
+    //  Platforms
+    maps[5].addPlatformMap({ 0, 180, 53 * 2, 10 });
+    maps[5].addPlatformMap({ 0, 315, 53 * 2, 10 });
+    maps[5].addPlatformMap({ 53, 450, 480, 10 });
+    maps[5].addPlatformMap({ 639, 450, 320, 10 });
+    maps[5].addPlatformMap({ 1067, 450, 480, 10 });
+    maps[5].addPlatformMap({ 0,855,1600,10 });
+    maps[5].addPlatformMap({ 1013, 315, 160, 10 });
+    maps[5].addPlatformMap({ 480, 584, 53 * 5, 10 });
+    //  Boxes
+    maps[5].addBoxMap({ 480,833,54 / 2,44 / 2 });
+    maps[5].addBoxMap({ 773, 833, 53 / 2, 44/2 });
+    maps[5].addBoxMap({ 507, 810, 266, 44/2 });
+    maps[5].addBoxMap({ 536,723,54 * 3,44 * 2 });
+    maps[5].addBoxMap({ 694,765,54,44});
+    maps[5].addBoxMap({ 1388,766,54*2,44*2 });
+    maps[5].addBoxMap({ 1494,722,53*2,44*3 });
+    //  Mobs depart et type
+    maps[5].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
+
+
+    int indicMap = 5;
+    int indicLim = 5;
 
     std::vector<Mob* >mobC;
 
@@ -200,6 +279,7 @@ int main(void)
             if (mobC[i]->getIsAlive()) {
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
+                //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
                 DrawRectangleRec(tmp, RED);
             }
         }
