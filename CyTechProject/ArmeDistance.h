@@ -10,10 +10,13 @@ private:
 public:
 	void setArme(float radius);
 	void setOn(Vector2 pos);
+	void setOut();
 	void updatePositon();
 
+	Vector2 getPosition();
 	float getX();
 	float getY();
 	float getRadius();
+	bool getActive();
 };
 
