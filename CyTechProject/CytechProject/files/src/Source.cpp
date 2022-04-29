@@ -145,8 +145,8 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        //for (int i = 0; i < NB_MAX_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
-        //for (int i = 0; i < NB_MAX_BOX; i++) DrawRectangleRec(box[i].getRectangle(), PURPLE);
+        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), arme, deltaTime);
 
