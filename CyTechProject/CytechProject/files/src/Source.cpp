@@ -5,6 +5,7 @@
 #include "../../ArmeDistance.h"
 #include "../../RatKing.h"
 #include "../../Ghost.h"
+#include "../../Lave.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
 #include "../../Map.h"
@@ -97,7 +98,7 @@ int main(void)
     maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
     maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
-    maps[1].addMobMap(new Mob({ 0,855,1600,5 }));
+    maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
 
     //      Map 2
     //  Load Background
@@ -126,7 +127,7 @@ int main(void)
     maps[2].addBoxMap({ 854,764,10,44 });
     maps[2].addBoxMap({ 906,675,10,88 });
     //  Mobs depart et type
-    maps[2].addMobMap(new Mob({ 0,855,1600,5 }));
+    maps[2].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     //      Map 3
@@ -150,7 +151,7 @@ int main(void)
     maps[3].addBoxMap({ 1494,361,53,44 });
     maps[3].addBoxMap({ 1440,406,106,44 });
     //  Mobs depart et type
-    maps[3].addMobMap(new Ghost({ 500, 40, 50, 50 }));
+    maps[3].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     //      Map 4
     //  Load Background
@@ -175,7 +176,7 @@ int main(void)
     maps[4].addBoxMap({ 1474,475,20,44 / 2 });
     maps[4].addBoxMap({ 1494,497,53,44 / 2 });
     //  Mobs depart et type
-    maps[4].addMobMap(new Ghost({ 500, 40, 50, 50 }));
+    maps[4].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     //      Map 5
     //  Load Background
@@ -198,7 +199,7 @@ int main(void)
     maps[5].addBoxMap({ 1388,766,54*2,44*2 });
     maps[5].addBoxMap({ 1494,722,53*2,44*3 });
     //  Mobs depart et type
-    maps[5].addMobMap(new Ghost({ 500, 40, 50, 50 }));
+    maps[5].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
 
     int indicMap = 5;
@@ -240,7 +241,7 @@ int main(void)
         maps[indicMap].afficheBackground();
 
         for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
-        for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
+        //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
@@ -281,7 +282,7 @@ int main(void)
             }
 
             if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mobC[i]->getRectangle()) && item.getActive()) {
-                mobC[i]->setIsAlive(false);
+                if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
             if (mobC[i]->getIsAlive()) {
@@ -324,7 +325,7 @@ int main(void)
         }
         else DrawRectangleRec({ 20,20,20,20 }, GREEN);
 
-        DrawCircle(900, 450, 50, PURPLE);
+       // DrawCircle(900, 450, 50, PURPLE);
 
 #pragma region UpdateAnimation
         framesCounter++;
