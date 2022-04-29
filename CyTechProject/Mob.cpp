@@ -15,6 +15,11 @@ void Mob::setMob(Rectangle rec)
     this->pos_dim = rec;
 }
 
+std::string Mob::getType()
+{
+    return this->type;
+}
+
 Mob::Mob(Rectangle rec) {
     pos_dim = rec;
 }

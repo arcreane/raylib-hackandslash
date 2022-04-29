@@ -5,6 +5,7 @@ MobPath1::MobPath1(Rectangle rec, bool o, float d, float a) {
     orientation = o;
     dep = d;
     arr = a;
+    this->type = "ratKing";
 }
 
 void MobPath1::setMob(Rectangle rec, bool o, float d, float a) {

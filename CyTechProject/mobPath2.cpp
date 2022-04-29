@@ -2,6 +2,7 @@
 
 MobPath2::MobPath2(Rectangle rec) {
     pos_dim = rec;
+    this->type = "ghost";
 }
 
 void MobPath2::setMob(Rectangle rec, bool o, float d, float a) {
@@ -17,6 +18,10 @@ void MobPath2::pathMob(Joueur player) {
     float mobY = this->getY(); 
     float playerX = player.getX(); 
     float playerY = player.getY();
+
+    if (mobX < playerX)
+        this->orientation = true;
+    else this->orientation = false;
 
     float distance = sqrt((playerX - mobX) * (playerX - mobX) + (playerY - mobY) * (playerY - mobY));
     this->setX(this->getX() + 2.5*(playerX - mobX) / distance);
