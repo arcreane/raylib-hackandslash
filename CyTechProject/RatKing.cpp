@@ -1,6 +1,6 @@
-#include "mobPath1.h"
+#include "RatKing.h"
 
-MobPath1::MobPath1(Rectangle rec, bool o, float d, float a) {
+RatKing::RatKing(Rectangle rec, bool o, float d, float a) {
     pos_dim = rec;
     orientation = o;
     dep = d;
@@ -8,14 +8,14 @@ MobPath1::MobPath1(Rectangle rec, bool o, float d, float a) {
     this->type = "ratKing";
 }
 
-void MobPath1::setMob(Rectangle rec, bool o, float d, float a) {
+void RatKing::setMob(Rectangle rec, bool o, float d, float a) {
     this->pos_dim = rec;
     this->orientation = o;
     this->dep = d;
     this->arr = a;
 }
 
-void MobPath1::pathMob(Joueur player)
+void RatKing::pathMob(Joueur player)
 {
     if (this->orientation) {
         this->setX(this->getX() + 1);
@@ -31,6 +31,6 @@ void MobPath1::pathMob(Joueur player)
     }
 }
 
-Mob* MobPath1::copy() {
-    return (new MobPath1(this->pos_dim,this->orientation,this->dep,this->arr));
+Mob* RatKing::copy() {
+    return (new RatKing(this->pos_dim,this->orientation,this->dep,this->arr));
 }

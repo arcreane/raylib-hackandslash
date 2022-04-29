@@ -6,6 +6,7 @@
 class Mob : public Personnage {
 protected:
 	std::string type;
+	bool isKillable = true;
 public:
 	void setRectangle(Rectangle rec);
 	virtual void setMob(Rectangle rec, bool o, float d, float a);
@@ -15,6 +16,7 @@ public:
 	virtual void animation_run_droite(Vector2 position, int currentFrame){};
 	virtual void animation_run_gauche(Vector2 position, int currentFrame) {};
 	virtual void Init_animation_zombie() {};
+	bool getIsKillable();
 	std::string getType();
 	Mob(Rectangle rec);
 	Mob();

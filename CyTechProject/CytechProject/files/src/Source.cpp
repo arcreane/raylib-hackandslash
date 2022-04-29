@@ -1,8 +1,10 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "../../Platform.h"
-#include "../../mobPath1.h"
-#include "../../mobPath2.h"
+#include "../../ArmeCAC.h"
+#include "../../ArmeDistance.h"
+#include "../../RatKing.h"
+#include "../../Ghost.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
 #include "../../Map.h"
@@ -32,11 +34,11 @@ int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 
-Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, Arme attaque, float delta);
+Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, float delta);
 Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
 Joueur CheckCollisionBlocPlein(Joueur player, std::vector<Platform> box, float delta);
-Arme UpdateArme(Joueur player, Arme arme);
-
+ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme);
+ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item);
 
 int main(void)
 {
@@ -52,9 +54,11 @@ int main(void)
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
 
-    Arme arme;
-    arme.setArme({ 60, 40 }, 100, 35);
-
+    ArmeCAC arme;
+    arme.setArme({ 60, 40 }, 70, 35);
+    ArmeDistance item;
+    item.setArme(20);
+    int timeItem = 0;
     Map maps[6];
 
     Mob mobPassif[NB_MOB_PASSIF];
@@ -90,9 +94,9 @@ int main(void)
     maps[1].addBoxMap({ 0,359,54,45 });
     maps[1].addBoxMap({ 54,359,54,45 });
     //  Mobs depart et type
-    maps[1].addMobMap(new MobPath1({ 750, 200, 50, 50 }, true, 700, 800));
-    maps[1].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
-    maps[1].addMobMap(new MobPath1({ 375, 600, 50, 50 }, true, 300, 450));
+    maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
+    maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Mob({ 0,855,1600,5 }));
 
     //      Map 2
@@ -123,7 +127,7 @@ int main(void)
     maps[2].addBoxMap({ 906,675,10,88 });
     //  Mobs depart et type
     maps[2].addMobMap(new Mob({ 0,855,1600,5 }));
-    maps[2].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
+    maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     //      Map 3
     //  Load Background
@@ -146,7 +150,7 @@ int main(void)
     maps[3].addBoxMap({ 1494,361,53,44 });
     maps[3].addBoxMap({ 1440,406,106,44 });
     //  Mobs depart et type
-    maps[3].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
+    maps[3].addMobMap(new Ghost({ 500, 40, 50, 50 }));
 
     //      Map 4
     //  Load Background
@@ -171,7 +175,7 @@ int main(void)
     maps[4].addBoxMap({ 1474,475,20,44 / 2 });
     maps[4].addBoxMap({ 1494,497,53,44 / 2 });
     //  Mobs depart et type
-    maps[4].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
+    maps[4].addMobMap(new Ghost({ 500, 40, 50, 50 }));
 
     //      Map 5
     //  Load Background
@@ -194,7 +198,7 @@ int main(void)
     maps[5].addBoxMap({ 1388,766,54*2,44*2 });
     maps[5].addBoxMap({ 1494,722,53*2,44*3 });
     //  Mobs depart et type
-    maps[5].addMobMap(new MobPath2({ 500, 40, 50, 50 }));
+    maps[5].addMobMap(new Ghost({ 500, 40, 50, 50 }));
 
 
     int indicMap = 5;
@@ -238,7 +242,7 @@ int main(void)
         for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
-        player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), arme, deltaTime);
+        player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
         
 
@@ -273,6 +277,10 @@ int main(void)
             }
 
             if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
+                if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
+            }
+
+            if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mobC[i]->getRectangle()) && item.getActive()) {
                 mobC[i]->setIsAlive(false);
             }
 
@@ -284,29 +292,39 @@ int main(void)
             }
         }
 
-        if (arme.getEtat() == true) {
-            if (arme.getDirection() == true) {
+        if (arme.getEtat()) {
+            if (arme.getDirection()) {
                 arme.setOn({ player.getXDroite(), player.getY() });
             }
             else {
                 arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
             }
             arme.setCd();
-            /*if (arme.getActive() > 0) {
+            if (arme.getActive() > 0) {
                 DrawRectangleRec(arme.getRectangle(), YELLOW);
-            }*/
+            }
             if (arme.getCd() <= 0) {
                 arme.setOff();
             }
         }
 
-        if (IsKeyDown(KEY_J)) {
-            if (IsKeyDown(KEY_K)) {
-                if (IsKeyDown(KEY_I)) {
-                    DrawRectangleRec({0,0,100,100}, PURPLE);
-                }
+        if (item.getEtat()) {
+            DrawRectangleRec({ 20,20,20,20 }, RED);
+            item.setCd();
+            if (item.getActive()) {
+                DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+                item.updatePositon();
+            }
+            if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
+                item.setOut();
+            }
+            if (item.getCd() <= 0) {
+                item.setOff();
             }
         }
+        else DrawRectangleRec({ 20,20,20,20 }, GREEN);
+
+        DrawCircle(900, 450, 50, PURPLE);
 
 #pragma region UpdateAnimation
         framesCounter++;
@@ -388,7 +406,8 @@ int main(void)
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 #pragma endregion Joueur
 
-        arme = UpdateArme(player, arme);
+        arme = UpdateArmeCAC(player, arme);
+        item = UpdateArmeDistance(player, item);
 #pragma endregion DrawAnimation
 
         EndMode2D();
@@ -410,7 +429,7 @@ int main(void)
     return 0;
 }
 
-Joueur UpdatePlayer(Joueur player, std::vector<Platform> platform, std::vector<Platform> box, Arme arme, float delta)
+Joueur UpdatePlayer(Joueur player, std::vector<Platform> platform, std::vector<Platform> box, float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -488,7 +507,7 @@ Joueur CheckCollisionBlocPlein(Joueur player, std::vector<Platform> box, float d
     return player;
 }
 
-Arme UpdateArme(Joueur player, Arme arme) {
+ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme) {
     if (IsKeyDown(KEY_J) && !arme.getEtat()) {
         if (player.getOrientation() == true) {
             arme.setOn({ player.getXDroite(), player.getY() });
@@ -501,4 +520,12 @@ Arme UpdateArme(Joueur player, Arme arme) {
     }
 
     return arme;
+}
+
+ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item) {
+    if (IsKeyDown(KEY_Y) && !item.getEtat()) {
+        item.setOn(player.getPosition());
+        item.setDirection(player.getOrientation());
+    }
+    return item;
 }

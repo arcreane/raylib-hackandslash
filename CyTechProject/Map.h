@@ -1,6 +1,6 @@
 #include"Platform.h"
-#include"mobPath2.h"
-#include"mobPath1.h"
+#include"Ghost.h"
+#include"RatKing.h"
 #include"raylib.h"
 #include <vector>
 
