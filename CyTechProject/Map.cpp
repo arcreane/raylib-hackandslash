@@ -15,11 +15,18 @@ void Map::afficheBackground() {
 void Map::addPlatformMap(Rectangle rec) {
 	this->platforms.push_back(Platform(rec));
 }
+void Map::addBoxMap(Rectangle rec) {
+	this->boxes.push_back(Platform(rec));
+}
 
 Map::Map(){}
 
 std::vector<Platform> Map::getPlatforms() {
 	return platforms;
+}
+
+std::vector<Platform> Map::getBoxes() {
+	return boxes;
 }
 
 std::vector<Mob*> Map::getMobs() {

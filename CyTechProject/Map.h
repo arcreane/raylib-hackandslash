@@ -21,8 +21,10 @@ public :
 	void setMap(Texture2D bg);
 	void afficheBackground();
 	void addPlatformMap(Rectangle rec);
+	void addBoxMap(Rectangle rec);
 	void addMobMap(Mob* mob);
 	std::vector<Platform> getPlatforms();
+	std::vector<Platform> getBoxes();
 	std::vector<Mob*> getMobs();
 	Mob* getMob(int i);
 };
