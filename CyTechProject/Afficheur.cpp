@@ -1,8 +1,6 @@
 #include "raylib.h"
 #include "Afficheur.h"
 
-Vector2 vector = {100.0f,100.0f};
-
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 void Afficheur::Load() {
 	this->fonts[0] = LoadFont("resources/fonts/alagard.png");
@@ -20,6 +18,7 @@ void Afficheur::Unload() {
 }
 
 void Afficheur::Print(int i, const char* a,Color color) {
+	Vector2 vector = { 1600 / 2.0f - MeasureTextEx(this->fonts[i], a, 20, 20).x / 2.0f, 150.0f };
 	DrawTextEx(this->fonts[i], a, vector, 20, 20, color);
 }
 
