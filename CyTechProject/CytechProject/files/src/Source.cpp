@@ -27,10 +27,11 @@ int currentFrameImmobile = 0;
 int framesCounter = 0;
 int currentFrameAttaque = 0;
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], ArmeCAC attaque, float delta);
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], float delta);
 Joueur CheckCollisionPlatform(Joueur player, Platform platform[NB_PLATFORM], float delta);
 Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta);
-ArmeCAC UpdateArme(Joueur player, ArmeCAC arme);
+ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme);
+ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item);
 
 
 int main(void)
@@ -49,6 +50,7 @@ int main(void)
 
     ArmeDistance item;
     item.setArme(20);
+    int timeItem = 0;
 
     std::vector<Mob* > mob;
     //input données
@@ -136,7 +138,7 @@ int main(void)
         //for (int i = 0; i < NB_PLATFORM; i++) DrawRectangleRec(platform[i].getRectangle(), GRAY);
         //for (int i = 0; i < NB_BOX; i++) DrawRectangleRec(box[i].getRectangle(), PURPLE);
 
-        player = UpdatePlayer(player, platform, box, arme, deltaTime);
+        player = UpdatePlayer(player, platform, box, deltaTime);
 
         
 
@@ -179,8 +181,8 @@ int main(void)
             }
         }
 
-        if (arme.getEtat() == true) {
-            if (arme.getDirection() == true) {
+        if (arme.getEtat()) {
+            if (arme.getDirection()) {
                 arme.setOn({ player.getXDroite(), player.getY() });
             }
             else {
@@ -193,6 +195,15 @@ int main(void)
             if (arme.getCd() <= 0) {
                 arme.setOff();
             }
+        }
+
+        if (item.getEtat()) {
+            DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+            item.setCd();
+            if (item.getCd() <= 0) {
+                item.setOff();
+            }
+            item.updatePositon();
         }
 
         DrawCircle(900, 450, 50, PURPLE);
@@ -254,7 +265,8 @@ int main(void)
         if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && player.getCanJump() && ((arme.getEtat() && arme.getActive() <= 0) || !arme.getEtat()))
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 
-        arme = UpdateArme(player, arme);
+        arme = UpdateArmeCAC(player, arme);
+        item = UpdateArmeDistance(player, item);
 #pragma endregion DrawAnimation
 
         EndMode2D();
@@ -276,7 +288,7 @@ int main(void)
     return 0;
 }
 
-Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], ArmeCAC arme, float delta)
+Joueur UpdatePlayer(Joueur player, Platform platform[NB_PLATFORM], Platform box[NB_BOX], float delta)
 {
     Dimension dim = player.getDimension();
 
@@ -353,7 +365,7 @@ Joueur CheckCollisionBlocPlein(Joueur player, Platform box[NB_BOX], float delta)
     return player;
 }
 
-ArmeCAC UpdateArme(Joueur player, ArmeCAC arme) {
+ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme) {
     if (IsKeyDown(KEY_J) && !arme.getEtat()) {
         if (player.getOrientation() == true) {
             arme.setOn({ player.getXDroite(), player.getY() });
@@ -366,4 +378,12 @@ ArmeCAC UpdateArme(Joueur player, ArmeCAC arme) {
     }
 
     return arme;
+}
+
+ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item) {
+    if (IsKeyDown(KEY_Y) && !item.getEtat()) {
+        item.setOn(player.getPosition());
+        item.setDirection(player.getOrientation());
+    }
+    return item;
 }
