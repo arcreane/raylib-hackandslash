@@ -13,6 +13,7 @@
 #include "../../Animation_Ghost.h"
 #include "../../Animation_RatKing.h"
 #include "../../Animation_Scythe.h"
+#include "../../audio.h"
 #include <vector>
 #include <string>
 
@@ -54,6 +55,8 @@ int main(void)
     Animation_Zombie animation_zombie;
     Animation_Ghost animation_ghost;
     Animation_Scythe animation_scythe;
+
+    Audio audio;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -230,6 +233,8 @@ int main(void)
     animation_scythe.Init_animation_scythe();
 #pragma endregion initAnim
 
+    audio.Init();
+
 #pragma endregion initialisation
 
     SetTargetFPS(60);
@@ -249,7 +254,8 @@ int main(void)
 
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
-        
+        audio.Update();
+
 
         for (int i = 0; i < NB_MOB_PASSIF; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
@@ -431,6 +437,8 @@ int main(void)
 
     }
 #pragma endregion MainGameLoop
+
+    audio.Free();
 
     CloseWindow();        // Close window and OpenGL context
 
