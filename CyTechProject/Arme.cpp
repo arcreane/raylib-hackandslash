@@ -1,12 +1,6 @@
 #include "Arme.h"
 
 
-
-void Arme::setOff() {
-	this->etat = false;
-	this->time = 0;
-}
-
 void Arme::setDirection(bool d) {
 	this->direction = d;
 }

@@ -11,6 +11,7 @@ public:
 	void setArme(float radius);
 	void setOn(Vector2 pos);
 	void setOut();
+	void setOff();
 	void updatePositon();
 
 	Vector2 getPosition();

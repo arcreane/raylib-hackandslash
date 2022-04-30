@@ -382,7 +382,7 @@ int main(void)
 
 
 #pragma region DrawAnimation
-        if (item.getEtat()) {
+        if (item.getActive()) {
             if (item.getDirection()== true)
                 animation_scythe.animation_loop_droite({item.getX()- 40, item.getY() - 37}, currentFrameScythe);
             else
