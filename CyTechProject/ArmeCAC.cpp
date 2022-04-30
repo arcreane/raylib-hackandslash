@@ -15,6 +15,11 @@ void ArmeCAC::setOn(Vector2 pos) {
 	this->etat = true;
 }
 
+void ArmeCAC::setOff() {
+	this->etat = false;
+	this->time = 0;
+}
+
 
 Rectangle ArmeCAC::getRectangle() {
 	return this->hitBox;

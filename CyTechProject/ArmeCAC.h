@@ -8,6 +8,7 @@ private:
 public:
 	void setArme(Dimension hb, int cd, int t);
 	void setOn(Vector2 pos);
+	void setOff();
 
 	Rectangle getRectangle();
 	float getWidth();

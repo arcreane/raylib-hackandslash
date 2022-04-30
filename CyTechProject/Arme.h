@@ -12,7 +12,6 @@ protected:
 	int time;
 
 public:
-	void setOff();
 	void setDirection(bool d);
 	void setCd();
 	

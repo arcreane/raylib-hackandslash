@@ -6,7 +6,7 @@ void ArmeDistance::setArme(float radius)
 	this->cooldown = 500;
 	this->etat = false;
 	this->time = 0;
-	this->active = true;
+	this->active = false;
 }
 
 void ArmeDistance::setOn(Vector2 pos) {
@@ -20,6 +20,12 @@ void ArmeDistance::setOn(Vector2 pos) {
 
 void ArmeDistance::setOut() {
 	this->active = false;
+}
+
+void ArmeDistance::setOff() {
+	this->etat = false;
+	this->active = false;
+	this->time = 0;
 }
 
 void ArmeDistance::updatePositon() {
