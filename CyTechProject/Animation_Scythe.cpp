@@ -2,8 +2,8 @@
 
 void Animation_Scythe::Init_animation_scythe()
 {
-    this->frameRecDroite = { 112.0f, -115.0f, 68, 68 };
-    this->frameRecGauche = { 112.0f, -115.0f, 68, 68 };
+    this->frameRecDroite = { 105.0f, -137.0f, -68, 68 };
+    this->frameRecGauche = { 105.0f, -137.0f, 68, 68 };
     this->Loop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin00.png");
     this->Loop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin01.png");
     this->Loop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin02.png");

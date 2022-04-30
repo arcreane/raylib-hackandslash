@@ -382,11 +382,11 @@ int main(void)
 
 
 #pragma region DrawAnimation
-        if (item.getActive()) {
+        if (item.getEtat()) {
             if (item.getDirection()== true)
-                animation_scythe.animation_loop_droite({item.getX()- 34, item.getY() - 20}, currentFrameScythe);
+                animation_scythe.animation_loop_droite({item.getX()- 40, item.getY() - 37}, currentFrameScythe);
             else
-                animation_scythe.animation_loop_gauche({item.getX() - 25, item.getY() - 20}, currentFrameScythe);
+                animation_scythe.animation_loop_gauche({item.getX() - 30, item.getY() - 37}, currentFrameScythe);
         }
 
         for (unsigned i = 0; i < mobC.size(); i++) {
