@@ -208,7 +208,7 @@ int main(void)
     maps[5].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
 
-    int indicMap = 5;
+    int indicMap = 1;
     int indicLim = 5;
 
     std::vector<Mob* >mobC;
