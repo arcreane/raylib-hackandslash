@@ -2,16 +2,16 @@
 
 void Animation_Scythe::Init_animation_scythe()
 {
-    this->frameRecDroite = { 112.0f, -115.0f, 32, 28 };
-    this->frameRecGauche = { 112.0f, -115.0f, -32, 28 };
-    this->Loop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin00.png");
-    this->Loop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin01.png");
-    this->Loop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin02.png");
-    this->Loop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin03.png");
-    this->Loop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin04.png");
-    this->Loop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin05.png");
-    this->Loop6 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin06.png");
-    this->Loop7 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/animations/joueur/scytheLargeSpin07.png");
+    this->frameRecDroite = { 112.0f, -115.0f, 68, 68 };
+    this->frameRecGauche = { 112.0f, -115.0f, 68, 68 };
+    this->Loop0 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin00.png");
+    this->Loop1 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin01.png");
+    this->Loop2 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin02.png");
+    this->Loop3 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin03.png");
+    this->Loop4 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin04.png");
+    this->Loop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin05.png");
+    this->Loop6 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin06.png");
+    this->Loop7 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin07.png");
 }
 
 

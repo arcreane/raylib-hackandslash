@@ -64,7 +64,7 @@ int main(void)
     ArmeCAC arme;
     arme.setArme({ 60, 40 }, 70, 35);
     ArmeDistance item;
-    item.setArme(20);
+    item.setArme(34);
     int timeItem = 0;
     Map maps[6];
 
@@ -249,7 +249,7 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
@@ -299,7 +299,7 @@ int main(void)
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
                 //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
-                DrawRectangleRec(tmp, RED);
+                //DrawRectangleRec(tmp, RED);
             }
         }
 
@@ -312,7 +312,7 @@ int main(void)
             }
             arme.setCd();
             if (arme.getActive() > 0) {
-                DrawRectangleRec(arme.getRectangle(), YELLOW);
+                //DrawRectangleRec(arme.getRectangle(), YELLOW);
             }
             if (arme.getCd() <= 0) {
                 arme.setOff();
@@ -323,7 +323,7 @@ int main(void)
             DrawRectangleRec({ 20,20,20,20 }, RED);
             item.setCd();
             if (item.getActive()) {
-                DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+                //DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
                 item.updatePositon();
             }
             if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
@@ -381,12 +381,12 @@ int main(void)
 
 
 #pragma region DrawAnimation
-
-        if (item.getDirection())
-            animation_scythe.animation_loop_droite(item.getPosition(),currentFrameScythe);
-        if (!item.getDirection())
-            animation_scythe.animation_loop_gauche(item.getPosition(), currentFrameScythe);
-            
+        if (item.getActive()) {
+            if (item.getDirection()== true)
+                animation_scythe.animation_loop_droite({item.getX()- 34, item.getY() - 20}, currentFrameScythe);
+            else
+                animation_scythe.animation_loop_gauche({item.getX() - 25, item.getY() - 20}, currentFrameScythe);
+        }
 
         for (unsigned i = 0; i < mobC.size(); i++) {
             if (mobC[i]->getIsAlive()) {
