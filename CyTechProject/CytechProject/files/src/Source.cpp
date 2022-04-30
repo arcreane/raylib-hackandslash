@@ -4,6 +4,7 @@
 #include "../../ArmeCAC.h"
 #include "../../ArmeDistance.h"
 #include "../../RatKing.h"
+#include "../../Zombie.h"
 #include "../../Ghost.h"
 #include "../../Lave.h"
 #include "../../Arme.h"
@@ -46,7 +47,7 @@ ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item);
 
 int main(void)
 {
-    InitWindow(screenWidth, screenHeight, "Premier test");
+    InitWindow(screenWidth, screenHeight, "Jeu Vidéo GAMING");
 
 #pragma region Initialisation
 
@@ -105,6 +106,7 @@ int main(void)
     maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
+    maps[1].addMobMap(new Zombie({ 577,550,34,40 }, true, &maps[1]));
 
     //      Map 2
     //  Load Background
@@ -249,8 +251,8 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
-        //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
+        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
         audio.Update(player, arme);
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
@@ -300,7 +302,7 @@ int main(void)
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
                 //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
-                //DrawRectangleRec(tmp, RED);
+                DrawRectangleRec(tmp, RED);
             }
         }
 
@@ -324,7 +326,7 @@ int main(void)
             DrawRectangleRec({ 20,20,20,20 }, RED);
             item.setCd();
             if (item.getActive()) {
-                DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+               // DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
                 item.updatePositon();
             }
             if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
@@ -402,6 +404,12 @@ int main(void)
                         animation_ghost.animation_run_droite(mobC[i]->getPosition(), currentFrameZombie);
                     else          
                         animation_ghost.animation_run_gauche(mobC[i]->getPosition(), currentFrameZombie);
+                }
+                if (mobC[i]->getType() == "zombie") {
+                    if (mobC[i]->getOrientation())
+                        animation_zombie.animation_run_droite(mobC[i]->getPosition(), currentFrameZombie);
+                    else
+                        animation_zombie.animation_run_gauche(mobC[i]->getPosition(), currentFrameZombie);
                 }
             }
         }

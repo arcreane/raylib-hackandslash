@@ -5,7 +5,7 @@ Zombie::Zombie(Rectangle rec, bool o, Map* m)
     pos_dim = rec;
     orientation = o;
     _p = getClosestPlatform(m);
-    this->type = "Zombie";
+    this->type = "zombie";
 }
 
 float Zombie::getDistance(Platform* p)
@@ -18,7 +18,7 @@ Platform* Zombie::getClosestPlatform(Map* m)
     std::vector<Platform> pltfms = m->getPlatforms();
     Platform* result = nullptr;
     int resultDistance = 10000.0;
-    for (int i; i < pltfms.size(); i++) {
+    for (int i=0; i < pltfms.size(); i++) {
         if (this->getDistance(&pltfms[i]) < resultDistance) {
             result = &pltfms[i];
             resultDistance = this->getDistance(&pltfms[i]);
