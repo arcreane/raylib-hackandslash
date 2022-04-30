@@ -59,8 +59,6 @@ int main(void)
     arme.setArme({ 60, 40 }, 70, 35);
     ArmeDistance item;
     item.setArme(34);
-    DeathTouch deathTouch;
-    deathTouch.setArme();
 
 
 
@@ -105,6 +103,9 @@ int main(void)
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[1].addMobMap(new Zombie({ 577,1,34,40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1100,60,34,40 }, true, &maps[1]));
+
+    DeathTouch deathTouch;
+    deathTouch.setArme();
 
     //      Map 2
     //  Load Background
@@ -297,7 +298,7 @@ int main(void)
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
-            if (CheckCollisionRecs(deathTouch.getRectangle(), mobC[i]->getRectangle()) && deathTouch.getActive()) {
+            if (CheckCollisionRecs(deathTouch.getRectangle(), mobC[i]->getRectangle()) && deathTouch.getActive() && mobC[i]->getIsAlive()) {
                 if (mobC[i]->getIsKillable()) {
                     mobC[i]->setIsAlive(false);
                     deathTouch.setOut();
@@ -409,7 +410,7 @@ int main(void)
 
         arme.updateArme(player);
         item.updateArme(player);
-        deathTouch.updateArme(player);
+        deathTouch.updateArme(player, &maps[indicMap]);
 
 #pragma endregion DrawAnimation
 

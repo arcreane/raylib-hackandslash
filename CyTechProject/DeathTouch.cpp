@@ -9,12 +9,13 @@ void DeathTouch::setArme()
 	this->active = false;
 }
 
-void DeathTouch::setOn(Vector2 pos)
+void DeathTouch::setOn(Vector2 pos, Map* m)
 {
 	this->hitBox.x = pos.x;
 	this->hitBox.y = pos.y;
 	this->etat = true;
 	this->active = true;
+	this->_m = m;
 }
 
 void DeathTouch::setOut()
@@ -35,16 +36,30 @@ void DeathTouch::updatePositon()
 	else this->hitBox.x -= 5;
 }
 
-void DeathTouch::updateArme(Joueur player)
+void DeathTouch::updateArme(Joueur player, Map* m)
 {
+	//std::vector<Platform> platforms = this->_m->getPlatforms();
 	if (IsKeyDown(KEY_H) && !this->etat) {
-		this->setOn(player.getPosition());
+		this->setOn(player.getPosition(), m);
 		this->setDirection(player.getOrientation());
 	}
+
+	/*for (int i = 0; i < platforms.size(); i++) {
+		if (CheckCollisionRecs(this->hitBox, platforms[i].getRectangle())) {
+			this->active = false;
+		}
+	}*/
+
 	if (this->getEtat()) {
+		std::vector<Platform> boxes = this->_m->getBoxes();
+		for (int i = 0; i < boxes.size(); i++) {
+			if (CheckCollisionRecs(this->hitBox, boxes[i].getRectangle())) {
+				this->active = false;
+			}
+		}
 		DrawRectangleRec({ 60,20,20,20 }, RED);
 		this->setCd();
-		if (this->getActive()) {
+		if (this->active) {
 			DrawRectangleRec(this->getRectangle(), PINK);
 			this->updatePositon();
 		}
@@ -65,6 +80,10 @@ Rectangle DeathTouch::getRectangle() {
 Vector2 DeathTouch::getPosition()
 {
 	return {this->hitBox.x, this->hitBox.y};
+}
+
+bool DeathTouch::getActive() {
+	return this->active;
 }
 
 float DeathTouch::getX()
