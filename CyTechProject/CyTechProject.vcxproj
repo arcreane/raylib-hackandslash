@@ -42,14 +42,17 @@
     <ClCompile Include="Animation_Joueur.cpp" />
     <ClCompile Include="ArmeCAC.cpp" />
     <ClCompile Include="ArmeDistance.cpp" />
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="CytechProject\files\src\Source.cpp" />
     <ClCompile Include="Joueur.cpp" />
+    <ClCompile Include="lave.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="RatKing.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Personnage.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Animation_Scythe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\raylib\raylib.vcxproj">
@@ -66,7 +69,11 @@
     <ClInclude Include="Animation_Joueur.h" />
     <ClInclude Include="ArmeCAC.h" />
     <ClInclude Include="ArmeDistance.h" />
+    <ClInclude Include="Lave.h" />
+    <ClInclude Include="Animation_Scythe.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="Dimension.h" />
     <ClInclude Include="Joueur.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mob.h" />
