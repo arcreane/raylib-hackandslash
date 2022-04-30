@@ -18,6 +18,7 @@ private :
 public :
 	Map(Texture2D bg);
 	Map();
+	~Map();
 	void setMap(Texture2D bg);
 	void afficheBackground();
 	void addPlatformMap(Rectangle rec);

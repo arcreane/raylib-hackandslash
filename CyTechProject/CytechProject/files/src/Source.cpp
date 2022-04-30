@@ -303,7 +303,6 @@ int main(void)
             if (mobC[i]->getIsAlive()) {
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
-                //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
                 DrawRectangleRec(tmp, RED);
             }
         }
@@ -456,6 +455,9 @@ int main(void)
     //delete mob données
     for (unsigned i = 0; i < mobC.size(); i++) {
         delete mobC[i];
+    }
+    for (unsigned i = 0; i < 6; i++) {
+        maps[i].~Map();
     }
 
 
