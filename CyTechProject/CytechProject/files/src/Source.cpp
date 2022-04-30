@@ -4,13 +4,17 @@
 #include "../../ArmeCAC.h"
 #include "../../ArmeDistance.h"
 #include "../../RatKing.h"
+#include "../../Zombie.h"
 #include "../../Ghost.h"
+#include "../../Lave.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
 #include "../../Map.h"
 #include "../../Animation_Zombie.h"
 #include "../../Animation_Ghost.h"
 #include "../../Animation_RatKing.h"
+#include "../../Animation_Scythe.h"
+#include "../../audio.h"
 #include <vector>
 #include <string>
 
@@ -33,6 +37,7 @@ int framesCounter = 0;
 int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
+int currentFrameScythe = 0;
 
 Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, float delta);
 Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
@@ -42,7 +47,7 @@ ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item);
 
 int main(void)
 {
-    InitWindow(screenWidth, screenHeight, "Premier test");
+    InitWindow(screenWidth, screenHeight, "Jeu Vidéo GAMING");
 
 #pragma region Initialisation
 
@@ -50,6 +55,9 @@ int main(void)
     Animation_Joueur animation_joueur;
     Animation_Zombie animation_zombie;
     Animation_Ghost animation_ghost;
+    Animation_Scythe animation_scythe;
+
+    Audio audio;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -57,7 +65,7 @@ int main(void)
     ArmeCAC arme;
     arme.setArme({ 60, 40 }, 70, 35);
     ArmeDistance item;
-    item.setArme(20);
+    item.setArme(34);
     int timeItem = 0;
     Map maps[6];
 
@@ -97,7 +105,8 @@ int main(void)
     maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
     maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
-    maps[1].addMobMap(new Mob({ 0,855,1600,5 }));
+    maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
+    maps[1].addMobMap(new Zombie({ 577,550,34,40 }, true, &maps[1]));
 
     //      Map 2
     //  Load Background
@@ -126,7 +135,7 @@ int main(void)
     maps[2].addBoxMap({ 854,764,10,44 });
     maps[2].addBoxMap({ 906,675,10,88 });
     //  Mobs depart et type
-    maps[2].addMobMap(new Mob({ 0,855,1600,5 }));
+    maps[2].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     //      Map 3
@@ -150,7 +159,7 @@ int main(void)
     maps[3].addBoxMap({ 1494,361,53,44 });
     maps[3].addBoxMap({ 1440,406,106,44 });
     //  Mobs depart et type
-    maps[3].addMobMap(new Ghost({ 500, 40, 50, 50 }));
+    maps[3].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     //      Map 4
     //  Load Background
@@ -175,7 +184,7 @@ int main(void)
     maps[4].addBoxMap({ 1474,475,20,44 / 2 });
     maps[4].addBoxMap({ 1494,497,53,44 / 2 });
     //  Mobs depart et type
-    maps[4].addMobMap(new Ghost({ 500, 40, 50, 50 }));
+    maps[4].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
     //      Map 5
     //  Load Background
@@ -198,10 +207,10 @@ int main(void)
     maps[5].addBoxMap({ 1388,766,54*2,44*2 });
     maps[5].addBoxMap({ 1494,722,53*2,44*3 });
     //  Mobs depart et type
-    maps[5].addMobMap(new Ghost({ 500, 40, 50, 50 }));
+    maps[5].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
 
-    int indicMap = 5;
+    int indicMap = 1;
     int indicLim = 5;
 
     std::vector<Mob* >mobC;
@@ -223,7 +232,10 @@ int main(void)
     animation_joueur.Init_animation_joueur();
     animation_ghost.Init_animation_ghost();
     animation_ratKing.Init_animation_ratKing();
+    animation_scythe.Init_animation_scythe();
 #pragma endregion initAnim
+
+    audio.Init();
 
 #pragma endregion initialisation
 
@@ -242,9 +254,11 @@ int main(void)
         for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
+        audio.Update(player, arme);
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
-        
+       
+
 
         for (int i = 0; i < NB_MOB_PASSIF; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
@@ -257,7 +271,7 @@ int main(void)
         }
 
         for (unsigned i = 0; i < mobC.size(); i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) {
+            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
                 player.setIsAlive(false);
                 player.setPersonnage({ 300, 100, 28, 40 });
                 if (indicMap == indicLim) {
@@ -281,7 +295,7 @@ int main(void)
             }
 
             if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mobC[i]->getRectangle()) && item.getActive()) {
-                mobC[i]->setIsAlive(false);
+                if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
             if (mobC[i]->getIsAlive()) {
@@ -301,7 +315,7 @@ int main(void)
             }
             arme.setCd();
             if (arme.getActive() > 0) {
-                DrawRectangleRec(arme.getRectangle(), YELLOW);
+                //DrawRectangleRec(arme.getRectangle(), YELLOW);
             }
             if (arme.getCd() <= 0) {
                 arme.setOff();
@@ -312,7 +326,7 @@ int main(void)
             DrawRectangleRec({ 20,20,20,20 }, RED);
             item.setCd();
             if (item.getActive()) {
-                DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+               // DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
                 item.updatePositon();
             }
             if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
@@ -324,7 +338,7 @@ int main(void)
         }
         else DrawRectangleRec({ 20,20,20,20 }, GREEN);
 
-        DrawCircle(900, 450, 50, PURPLE);
+       // DrawCircle(900, 450, 50, PURPLE);
 
 #pragma region UpdateAnimation
         framesCounter++;
@@ -337,6 +351,7 @@ int main(void)
             currentFrameAttaque++;
             currentFrameZombie++;
             currentFrameRatKing++;
+            currentFrameScythe++;
             
             
             if (currentFrame > 5) currentFrame = 0;
@@ -344,6 +359,7 @@ int main(void)
             if (currentFrameAttaque > 6) currentFrameAttaque = 0;
             if (currentFrameZombie > 3) currentFrameZombie = 0;
             if (currentFrameRatKing > 15) currentFrameRatKing = 0;
+            if (currentFrameScythe > 7) currentFrameScythe = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -368,6 +384,12 @@ int main(void)
 
 
 #pragma region DrawAnimation
+        if (item.getActive()) {
+            if (item.getDirection()== true)
+                animation_scythe.animation_loop_droite({item.getX()- 40, item.getY() - 37}, currentFrameScythe);
+            else
+                animation_scythe.animation_loop_gauche({item.getX() - 30, item.getY() - 37}, currentFrameScythe);
+        }
 
         for (unsigned i = 0; i < mobC.size(); i++) {
             if (mobC[i]->getIsAlive()) {
@@ -383,8 +405,15 @@ int main(void)
                     else          
                         animation_ghost.animation_run_gauche(mobC[i]->getPosition(), currentFrameZombie);
                 }
+                if (mobC[i]->getType() == "zombie") {
+                    if (mobC[i]->getOrientation())
+                        animation_zombie.animation_run_droite(mobC[i]->getPosition(), currentFrameZombie);
+                    else
+                        animation_zombie.animation_run_gauche(mobC[i]->getPosition(), currentFrameZombie);
+                }
             }
         }
+
 
 #pragma region Joueur
         if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;
@@ -417,6 +446,8 @@ int main(void)
 
     }
 #pragma endregion MainGameLoop
+
+    audio.Free();
 
     CloseWindow();        // Close window and OpenGL context
 
