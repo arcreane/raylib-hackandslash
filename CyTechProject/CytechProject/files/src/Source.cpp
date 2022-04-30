@@ -5,12 +5,15 @@
 #include "../../ArmeDistance.h"
 #include "../../RatKing.h"
 #include "../../Ghost.h"
+#include "../../Lave.h"
 #include "../../Arme.h"
 #include "../../Animation_Joueur.h"
 #include "../../Map.h"
 #include "../../Animation_Zombie.h"
 #include "../../Animation_Ghost.h"
 #include "../../Animation_RatKing.h"
+#include "../../Animation_Scythe.h"
+#include "../../audio.h"
 #include <vector>
 #include <string>
 
@@ -33,6 +36,7 @@ int framesCounter = 0;
 int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
+int currentFrameScythe = 0;
 
 Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, float delta);
 Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
@@ -50,6 +54,9 @@ int main(void)
     Animation_Joueur animation_joueur;
     Animation_Zombie animation_zombie;
     Animation_Ghost animation_ghost;
+    Animation_Scythe animation_scythe;
+
+    Audio audio;
 
     Joueur player;
     player.setPersonnage({ 300, 100, 28, 40 });
@@ -57,9 +64,9 @@ int main(void)
     ArmeCAC arme;
     arme.setArme({ 60, 40 }, 70, 35);
     ArmeDistance item;
-    item.setArme(20);
+    item.setArme(34);
     int timeItem = 0;
-    Map maps[5];
+    Map maps[6];
 
     Mob mobPassif[NB_MOB_PASSIF];
     mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
@@ -97,9 +104,12 @@ int main(void)
     maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
     maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
-    maps[1].addMobMap(new Mob({ 0,855,1600,5 }));
+    maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
 
+    //      Map 2
+    //  Load Background
     maps[2].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png"));
+    //  Platforms
     maps[2].addPlatformMap({ 160, 855, 640, 10 });
     maps[2].addPlatformMap({ 0,138,316,10 });
     maps[2].addPlatformMap({ 0,271,209,10 });
@@ -113,17 +123,93 @@ int main(void)
     maps[2].addPlatformMap({ a, 673, screenWidth - a, 10 });
     maps[2].addPlatformMap({ 800, 810, 54, 10 });
     maps[2].addPlatformMap({ 852, 764, 54, 10 });
-    maps[2].addMobMap(new Mob({ 0,855,1600,5 }));
+    //  Boxes
+    maps[2].addBoxMap({ 150,676,10,180 });
+    maps[2].addBoxMap({ 160,666,266,10 });
+    maps[2].addBoxMap({ 734,496,170,90 });
+    maps[2].addBoxMap({ 693,451,210,40 });
+    maps[2].addBoxMap({ 746,404,52,44 });
+    maps[2].addBoxMap({ 798,810,10,44 });
+    maps[2].addBoxMap({ 854,764,10,44 });
+    maps[2].addBoxMap({ 906,675,10,88 });
+    //  Mobs depart et type
+    maps[2].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
+    //      Map 3
+    //  Load Background
     maps[3].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map3.png"));
+    //  Platforms
     maps[3].addPlatformMap({ 0, 180, 317, 10 });
     maps[3].addPlatformMap({ 0,315,531,10 });
     maps[3].addPlatformMap({ 0,448,1013,10 });
     maps[3].addPlatformMap({ 0,855,1600,10 });
+    maps[3].addPlatformMap({ 482,138,476,10 });
+    a = 1226;
+    maps[3].addPlatformMap({ a,450,1600 - a,10 });
+    maps[3].addPlatformMap({ 803,585,689,10 });
+    maps[3].addPlatformMap({ 630,707,70,10 });
+    //  Boxes
+    maps[3].addBoxMap({ 0,675,106,44 });
+    maps[3].addBoxMap({ 0,720,160,44 });
+    maps[3].addBoxMap({ 0,765,320,44 });
+    maps[3].addBoxMap({ 0,810,480,44 });
+    maps[3].addBoxMap({ 1494,361,53,44 });
+    maps[3].addBoxMap({ 1440,406,106,44 });
+    //  Mobs depart et type
+    maps[3].addMobMap(new Ghost({ 500, 40, 32, 28 }));
 
-    int indicMap = 1;
-    int indicLim = 2;
+    //      Map 4
+    //  Load Background
+    maps[4].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map4.png"));
+    //  Platforms
+    maps[4].addPlatformMap({ 428, 406, 53*5, 10 });
+    a = 534;
+    maps[4].addPlatformMap({ a,855,1600 - a,10 });
+    maps[4].addPlatformMap({ 213, 270, 53 * 5, 10 });
+    maps[4].addPlatformMap({ 639, 136, 53 * 6, 10 });
+    //  Boxes
+    maps[4].addBoxMap({ 0,540,53*4,44*2 });
+    maps[4].addBoxMap({ 215,630,53 * 4,44 * 2 });
+    maps[4].addBoxMap({ 427,721,53 * 2,44 * 3 });
+    maps[4].addBoxMap({ 856,497,53,44 /2 });
+    maps[4].addBoxMap({ 908,475,35,44 / 2 });
+    maps[4].addBoxMap({ 942,453,70,44 / 2 });
+    maps[4].addBoxMap({ 1015,431,35,44 / 2 });
+    maps[4].addBoxMap({ 1050,409,315,44 / 2 });
+    maps[4].addBoxMap({ 1367,431,20,44 / 2 });
+    maps[4].addBoxMap({ 1388,453,84,44 / 2 });
+    maps[4].addBoxMap({ 1474,475,20,44 / 2 });
+    maps[4].addBoxMap({ 1494,497,53,44 / 2 });
+    //  Mobs depart et type
+    maps[4].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+
+    //      Map 5
+    //  Load Background
+    maps[5].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map5.png"));
+    //  Platforms
+    maps[5].addPlatformMap({ 0, 180, 53 * 2, 10 });
+    maps[5].addPlatformMap({ 0, 315, 53 * 2, 10 });
+    maps[5].addPlatformMap({ 53, 450, 480, 10 });
+    maps[5].addPlatformMap({ 639, 450, 320, 10 });
+    maps[5].addPlatformMap({ 1067, 450, 480, 10 });
+    maps[5].addPlatformMap({ 0,855,1600,10 });
+    maps[5].addPlatformMap({ 1013, 315, 160, 10 });
+    maps[5].addPlatformMap({ 480, 584, 53 * 5, 10 });
+    //  Boxes
+    maps[5].addBoxMap({ 480,833,54 / 2,44 / 2 });
+    maps[5].addBoxMap({ 773, 833, 53 / 2, 44/2 });
+    maps[5].addBoxMap({ 507, 810, 266, 44/2 });
+    maps[5].addBoxMap({ 536,723,54 * 3,44 * 2 });
+    maps[5].addBoxMap({ 694,765,54,44});
+    maps[5].addBoxMap({ 1388,766,54*2,44*2 });
+    maps[5].addBoxMap({ 1494,722,53*2,44*3 });
+    //  Mobs depart et type
+    maps[5].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+
+
+    int indicMap = 5;
+    int indicLim = 5;
 
     std::vector<Mob* >mobC;
 
@@ -144,7 +230,10 @@ int main(void)
     animation_joueur.Init_animation_joueur();
     animation_ghost.Init_animation_ghost();
     animation_ratKing.Init_animation_ratKing();
+    animation_scythe.Init_animation_scythe();
 #pragma endregion initAnim
+
+    audio.Init();
 
 #pragma endregion initialisation
 
@@ -160,12 +249,14 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
-        for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
+        //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
+        audio.Update(player, arme);
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
-        
+       
+
 
         for (int i = 0; i < NB_MOB_PASSIF; i++) {
             if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
@@ -198,17 +289,18 @@ int main(void)
             }
 
             if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
-                mobC[i]->setIsAlive(false);
+                if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
             if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mobC[i]->getRectangle()) && item.getActive()) {
-                mobC[i]->setIsAlive(false);
+                if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
             if (mobC[i]->getIsAlive()) {
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
-                DrawRectangleRec(tmp, RED);
+                //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
+                //DrawRectangleRec(tmp, RED);
             }
         }
 
@@ -221,7 +313,7 @@ int main(void)
             }
             arme.setCd();
             if (arme.getActive() > 0) {
-                DrawRectangleRec(arme.getRectangle(), YELLOW);
+                //DrawRectangleRec(arme.getRectangle(), YELLOW);
             }
             if (arme.getCd() <= 0) {
                 arme.setOff();
@@ -232,7 +324,7 @@ int main(void)
             DrawRectangleRec({ 20,20,20,20 }, RED);
             item.setCd();
             if (item.getActive()) {
-                DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+                //DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
                 item.updatePositon();
             }
             if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
@@ -244,7 +336,7 @@ int main(void)
         }
         else DrawRectangleRec({ 20,20,20,20 }, GREEN);
 
-        DrawCircle(900, 450, 50, PURPLE);
+       // DrawCircle(900, 450, 50, PURPLE);
 
 #pragma region UpdateAnimation
         framesCounter++;
@@ -257,6 +349,7 @@ int main(void)
             currentFrameAttaque++;
             currentFrameZombie++;
             currentFrameRatKing++;
+            currentFrameScythe++;
             
             
             if (currentFrame > 5) currentFrame = 0;
@@ -264,6 +357,7 @@ int main(void)
             if (currentFrameAttaque > 6) currentFrameAttaque = 0;
             if (currentFrameZombie > 3) currentFrameZombie = 0;
             if (currentFrameRatKing > 15) currentFrameRatKing = 0;
+            if (currentFrameScythe > 7) currentFrameScythe = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -288,6 +382,12 @@ int main(void)
 
 
 #pragma region DrawAnimation
+        if (item.getActive()) {
+            if (item.getDirection()== true)
+                animation_scythe.animation_loop_droite({item.getX()- 34, item.getY() - 20}, currentFrameScythe);
+            else
+                animation_scythe.animation_loop_gauche({item.getX() - 25, item.getY() - 20}, currentFrameScythe);
+        }
 
         for (unsigned i = 0; i < mobC.size(); i++) {
             if (mobC[i]->getIsAlive()) {
@@ -305,6 +405,7 @@ int main(void)
                 }
             }
         }
+
 
 #pragma region Joueur
         if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;
@@ -337,6 +438,8 @@ int main(void)
 
     }
 #pragma endregion MainGameLoop
+
+    audio.Free();
 
     CloseWindow();        // Close window and OpenGL context
 
