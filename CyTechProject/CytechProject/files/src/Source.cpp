@@ -252,9 +252,10 @@ int main(void)
         //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
+        audio.Update(player, arme);
         player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
-        audio.Update();
+       
 
 
         for (int i = 0; i < NB_MOB_PASSIF; i++) {

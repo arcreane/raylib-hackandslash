@@ -1,4 +1,4 @@
-#include "raylib.h"
+
 #include "Audio.h"
 
 
@@ -11,10 +11,10 @@ void Audio::Init() {
     this->jump = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/jump.wav");
 }
 
-void Audio::Update() {
+void Audio::Update(Joueur player, ArmeCAC arme) {
     UpdateMusicStream(this->music);
-    if (IsKeyPressed(KEY_J))  PlaySoundMulti(this->attack);
-    if (IsKeyPressed(KEY_UP)/*&& player.getCanJump()*/) PlaySoundMulti(this->jump);
+    if (IsKeyDown(KEY_J) && !arme.getEtat())  PlaySoundMulti(this->attack);
+    if (IsKeyDown(KEY_UP) && player.getCanJump()) PlaySoundMulti(this->jump);
 }
 
 void Audio::Free() {
