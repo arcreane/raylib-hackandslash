@@ -40,7 +40,7 @@ void DeathTouch::updatePositon()
 void DeathTouch::updateArme(Joueur player, Map* m)
 {
 	//std::vector<Platform> platforms = this->_m->getPlatforms();
-	if (IsKeyDown(KEY_H) && !this->etat) {
+	if (IsKeyDown(KEY_Y) && !this->etat) {
 		this->setOn(player.getPosition(), m);
 		this->setDirection(player.getOrientation());
 	}
