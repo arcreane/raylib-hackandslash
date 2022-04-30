@@ -269,7 +269,7 @@ int main(void)
         }
 
         for (unsigned i = 0; i < mobC.size(); i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) {
+            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
                 player.setIsAlive(false);
                 player.setPersonnage({ 300, 100, 28, 40 });
                 if (indicMap == indicLim) {
@@ -324,7 +324,7 @@ int main(void)
             DrawRectangleRec({ 20,20,20,20 }, RED);
             item.setCd();
             if (item.getActive()) {
-                //DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
+                DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
                 item.updatePositon();
             }
             if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
