@@ -423,8 +423,8 @@ int main(void)
 #pragma endregion Joueur
 
         arme.updateArme(player);
-        item.updateArme(player);
-        deathTouch.updateArme(player, &maps[indicMap]);
+        if (item.possetion()) item.updateArme(player);
+        else deathTouch.updateArme(player, &maps[indicMap]);
 
 #pragma endregion DrawAnimation
 

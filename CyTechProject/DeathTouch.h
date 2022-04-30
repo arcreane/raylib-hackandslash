@@ -6,6 +6,7 @@ class DeathTouch : public Arme
 private:
 	Rectangle hitBox;
 	Map* _m;
+	bool possede;
 public:
 	void setArme();
 	void setOn(Vector2 pos, Map* m);
@@ -19,5 +20,6 @@ public:
 	bool getActive();
 	float getX();
 	float getY();
+	bool possetion();
 };
 

@@ -7,6 +7,7 @@ void DeathTouch::setArme()
 	this->etat = false;
 	this->time = 0;
 	this->active = false;
+	this->possede = true;
 }
 
 void DeathTouch::setOn(Vector2 pos, Map* m)
@@ -94,4 +95,8 @@ float DeathTouch::getX()
 float DeathTouch::getY()
 {
 	return this->hitBox.y;
+}
+
+bool DeathTouch::possetion() {
+	return this->possede;
 }
