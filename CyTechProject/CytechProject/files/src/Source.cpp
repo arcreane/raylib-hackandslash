@@ -16,6 +16,7 @@
 #include "../../Animation_Ghost.h"
 #include "../../Animation_RatKing.h"
 #include "../../Animation_Scythe.h"
+#include "../../Animation_DeathTouch.h"
 #include "../../audio.h"
 #include "../../Struct.h"
 #include <vector>
@@ -36,6 +37,7 @@ int currentFrameAttaque = 0;
 int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 int currentFrameScythe = 0;
+int currentFrameDeathTouch = 0;
 
 
 int main(void)
@@ -49,6 +51,7 @@ int main(void)
     Animation_Zombie animation_zombie;
     Animation_Ghost animation_ghost;
     Animation_Scythe animation_scythe;
+    Animation_DeathTouch animation_deathTouch;
 
     Audio audio;
 
@@ -233,6 +236,7 @@ int main(void)
     animation_ghost.Init_animation_ghost();
     animation_ratKing.Init_animation_ratKing();
     animation_scythe.Init_animation_scythe();
+    animation_deathTouch.Init_animation_deathTouch();
 #pragma endregion initAnim
 
     audio.Init();
@@ -325,6 +329,7 @@ int main(void)
             currentFrameZombie++;
             currentFrameRatKing++;
             currentFrameScythe++;
+            currentFrameDeathTouch++;
             
             
             if (currentFrame > 5) currentFrame = 0;
@@ -333,6 +338,7 @@ int main(void)
             if (currentFrameZombie > 3) currentFrameZombie = 0;
             if (currentFrameRatKing > 15) currentFrameRatKing = 0;
             if (currentFrameScythe > 7) currentFrameScythe = 0;
+            if (currentFrameDeathTouch > 1) currentFrameDeathTouch = 0;
         }
 #pragma endregion UpdateAnimation
 
@@ -363,6 +369,14 @@ int main(void)
             else
                 animation_scythe.animation_loop_gauche({item.getX() - 30, item.getY() - 37}, currentFrameScythe);
         }
+
+        if (deathTouch.getActive()) {
+            if (deathTouch.getDirection())
+                animation_deathTouch.animation_loop_droite(deathTouch.getPosition(), currentFrameDeathTouch);
+            else
+                animation_deathTouch.animation_loop_gauche(deathTouch.getPosition(), currentFrameDeathTouch);
+        }
+
 
         for (unsigned i = 0; i < mobC.size(); i++) {
             if (mobC[i]->getIsAlive()) {

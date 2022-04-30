@@ -35,6 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation_DeathTouch.cpp" />
     <ClCompile Include="Animation_Ghost.cpp" />
     <ClCompile Include="Animation_RatKing.cpp" />
     <ClCompile Include="Animation_Zombie.cpp" />
@@ -64,6 +65,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation_DeathTouch.h" />
     <ClInclude Include="Animation_Ghost.h" />
     <ClInclude Include="Animation_RatKing.h" />
     <ClInclude Include="Animation_Zombie.h" />

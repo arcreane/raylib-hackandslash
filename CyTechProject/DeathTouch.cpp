@@ -59,8 +59,8 @@ void DeathTouch::updateArme(Joueur player, Map* m)
 		}
 		DrawRectangleRec({ 60,20,20,20 }, RED);
 		this->setCd();
-		if (this->active) {
-			DrawRectangleRec(this->getRectangle(), PINK);
+		if (this->getActive()) {
+			//DrawRectangleRec(this->getRectangle(), PINK);
 			this->updatePositon();
 		}
 		if (this->getX() < -20 || this->getX() > 1620 || this->getY() > 920) {
