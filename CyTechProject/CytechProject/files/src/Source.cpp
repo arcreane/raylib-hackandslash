@@ -503,7 +503,7 @@ Joueur UpdatePlayer(Joueur player, std::vector<Platform> platform, std::vector<P
 Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform> platform, float delta) {
     for (int i = 0; i < platform.size(); i++) {
         if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
-            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta) > platform[i].getY()) {
+            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta +3) > platform[i].getY()) {
             player.setSpeed(0);
             player.setYBas(platform[i].getY());
             player.setCanJump(true);
