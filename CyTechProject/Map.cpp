@@ -41,3 +41,8 @@ void Map::addMobMap(Mob* mob) {
 	mobs.push_back(mob);
 }
 
+Map::~Map() {
+	for (unsigned i = 0; i < mobs.size(); i++) {
+		delete mobs[i];
+	}
+}

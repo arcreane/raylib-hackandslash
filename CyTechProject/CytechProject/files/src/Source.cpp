@@ -120,7 +120,7 @@ int main(void)
     maps[2].addPlatformMap({ 1067, 313, 1438 - 1067, 10 });
     maps[2].addPlatformMap({ 905, 541, 54, 10 });
     a = 906;
-    maps[2].addPlatformMap({ a, 673, screenWidth - a, 10 });
+    //maps[2].addPlatformMap({ a, 673, screenWidth - a, 10 });
     maps[2].addPlatformMap({ 800, 810, 54, 10 });
     maps[2].addPlatformMap({ 852, 764, 54, 10 });
     //  Boxes
@@ -131,7 +131,8 @@ int main(void)
     maps[2].addBoxMap({ 746,404,52,44 });
     maps[2].addBoxMap({ 798,810,10,44 });
     maps[2].addBoxMap({ 854,764,10,44 });
-    maps[2].addBoxMap({ 906,675,10,88 });
+    a = 906;
+    maps[2].addBoxMap({ a,673,screenWidth - a,88 });
     //  Mobs depart et type
     maps[2].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
@@ -418,6 +419,9 @@ int main(void)
     //delete mob données
     for (unsigned i = 0; i < mobC.size(); i++) {
         delete mobC[i];
+    }
+    for (unsigned i = 0; i < 6; i++) {
+        maps[i].~Map();
     }
 
 
