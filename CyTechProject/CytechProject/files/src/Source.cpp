@@ -106,7 +106,8 @@ int main(void)
     maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
-    maps[1].addMobMap(new Zombie({ 577,550,34,40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 577,1,34,40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1100,60,34,40 }, true, &maps[1]));
 
     //      Map 2
     //  Load Background

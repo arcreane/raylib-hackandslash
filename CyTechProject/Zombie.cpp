@@ -3,42 +3,68 @@
 Zombie::Zombie(Rectangle rec, bool o, Map* m)
 {
     pos_dim = rec;
+    _m = m;
     orientation = o;
-    _p = getClosestPlatform(m);
+    this->getClosestPlatform(_m);
     this->type = "zombie";
 }
 
-float Zombie::getDistance(Platform* p)
-{
-    return sqrt(pow(p->getPosition().x + this->pos_dim.x, 2) + pow(p->getPosition().y + this->pos_dim.y, 2));
+Zombie::Zombie(Rectangle rec, bool o, Platform p, Map* m) {
+    pos_dim = rec;
+    orientation = o;
+    _m = m;
+    _p = p;
+    this->type = "zombie";
+    isAlive = true;
 }
 
-Platform* Zombie::getClosestPlatform(Map* m)
+void Zombie::setMob(Rectangle rec)
+{
+    this->pos_dim = rec;
+}
+
+
+float Zombie::getDistance(Platform p)
+{
+    return sqrt(pow(p.getXd() - this->getX(), 2) + pow(p.getY() - this->getY(), 2));
+}
+
+void Zombie::getClosestPlatform(Map* m)
 {
     std::vector<Platform> pltfms = m->getPlatforms();
-    Platform* result = nullptr;
+    int result = 0;
     int resultDistance = 10000.0;
-    for (int i=0; i < pltfms.size(); i++) {
-        if (this->getDistance(&pltfms[i]) < resultDistance) {
-            result = &pltfms[i];
-            resultDistance = this->getDistance(&pltfms[i]);
+    for (int i = 0; i < pltfms.size(); i++) {
+        float dist = this->getDistance(pltfms[i]);
+        if (dist < resultDistance) {
+            result = i;
+            resultDistance = dist;
         }
     }
-    return result;
+    Rectangle tmp = pltfms[result].getRectangle();
+    _p.setPlatform(tmp);
 }
 
 void Zombie::pathMob(Joueur player)
 {
     if (this->orientation) {
         this->setX(this->getX() + 1);
-        if (this->getX() > this->_p->getXDroite()) {
+        if (this->getX() > this->_p.getXDroite()) {
             this->setOrientation(false);
         }
     }
     else {
         this->setX(this->getX() - 1);
-        if (this->getX() < this->_p->getPosition().x) {
+        if (this->getX() < this->_p.getPosition().x) {
             this->setOrientation(true);
         }
     }
+
+    if (!(this->getYBas() <= this->_p.getYBas() && this->getYBas() >= this->_p.getY())) {
+        this->setY(this->getY() + 1);
+    }
+}
+
+Mob* Zombie::copy() {
+    return (new Zombie(this->pos_dim, this->orientation, this->_p, this->_m));
 }
