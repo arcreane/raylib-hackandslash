@@ -10,6 +10,7 @@
 #include "../../Ghost.h"
 #include "../../Lave.h"
 #include "../../Arme.h"
+#include "../../Portail.h"
 #include "../../Animation_Joueur.h"
 #include "../../Map.h"
 #include "../../Animation_Zombie.h"
@@ -38,7 +39,6 @@ int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 int currentFrameScythe = 0;
 int currentFrameDeathTouch = 0;
-
 
 int main(void)
 {
@@ -108,6 +108,7 @@ int main(void)
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[1].addMobMap(new Zombie({ 577,1,34,40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1100,60,34,40 }, true, &maps[1]));
+    maps[1].addMobMap(new Portail({ 118,505,50,50 }));
 
     //      Map 2
     //  Load Background
@@ -273,18 +274,22 @@ int main(void)
             }
         }
 
-        for (unsigned i = 0; i < mobC.size(); i++) {
+        for (unsigned i = 0; i < mobC.size(); i++) {            
             if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
-                player.setIsAlive(false);
-                player.setPersonnage({ 300, 100, 28, 40 });
-                if (indicMap == indicLim) {
-                    indicMap = 0;
+                if (mobC[i]->getType() == "Portail" || IsKeyPressed(KEY_N)) {
+                    if (indicMap == indicLim) {
+                        indicMap = 0;
+                    }
+                    indicMap += 1;
                 }
-                indicMap += 1;
+                else {
+                    player.setIsAlive(false);
+                }
+                player.setPersonnage({ 300, 100, 28, 40 });
 
                 mobC.clear();
                 for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
-                    mobC.push_back((* maps[indicMap].getMob(j)).copy());
+                    mobC.push_back((*maps[indicMap].getMob(j)).copy());
                 }
 
                 mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
@@ -292,6 +297,9 @@ int main(void)
                 mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
                 break;
             }
+            
+
+            
 
             if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
@@ -312,7 +320,7 @@ int main(void)
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
                 //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
-                //DrawRectangleRec(tmp, RED);
+                DrawRectangleRec(tmp, RED);
             }
         }
 

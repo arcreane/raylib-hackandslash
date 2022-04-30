@@ -50,6 +50,7 @@
     <ClCompile Include="lave.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mob.cpp" />
+    <ClCompile Include="Portail.cpp" />
     <ClCompile Include="RatKing.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Personnage.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="DeathTouch.h" />
     <ClInclude Include="Lave.h" />
     <ClInclude Include="Animation_Scythe.h" />
+    <ClInclude Include="Portail.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Dimension.h" />
