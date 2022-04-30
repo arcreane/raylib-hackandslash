@@ -13,6 +13,9 @@ public:
 	void updatePositon();
 	void updateArme(Joueur player);
 
-
+	Rectangle getRectangle();
+	Vector2 getPosition();
+	float getX();
+	float getY();
 };
 

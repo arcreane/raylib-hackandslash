@@ -37,7 +37,7 @@ void ArmeDistance::updatePositon() {
 void ArmeDistance::updateArme(Joueur player) {
 	if (IsKeyDown(KEY_Y) && !this->etat) {
 		this->setOn(player.getPosition());
-		this->setDirection(this->direction);
+		this->setDirection(player.getOrientation());
 	}
 	if (this->getEtat()) {
 		DrawRectangleRec({ 20,20,20,20 }, RED);

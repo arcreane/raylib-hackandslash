@@ -297,6 +297,13 @@ int main(void)
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
+            if (CheckCollisionRecs(deathTouch.getRectangle(), mobC[i]->getRectangle()) && deathTouch.getActive()) {
+                if (mobC[i]->getIsKillable()) {
+                    mobC[i]->setIsAlive(false);
+                    deathTouch.setOut();
+                }
+            }
+
             if (mobC[i]->getIsAlive()) {
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
@@ -402,6 +409,8 @@ int main(void)
 
         arme.updateArme(player);
         item.updateArme(player);
+        deathTouch.updateArme(player);
+
 #pragma endregion DrawAnimation
 
         EndMode2D();
