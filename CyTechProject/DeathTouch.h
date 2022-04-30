@@ -1,19 +1,17 @@
 #include "Arme.h"
 
 #pragma once
-class ArmeCAC : public Arme
+class DeathTouch : public Arme
 {
 private:
 	Rectangle hitBox;
 public:
-	void setArme(Dimension hb, int cd, int t);
+	void setArme();
 	void setOn(Vector2 pos);
+	void setOut();
 	void setOff();
-
+	void updatePositon();
 	void updateArme(Joueur player);
-
-	Rectangle getRectangle();
-	float getWidth();
 
 
 };

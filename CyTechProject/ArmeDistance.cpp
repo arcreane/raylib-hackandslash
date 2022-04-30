@@ -34,6 +34,28 @@ void ArmeDistance::updatePositon() {
 	this->hitBox.y = this->positionDepart.y + (0.05 * (time * 5 - 300)) * (0.05 * (time * 5 - 300));
 }
 
+void ArmeDistance::updateArme(Joueur player) {
+	if (IsKeyDown(KEY_Y) && !this->etat) {
+		this->setOn(player.getPosition());
+		this->setDirection(this->direction);
+	}
+	if (this->getEtat()) {
+		DrawRectangleRec({ 20,20,20,20 }, RED);
+		this->setCd();
+		if (this->getActive()) {
+			// DrawCircle(this->getX(), this->getY(), this->getRadius(), PINK);
+			this->updatePositon();
+		}
+		if (this->getX() < -20 || this->getX() > 1620 || this->getY() > 920) {
+			this->setOut();
+		}
+		if (this->getCd() <= 0) {
+			this->setOff();
+		}
+	}
+	else DrawRectangleRec({ 20,20,20,20 }, GREEN);
+}
+
 
 Vector2 ArmeDistance::getPosition() {
 	return { this->hitBox.x, this->hitBox.y };

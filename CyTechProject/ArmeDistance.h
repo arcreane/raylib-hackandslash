@@ -13,6 +13,7 @@ public:
 	void setOut();
 	void setOff();
 	void updatePositon();
+	void updateArme(Joueur player);
 
 	Vector2 getPosition();
 	float getX();

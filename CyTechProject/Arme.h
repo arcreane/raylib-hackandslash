@@ -1,10 +1,13 @@
 #include "raylib.h"
 #include "raymath.h"
+#include "Joueur.h"
 #include "Struct.h"
+#include <string>
 
 #pragma once
 class Arme {
 protected:
+	std::string type;
 	bool etat;
 	bool direction;
 	int cooldown;

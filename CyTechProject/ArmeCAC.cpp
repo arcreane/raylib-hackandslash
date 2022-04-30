@@ -20,6 +20,34 @@ void ArmeCAC::setOff() {
 	this->time = 0;
 }
 
+void ArmeCAC::updateArme(Joueur player)
+{
+	if (IsKeyDown(KEY_J) && !this->etat) {
+		if (player.getOrientation() == true) {
+			this->setOn({ player.getXDroite(), player.getY() });
+			this->setDirection(true);
+		}
+		if (player.getOrientation() == false) {
+			this->setOn({ player.getX() - this->getWidth(), player.getY() });
+			this->setDirection(false);
+		}
+	}
+	if (this->getEtat()) {
+		if (this->getDirection()) {
+			this->setOn({ player.getXDroite(), player.getY() });
+		}
+		else {
+			this->setOn({ player.getX() - this->getWidth(), player.getY() });
+		}
+		this->setCd();
+		if (this->getActive() > 0) {
+			//DrawRectangleRec(this->getRectangle(), YELLOW);
+		}
+		if (this->getCd() <= 0) {
+			this->setOff();
+		}
+	}
+}
 
 Rectangle ArmeCAC::getRectangle() {
 	return this->hitBox;

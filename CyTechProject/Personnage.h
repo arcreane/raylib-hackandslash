@@ -2,7 +2,7 @@
 #include "raymath.h"
 #include "Struct.h"
 #include "Platform.h"
-
+#include <vector>
 
 #pragma once
 class Personnage {

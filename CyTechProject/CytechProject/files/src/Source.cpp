@@ -1,8 +1,10 @@
 #include "raylib.h"
 #include "raymath.h"
+#include "../../Joueur.h"
 #include "../../Platform.h"
 #include "../../ArmeCAC.h"
 #include "../../ArmeDistance.h"
+#include "../../DeathTouch.h"
 #include "../../RatKing.h"
 #include "../../Zombie.h"
 #include "../../Ghost.h"
@@ -15,6 +17,7 @@
 #include "../../Animation_RatKing.h"
 #include "../../Animation_Scythe.h"
 #include "../../audio.h"
+#include "../../Struct.h"
 #include <vector>
 #include <string>
 
@@ -23,14 +26,9 @@
 //Henri is in your wall
 
 
-#define G 1000
-#define PLAYER_JUMP_SPD 550.0f
-#define PLAYER_HOR_SPD 300.0f
 #define FRAMES_SPEED 8
 #define NB_MOB_PASSIF 3
 
-const int screenWidth = 1600;
-const int screenHeight = 900;
 int currentFrame = 0;
 int currentFrameImmobile = 0;
 int framesCounter = 0;
@@ -39,11 +37,6 @@ int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 int currentFrameScythe = 0;
 
-Joueur UpdatePlayer(Joueur player, std::vector<Platform > platform, std::vector<Platform> box, float delta);
-Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform > platform, float delta);
-Joueur CheckCollisionBlocPlein(Joueur player, std::vector<Platform> box, float delta);
-ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme);
-ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item);
 
 int main(void)
 {
@@ -66,7 +59,11 @@ int main(void)
     arme.setArme({ 60, 40 }, 70, 35);
     ArmeDistance item;
     item.setArme(34);
-    int timeItem = 0;
+    DeathTouch deathTouch;
+    deathTouch.setArme();
+
+
+
     Map maps[6];
 
     Mob mobPassif[NB_MOB_PASSIF];
@@ -252,11 +249,11 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
-        for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
+        //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
         audio.Update(player, arme);
-        player = UpdatePlayer(player, maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
+        player.updatePlayer(maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
 
        
 
@@ -267,7 +264,7 @@ int main(void)
             }
 
             if (mobPassif[i].getIsAlive()) {
-                DrawRectangleRec(mobPassif[i].getRectangle(), GREEN);
+                //DrawRectangleRec(mobPassif[i].getRectangle(), GREEN);
             }
         }
 
@@ -303,43 +300,9 @@ int main(void)
                 mobC[i]->pathMob(player);
                 Rectangle tmp = mobC[i]->getRectangle();
                 //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
-                DrawRectangleRec(tmp, RED);
+                //DrawRectangleRec(tmp, RED);
             }
         }
-
-        if (arme.getEtat()) {
-            if (arme.getDirection()) {
-                arme.setOn({ player.getXDroite(), player.getY() });
-            }
-            else {
-                arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
-            }
-            arme.setCd();
-            if (arme.getActive() > 0) {
-                //DrawRectangleRec(arme.getRectangle(), YELLOW);
-            }
-            if (arme.getCd() <= 0) {
-                arme.setOff();
-            }
-        }
-
-        if (item.getEtat()) {
-            DrawRectangleRec({ 20,20,20,20 }, RED);
-            item.setCd();
-            if (item.getActive()) {
-               // DrawCircle(item.getX(), item.getY(), item.getRadius(), PINK);
-                item.updatePositon();
-            }
-            if (item.getX() < -20 || item.getX() > 1620 || item.getY() > 920) {
-                item.setOut();
-            }
-            if (item.getCd() <= 0) {
-                item.setOff();
-            }
-        }
-        else DrawRectangleRec({ 20,20,20,20 }, GREEN);
-
-       // DrawCircle(900, 450, 50, PURPLE);
 
 #pragma region UpdateAnimation
         framesCounter++;
@@ -436,8 +399,8 @@ int main(void)
             animation_joueur.animation_run_gauche(player.getPosition(), currentFrame);
 #pragma endregion Joueur
 
-        arme = UpdateArmeCAC(player, arme);
-        item = UpdateArmeDistance(player, item);
+        arme.updateArme(player);
+        item.updateArme(player);
 #pragma endregion DrawAnimation
 
         EndMode2D();
@@ -459,105 +422,4 @@ int main(void)
 
 
     return 0;
-}
-
-Joueur UpdatePlayer(Joueur player, std::vector<Platform> platform, std::vector<Platform> box, float delta)
-{
-    Dimension dim = player.getDimension();
-
-    if (IsKeyDown(KEY_LEFT)) {
-
-        player.setX(player.getX() - PLAYER_HOR_SPD * delta);
-        player.setOrientation(false);
-    }
-    if (IsKeyDown(KEY_RIGHT)) {
-        player.setX(player.getX() + PLAYER_HOR_SPD * delta);
-        player.setOrientation(true);
-    }
-    if (IsKeyDown(KEY_UP) && player.getCanJump()) player.setSpeed(player.getSpeed() - PLAYER_JUMP_SPD);
-
-    player.setY(player.getY() + player.getSpeed() * delta);
-    player.setSpeed(player.getSpeed() + G * delta);
-    player.setCanJump(false);
-
-    if (player.getYBas() >= screenHeight)
-    {
-        player.setSpeed(0);
-        player.setYBas(screenHeight);
-        player.setCanJump(true);
-    }
-
-    if (player.getX() < 0) player.setX(0);
-    if (player.getXDroite() > screenWidth) player.setXDroite((float)screenWidth);
-    if (player.getY() < 0) {
-        player.setSpeed(0);
-        player.setY(0);
-    }
-
-    player = CheckCollisionPlatform(player, platform, delta);
-    player = CheckCollisionBlocPlein(player, box, delta);
-
-    return player;
-}
-
-Joueur CheckCollisionPlatform(Joueur player, std::vector<Platform> platform, float delta) {
-    for (int i = 0; i < platform.size(); i++) {
-        if (player.getX() >= platform[i].getXd() - player.getWidth() && player.getXDroite() <= platform[i].getXDroite() + player.getWidth()
-            && player.getYBas() <= platform[i].getY() && (player.getYBas() + player.getSpeed() * delta +3) > platform[i].getY()) {
-            player.setSpeed(0);
-            player.setYBas(platform[i].getY());
-            player.setCanJump(true);
-        }
-    }
-    return player;
-}
-
-Joueur CheckCollisionBlocPlein(Joueur player, std::vector<Platform> box, float delta) {
-    for (int i = 0; i < box.size(); i++) {
-        if (player.getXDroite() > box[i].getXd() && IsKeyDown(KEY_RIGHT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getX() < box[i].getXDroite() - 1) player.setXDroite(box[i].getXd());
-        if (player.getX() < box[i].getXDroite() && IsKeyDown(KEY_LEFT) && player.getYBas() > box[i].getY() + 1 + G * delta && player.getY() < box[i].getYBas() - G * delta && player.getXDroite() > box[i].getXd()) {
-            player.setX(box[i].getXDroite());
-        }
-
-        if (player.getYBas() >= box[i].getY() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getY() < box[i].getYBas() - G * delta)
-        {
-            if (player.getSpeed() >= 0) {
-                player.setSpeed(0);
-                player.setYBas(box[i].getY());
-                player.setCanJump(true);
-            }
-        }
-
-        if (player.getY() < box[i].getYBas() && player.getX() < box[i].getXDroite() && player.getXDroite() > box[i].getXd() && player.getYBas() > box[i].getY() + 20)
-        {
-            if (player.getSpeed()) {
-                player.setSpeed(0);
-                player.setY(box[i].getYBas());
-            }
-        }
-    }
-    return player;
-}
-
-ArmeCAC UpdateArmeCAC(Joueur player, ArmeCAC arme) {
-    if (IsKeyDown(KEY_J) && !arme.getEtat()) {
-        if (player.getOrientation() == true) {
-            arme.setOn({ player.getXDroite(), player.getY() });
-            arme.setDirection(true);
-        }
-        if (player.getOrientation() == false) {
-            arme.setOn({ player.getX() - arme.getWidth(), player.getY() });
-            arme.setDirection(false);
-        }
-    }
-
-    return arme;
-}
-
-ArmeDistance UpdateArmeDistance(Joueur player, ArmeDistance item) {
-    if (IsKeyDown(KEY_Y) && !item.getEtat()) {
-        item.setOn(player.getPosition());
-        item.setDirection(player.getOrientation());
-    }
-    return item;
 }

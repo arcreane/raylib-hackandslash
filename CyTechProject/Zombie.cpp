@@ -49,7 +49,7 @@ void Zombie::pathMob(Joueur player)
 {
     if (this->orientation) {
         this->setX(this->getX() + 1);
-        if (this->getX() > this->_p.getXDroite()) {
+        if (this->getXDroite() > this->_p.getXDroite()) {
             this->setOrientation(false);
         }
     }
