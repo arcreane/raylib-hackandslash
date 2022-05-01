@@ -3,7 +3,7 @@
 Portail::Portail(Rectangle rec)
 {
 	pos_dim = rec;
-	this->type = "Portail";
+	this->type = "portail";
 	this->isKillable = false;
 }
 

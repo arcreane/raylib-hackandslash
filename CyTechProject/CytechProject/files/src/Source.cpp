@@ -18,6 +18,7 @@
 #include "../../Animation_RatKing.h"
 #include "../../Animation_Scythe.h"
 #include "../../Animation_DeathTouch.h"
+#include "../../Animation_Portail.h"
 #include "../../audio.h"
 #include "../../Struct.h"
 #include <vector>
@@ -39,6 +40,8 @@ int currentFrameZombie = 0;
 int currentFrameRatKing = 0;
 int currentFrameScythe = 0;
 int currentFrameDeathTouch = 0;
+int currentFramePortail = 1;
+bool afficherPortail = false;
 
 int main(void)
 {
@@ -52,6 +55,7 @@ int main(void)
     Animation_Ghost animation_ghost;
     Animation_Scythe animation_scythe;
     Animation_DeathTouch animation_deathTouch;
+    Animation_Portail animation_portail;
 
     Audio audio;
 
@@ -108,7 +112,7 @@ int main(void)
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[1].addMobMap(new Zombie({ 577,1,34,40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1100,60,34,40 }, true, &maps[1]));
-    maps[1].addMobMap(new Portail({ 118,505,50,50 }));
+    maps[1].addMobMap(new Portail({ 143,530,50,50 }));
 
     //      Map 2
     //  Load Background
@@ -140,6 +144,7 @@ int main(void)
     //  Mobs depart et type
     maps[2].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[2].addMobMap(new Portail({1430,220,50,50}));
 
     //      Map 3
     //  Load Background
@@ -163,6 +168,7 @@ int main(void)
     maps[3].addBoxMap({ 1440,406,106,44 });
     //  Mobs depart et type
     maps[3].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[3].addMobMap(new Portail({ 1090,85,50,50 }));
 
     //      Map 4
     //  Load Background
@@ -188,6 +194,7 @@ int main(void)
     maps[4].addBoxMap({ 1494,497,53,44 / 2 });
     //  Mobs depart et type
     maps[4].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[4].addMobMap(new Portail({ 1175,790,50,50 }));
 
     //      Map 5
     //  Load Background
@@ -211,6 +218,7 @@ int main(void)
     maps[5].addBoxMap({ 1494,722,53*2,44*3 });
     //  Mobs depart et type
     maps[5].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[5].addMobMap(new Portail({870,200,50,50 }));
 
 
     int indicMap = 1;
@@ -237,6 +245,7 @@ int main(void)
     animation_ratKing.Init_animation_ratKing();
     animation_scythe.Init_animation_scythe();
     animation_deathTouch.Init_animation_deathTouch();
+    animation_portail.Init_animation_portail();
 #pragma endregion initAnim
 
     audio.Init();
@@ -260,7 +269,7 @@ int main(void)
 
         audio.Update(player, arme);
         player.updatePlayer(maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
-
+        afficherPortail = true;
        
 
 
@@ -276,7 +285,7 @@ int main(void)
 
         for (unsigned i = 0; i < mobC.size(); i++) {            
             if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
-                if (mobC[i]->getType() == "Portail" || IsKeyPressed(KEY_N)) {
+                if (mobC[i]->getType() == "portail" || IsKeyPressed(KEY_N)) {
                     if (indicMap == indicLim) {
                         indicMap = 0;
                     }
@@ -317,10 +326,14 @@ int main(void)
             }
 
             if (mobC[i]->getIsAlive()) {
-                mobC[i]->pathMob(player);
+                if (mobC[i]->getIsKillable()) {
+                    mobC[i]->pathMob(player);
+                    afficherPortail = false;
+
+                }
                 Rectangle tmp = mobC[i]->getRectangle();
                 //printf("%d, %s\n", i, mobC[i]->getOrientation() ? "true" : "false");
-                DrawRectangleRec(tmp, RED);
+                //DrawRectangleRec(tmp, RED);
             }
         }
 
@@ -337,6 +350,7 @@ int main(void)
             currentFrameRatKing++;
             currentFrameScythe++;
             currentFrameDeathTouch++;
+            currentFramePortail++;
             
             
             if (currentFrame > 5) currentFrame = 0;
@@ -346,6 +360,7 @@ int main(void)
             if (currentFrameRatKing > 15) currentFrameRatKing = 0;
             if (currentFrameScythe > 7) currentFrameScythe = 0;
             if (currentFrameDeathTouch > 1) currentFrameDeathTouch = 0;
+            if (currentFramePortail > 150) currentFramePortail = 1;
         }
 #pragma endregion UpdateAnimation
 
@@ -404,6 +419,9 @@ int main(void)
                         animation_zombie.animation_run_droite(mobC[i]->getPosition(), currentFrameZombie);
                     else
                         animation_zombie.animation_run_gauche(mobC[i]->getPosition(), currentFrameZombie);
+                }
+                if (mobC[i]->getType() == "portail" && afficherPortail) {
+                    animation_portail.animation_portail({ mobC[i]->getX()-25, mobC[i]->getY() - 25}, currentFramePortail);
                 }
             }
         }
