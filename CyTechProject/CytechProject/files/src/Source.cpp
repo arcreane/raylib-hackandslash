@@ -61,7 +61,7 @@ int main(void)
     Audio audio;
 
     Joueur player;
-    player.setPersonnage({ 300, 100, 28, 40 });
+
 
     ArmeCAC arme;
     arme.setArme({ 60, 40 }, 70, 35);
@@ -81,6 +81,8 @@ int main(void)
     //      Map 1
     //  Load Background
     maps[1].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png"));
+    //  Spawn
+    maps[1].setSpawn({ 140, 365, 28, 40 });
     //  Platforms
     float a;
     maps[1].addPlatformMap({ 0, 405, 905, 10 });
@@ -125,6 +127,8 @@ int main(void)
     //      Map 2
     //  Load Background
     maps[2].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png"));
+    //  Spawn
+    maps[2].setSpawn({ 1400, 650, 28, 40 });
     //  Platforms
     maps[2].addPlatformMap({ 160, 855, 640, 10 });
     maps[2].addPlatformMap({ 0,138,316,10 });
@@ -165,6 +169,8 @@ int main(void)
     //      Map 3
     //  Load Background
     maps[3].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map3.png"));
+    //  Spawn
+    maps[3].setSpawn({ 1100, 815, 28, 40 });
     //  Platforms
     maps[3].addPlatformMap({ 0, 180, 317, 10 });
     maps[3].addPlatformMap({ 0,315,531,10 });
@@ -200,6 +206,8 @@ int main(void)
     //      Map 4
     //  Load Background
     maps[4].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map4.png"));
+    //  Spawn
+    maps[4].setSpawn({ 1180, 375, 28, 40 });
     //  Platforms
     maps[4].addPlatformMap({ 428, 406, 53*5, 10 });
     a = 534;
@@ -236,6 +244,8 @@ int main(void)
     //      Map 5
     //  Load Background
     maps[5].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map5.png"));
+    //  Spawn
+    maps[5].setSpawn({ 1050, 815, 28, 40 });
     //  Platforms
     maps[5].addPlatformMap({ 0, 180, 53 * 2, 10 });
     maps[5].addPlatformMap({ 0, 315, 53 * 2, 10 });
@@ -273,6 +283,8 @@ int main(void)
 
     maps[5].addItemMap(new Portail({870,200,50,50 }));
 
+
+    player.setPersonnage(maps[1].getSpawn());
 
     int indicMap = 1;
     int indicLim = 5;
@@ -349,7 +361,7 @@ int main(void)
                     }
                     indicMap += 1;
 
-                    player.setPersonnage({ 300, 100, 28, 40 });
+                    player.setPersonnage(maps[indicMap].getSpawn());
 
                     itemC.clear();
                     for (unsigned j = 0; j < maps[indicMap].getItems().size(); j++) {
@@ -377,9 +389,9 @@ int main(void)
         afficherPortail = true;
 
         for (unsigned i = 0; i < mobC.size(); i++) {            
-            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
+            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()))  {
                 player.setIsAlive(false);
-                player.setPersonnage({ 300, 100, 28, 40 });
+                player.setPersonnage(maps[indicMap].getSpawn());
 
                 mobC.clear();
                 for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {

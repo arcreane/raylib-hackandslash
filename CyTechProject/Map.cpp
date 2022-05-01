@@ -53,6 +53,16 @@ void Map::addItemMap(Item* item) {
 	items.push_back(item);
 }
 
+void Map::setSpawn(Rectangle rectangle)
+{
+	this->spawn = rectangle;
+}
+
+Rectangle Map::getSpawn()
+{
+	return this->spawn;
+}
+
 Map::~Map() {
 	for (unsigned i = 0; i < mobs.size(); i++) {
 		delete mobs[i];
