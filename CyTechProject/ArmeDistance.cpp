@@ -8,6 +8,7 @@ void ArmeDistance::setArme(float radius)
 	this->time = 0;
 	this->active = false;
 	this->possede = true;
+	this->item.Init_animation_scythe();
 }
 
 void ArmeDistance::setOn(Vector2 pos) {
@@ -36,7 +37,6 @@ void ArmeDistance::updatePositon() {
 }
 
 void ArmeDistance::updateArme(Joueur player) {
-	this->item.Init_animation_scythe();
 	if (IsKeyDown(KEY_Y) && !this->etat) {
 		this->setOn(player.getPosition());
 		this->setDirection(player.getOrientation());

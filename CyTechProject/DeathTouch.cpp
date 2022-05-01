@@ -8,6 +8,7 @@ void DeathTouch::setArme()
 	this->time = 0;
 	this->active = false;
 	this->possede = false;
+	this->item.Init_animation_deathTouch();
 }
 
 void DeathTouch::setOn(Vector2 pos, Map* m)
@@ -39,7 +40,6 @@ void DeathTouch::updatePositon()
 
 void DeathTouch::updateArme(Joueur player, Map* m)
 {
-	this->item.Init_animation_deathTouch();
 	//std::vector<Platform> platforms = this->_m->getPlatforms();
 	if (IsKeyDown(KEY_Y) && !this->etat) {
 		this->setOn(player.getPosition(), m);
