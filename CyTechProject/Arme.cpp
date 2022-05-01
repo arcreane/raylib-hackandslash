@@ -22,6 +22,3 @@ int Arme::getCd() {
 	return (this->cooldown - this->time);
 }
 
-int Arme::getActive() {
-	return (this->active - this->time);
-}

@@ -1,9 +1,9 @@
 #include "Portail.h"
 
-Portail::Portail(Rectangle rec)
+Portail::Portail(Rectangle rec, std::string type)
 {
 	hitBox = rec;
-	this->type = "portail";
+	this->type = type;
 }
 
 void Portail::setItem(Rectangle rec) {
@@ -11,5 +11,5 @@ void Portail::setItem(Rectangle rec) {
 }
 
 Item* Portail::copy() {
-	return new Portail(this->hitBox);
+	return new Portail(this->hitBox, this->type);
 }

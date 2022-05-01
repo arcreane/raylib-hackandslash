@@ -6,8 +6,10 @@ class DeathTouch : public Arme, public Item
 {
 private:
 	Rectangle hitBox;
+	Rectangle positionItem;
 	Map* _m;
 	bool possede;
+	bool active;
 public:
 	void setArme();
 	void setOn(Vector2 pos, Map* m);
@@ -16,6 +18,7 @@ public:
 	void updatePositon();
 	void updateArme(Joueur player, Map* m);
 	void setPossetion(bool p);
+	void resetTime();
 
 	Rectangle getRectangle();
 	Vector2 getPosition();
@@ -23,12 +26,5 @@ public:
 	float getX();
 	float getY();
 	bool possetion();
-
-	// class portail
-	/*
-	DeathTouch(Rectangle rec);
-	void setItem(Rectangle rec);
-	Item* copy() override;
-	*/
 };
 

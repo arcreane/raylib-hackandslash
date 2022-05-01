@@ -57,6 +57,16 @@ void ArmeDistance::updateArme(Joueur player) {
 	else DrawRectangleRec({ 20,20,20,20 }, GREEN);
 }
 
+void ArmeDistance::setPossetion(bool p)
+{
+	this->possede = p;
+	this->setOut();
+}
+
+void ArmeDistance::resetTime() {
+	this->time = 0;
+}
+
 
 Vector2 ArmeDistance::getPosition() {
 	return { this->hitBox.x, this->hitBox.y };

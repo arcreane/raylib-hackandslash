@@ -48,6 +48,7 @@
     <ClCompile Include="CytechProject\files\src\Source.cpp" />
     <ClCompile Include="DeathTouch.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemArme.cpp" />
     <ClCompile Include="Joueur.cpp" />
     <ClCompile Include="lave.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="ArmeDistance.h" />
     <ClInclude Include="DeathTouch.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemArme.h" />
     <ClInclude Include="Lave.h" />
     <ClInclude Include="Animation_Scythe.h" />
     <ClInclude Include="Portail.h" />

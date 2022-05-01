@@ -12,7 +12,6 @@ protected:
 	bool etat;
 	bool direction;
 	int cooldown;
-	int active;
 	int time;
 
 public:
@@ -22,7 +21,6 @@ public:
 	bool getEtat();
 	bool getDirection();
 	int getCd();
-	int getActive();
 
 };
 

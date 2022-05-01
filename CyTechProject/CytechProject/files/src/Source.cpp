@@ -65,8 +65,10 @@ int main(void)
 
     ArmeCAC arme;
     arme.setArme({ 60, 40 }, 70, 35);
-    ArmeDistance item;
-    item.setArme(34);
+    ArmeDistance scythe;
+    scythe.setArme(34);
+    DeathTouch deathTouch;
+    deathTouch.setArme();
 
 
 
@@ -105,10 +107,10 @@ int main(void)
     maps[1].addBoxMap({ 0,359,54,45 });
     maps[1].addBoxMap({ 54,359,54,45 });
     //  Mobs depart et type
-    maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
-    maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
-    maps[1].addMobMap(new Ghost({ 1100, 715, 32, 28 }));
-    maps[1].addMobMap(new Ghost({ 1550, 480, 32, 28 }));
+    //maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
+    //maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    //maps[1].addMobMap(new Ghost({ 1100, 715, 32, 28 }));
+    //maps[1].addMobMap(new Ghost({ 1550, 480, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[1].addMobMap(new Zombie({ 577 ,1, 34, 40 }, true, &maps[1]));
@@ -117,10 +119,9 @@ int main(void)
     maps[1].addMobMap(new Zombie({ 1400, 600, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
 
-    maps[1].addItemMap(new Portail({ 143,530,50,50 }));
-
-    DeathTouch deathTouch;
-    deathTouch.setArme();
+    maps[1].addItemMap(new Portail({ 143,530,50,50 }, "portail"));
+    maps[1].addItemMap(new Portail({ 500,360,50,50 }, "deathTouch"));
+    maps[1].addItemMap(new Portail({ 500,360,50,50 }, "scythe"));
 
     //      Map 2
     //  Load Background
@@ -160,7 +161,7 @@ int main(void)
     maps[2].addMobMap(new Zombie({ 300,815,34,40 }, true, & maps[2]));
     maps[2].addMobMap(new Zombie({ 450,815,34,40 }, true, & maps[2]));
 
-    maps[2].addItemMap(new Portail({1430,220,50,50}));
+    maps[2].addItemMap(new Portail({1430,220,50,50}, "portail"));
 
     //      Map 3
     //  Load Background
@@ -194,8 +195,7 @@ int main(void)
     maps[3].addMobMap(new Zombie({ 645,665 ,34,40 }, true, & maps[3]));
     maps[3].addMobMap(new Zombie({ 520,90 ,34 ,40 }, true, & maps[3]));
 
-    maps[3].addItemMap(new Portail({ 1090,85,50,50 }));
-    //maps[3].addItemMap(new DeatTouch({ 1000,500,50,50 }));
+    maps[3].addItemMap(new Portail({ 1090,85,50,50 }, "portail"));
 
     //      Map 4
     //  Load Background
@@ -231,7 +231,7 @@ int main(void)
     maps[4].addMobMap(new Zombie({ 700, 100 ,34,40 }, true, & maps[4]));
     maps[4].addMobMap(new Zombie({ 245, 220, 34 ,40 }, true, & maps[4]));
 
-    maps[4].addItemMap(new Portail({ 1175,790,50,50 }));
+    maps[4].addItemMap(new Portail({ 1175,790,50,50 }, "portail"));
 
     //      Map 5
     //  Load Background
@@ -271,7 +271,7 @@ int main(void)
     maps[5].addMobMap(new Zombie({ 1030, 275, 34 ,40 }, true, & maps[5]));
     maps[5].addMobMap(new Zombie({ 500, 545, 34 ,40 }, true, & maps[5]));
 
-    maps[5].addItemMap(new Portail({870,200,50,50 }));
+    maps[5].addItemMap(new Portail({870,200,50,50 }, "portail"));
 
 
     int indicMap = 1;
@@ -365,14 +365,20 @@ int main(void)
                     //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
                     break;
                 }
-                /*if (itemC[i]->getType() == "deathTouch" && IsKeyPressed(KEY_H)) {
-                    item.setPossetion(true);
-                    ArmeDistance.setPossetion(false);
-                }*/
+
+                if (itemC[i]->getType() == "scythe" && IsKeyPressed(KEY_H) && !scythe.possetion()) {
+                    deathTouch.setPossetion(false);
+                    scythe.setPossetion(true);
+                }
+                if (itemC[i]->getType() == "deathTouch" && IsKeyPressed(KEY_K) && !deathTouch.possetion()) {
+                    scythe.setPossetion(false);
+                    deathTouch.setPossetion(true);
+                    //DrawRectangleRec({ 0,0,20,20 }, PINK);
+                }
             }
         }
 
-        DrawRectangleRec({ 1000,500,50,50 }, PINK);
+        DrawRectangleRec({ 500,360,50,50 }, PINK);
 
         afficherPortail = true;
 
@@ -396,7 +402,7 @@ int main(void)
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
-            if (CheckCollisionCircleRec(item.getPosition(), item.getRadius(), mobC[i]->getRectangle()) && item.getActive()) {
+            if (CheckCollisionCircleRec(scythe.getPosition(), scythe.getRadius(), mobC[i]->getRectangle()) && scythe.getActive()) {
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
@@ -467,11 +473,11 @@ int main(void)
 
 
 #pragma region DrawAnimation
-        if (item.getActive()) {
-            if (item.getDirection()== true)
-                animation_scythe.animation_loop_droite({item.getX()- 40, item.getY() - 37}, currentFrameScythe);
+        if (scythe.getActive()) {
+            if (scythe.getDirection()== true)
+                animation_scythe.animation_loop_droite({scythe.getX()- 40, scythe.getY() - 37}, currentFrameScythe);
             else
-                animation_scythe.animation_loop_gauche({item.getX() - 30, item.getY() - 37}, currentFrameScythe);
+                animation_scythe.animation_loop_gauche({scythe.getX() - 30, scythe.getY() - 37}, currentFrameScythe);
         }
 
         if (deathTouch.getActive()) {
@@ -533,7 +539,7 @@ int main(void)
 #pragma endregion Joueur
 
         arme.updateArme(player);
-        if (item.possetion()) item.updateArme(player);
+        if (scythe.possetion()) scythe.updateArme(player);
         else deathTouch.updateArme(player, &maps[indicMap]);
 
 #pragma endregion DrawAnimation

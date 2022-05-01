@@ -15,6 +15,8 @@ public:
 	void setOff();
 	void updatePositon();
 	void updateArme(Joueur player);
+	void setPossetion(bool p);
+	void resetTime();
 
 	Vector2 getPosition();
 	float getX();

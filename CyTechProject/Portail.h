@@ -5,7 +5,7 @@
 class Portail : public Item
 {
 public:
-	Portail(Rectangle rec);
+	Portail(Rectangle rec, std::string type);
 	void setItem(Rectangle rec);
 	Item* copy() override;
 };
