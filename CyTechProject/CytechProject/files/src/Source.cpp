@@ -335,7 +335,7 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
         audio.Update(player, arme);
@@ -467,8 +467,10 @@ int main(void)
         ClearBackground(LIGHTGRAY);
 
 
-
-        //DrawText("Test", 20, 20, 20, DARKGRAY);
+        DrawText("Utilisez les fleches directionnelles pour vous deplacer",20,65, 20, BLACK);
+        DrawText("Appuyez sur J pour Attaquer", 20, 40, 20, BLACK);
+        DrawText("Appuyez sur Y pour utiliser votre objet", 20, 90, 20, BLACK);
+        
 
 
 
