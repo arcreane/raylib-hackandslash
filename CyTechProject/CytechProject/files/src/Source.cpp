@@ -394,15 +394,25 @@ int main(void)
             }
 
             if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
+                if (mobC[i]->getType() == "zombie" && mobC[i]->getIsAlive()) audio.MortZombie();
+                if (mobC[i]->getType() == "ghost" && mobC[i]->getIsAlive()) audio.MortGhost();
+                if (mobC[i]->getType() == "ratKing" && mobC[i]->getIsAlive()) audio.MortRatKing();
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
+
             }
 
             if (CheckCollisionCircleRec(scythe.getPosition(), scythe.getRadius(), mobC[i]->getRectangle()) && scythe.getActive()) {
+                if (mobC[i]->getType() == "zombie" && mobC[i]->getIsAlive()) audio.MortZombie();
+                if (mobC[i]->getType() == "ghost" && mobC[i]->getIsAlive()) audio.MortGhost();
+                if (mobC[i]->getType() == "ratKing" && mobC[i]->getIsAlive()) audio.MortRatKing();
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
             if (CheckCollisionRecs(deathTouch.getRectangle(), mobC[i]->getRectangle()) && deathTouch.getActive() && mobC[i]->getIsAlive()) {
                 if (mobC[i]->getIsKillable()) {
+                    if (mobC[i]->getType() == "zombie" && mobC[i]->getIsAlive()) audio.MortZombie();
+                    if (mobC[i]->getType() == "ghost" && mobC[i]->getIsAlive()) audio.MortGhost();
+                    if (mobC[i]->getType() == "ratKing" && mobC[i]->getIsAlive()) audio.MortRatKing();
                     mobC[i]->setIsAlive(false);
                     deathTouch.setOut();
                 }
