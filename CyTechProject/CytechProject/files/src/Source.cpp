@@ -384,6 +384,8 @@ int main(void)
             if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()))  {
                 player.setIsAlive(false);
                 player.setPersonnage(maps[indicMap].getSpawn());
+                scythe.setOff();
+                deathTouch.setOff();
 
                 mobC.clear();
                 for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
