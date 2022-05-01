@@ -95,7 +95,7 @@ int main(void)
     maps[1].addPlatformMap({ a,275,(screenWidth - a),10 });
     maps[1].addPlatformMap({ 430,93,315,10 });
     a = 1386;
-    maps[1].addPlatformMap({ a, 630, (screenWidth - a), 10 });
+    maps[1].addPlatformMap({ a, 628, (screenWidth - a), 10 });
     maps[1].addPlatformMap({ 963, 540, 318, 10 });
     maps[1].addPlatformMap( { 587, 676, 213, 10 });
     maps[1].addPlatformMap( { 415, 617, 70, 10 });
@@ -116,7 +116,7 @@ int main(void)
     maps[1].addMobMap(new Zombie({ 577 ,1, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1300, 60, 34,40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1150, 360, 34, 40 }, true, &maps[1]));
-    maps[1].addMobMap(new Zombie({ 1400, 600, 34, 40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1400, 595, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
 
     maps[1].addItemMap(new Portail({ 143,530,50,50 }));
@@ -335,7 +335,7 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
         audio.Update(player, arme);
