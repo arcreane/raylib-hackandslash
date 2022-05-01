@@ -46,6 +46,9 @@ int currentFramePortail = 1;
 bool afficherPortail = false;
 int frameTimer = 0;
 bool startTimer = false;
+bool edit;
+bool checkHigh;
+std::string tmp;
 
 int main(void) 
 {
@@ -61,14 +64,18 @@ int main(void)
     Texture2D buttonQuitDown = LoadTexture("../CyTechProject/CyTechProject/files/ressources/menu/Quit Button.png");
     Texture2D buttonQuitUp = LoadTexture("../CyTechProject/CyTechProject/files/ressources/menu/Quit  col_Button.png");
 
-    // Define button bounds on screen
-    Rectangle btnBoundsStart = { 0, 0, 600, 200 };
-    Rectangle btnBoundsQuit = { 0, 0, 600, 200 };
+    Texture2D buttonMenuUp = LoadTexture("../CyTechProject/CyTechProject/files/ressources/menu/Menu  col_Button.png");
+    Texture2D buttonMenuDown = LoadTexture("../CyTechProject/CyTechProject/files/ressources/menu/Menu Button.png");
 
-    int btnStateStart = false;               // Button state: 0-NORMAL, 1-MOUSE_HOVER
-    int btnStateQuit = false;
+    // Define button bounds on screen
+    Rectangle btnBoundsStart = { 0, 0, 300, 100 };
+
+    bool btnStateStart = false;               // Button state: 0-NORMAL, 1-MOUSE_HOVER
+    bool btnStateQuit = false;
+    bool btnStateMenu = false;
     bool btnActionStart = false;         // Button action should be activated
     bool btnActionQuit = false;
+    bool btnActionMenu = false;
 
     Vector2 mousePoint = { 0.0f, 0.0f };
     int window = 0;
@@ -354,7 +361,7 @@ int main(void)
                 btnActionQuit = false;
 
                 // Check button state
-                if (CheckCollisionPointRec(mousePoint, { 500, 300, 600, 200 }))
+                if (CheckCollisionPointRec(mousePoint, { 650, 400, 300, 100 }))
                 {
                     if (IsMouseButtonUp(MOUSE_BUTTON_LEFT)) btnStateStart = true;
 
@@ -368,7 +375,7 @@ int main(void)
                     startTimer = true;
                 }
 
-                if (CheckCollisionPointRec(mousePoint, { 500, 600, 600, 200 }))
+                if (CheckCollisionPointRec(mousePoint, { 650, 600, 300, 100 }))
                 {
                     if (IsMouseButtonUp(MOUSE_BUTTON_LEFT)) btnStateQuit = true;
 
@@ -388,17 +395,17 @@ int main(void)
                 // Calculate button frame rectangle to draw depending on button state
 
                 if (btnStateStart) {
-                    DrawTextureRec(buttonStartDown, btnBoundsStart, { 500, 300 }, WHITE);
+                    DrawTextureRec(buttonStartDown, btnBoundsStart, { 650, 400 }, WHITE);
                 }
                 else {
-                    DrawTextureRec(buttonStartUp, btnBoundsStart, { 500, 300 }, WHITE);
+                    DrawTextureRec(buttonStartUp, btnBoundsStart, { 650, 400 }, WHITE);
                 }
 
                 if (btnStateQuit) {
-                    DrawTextureRec(buttonQuitDown, btnBoundsStart, { 500, 600 }, WHITE);
+                    DrawTextureRec(buttonQuitDown, btnBoundsStart, { 650, 600 }, WHITE);
                 }
                 else {
-                    DrawTextureRec(buttonQuitUp, btnBoundsStart, { 500, 600 }, WHITE);
+                    DrawTextureRec(buttonQuitUp, btnBoundsStart, { 650, 600 }, WHITE);
                 }
                 ClearBackground(RAYWHITE);
 
@@ -443,6 +450,7 @@ int main(void)
                                 if (indicMap == indicLim) {
                                     indicMap = 0;
                                     window = 2;
+                                    checkHigh = true;
                                 }
                                 indicMap += 1;
 
@@ -638,9 +646,14 @@ int main(void)
 
             while (window == 2 && !WindowShouldClose()) {
                 // Game over
-                std::string score = "Vous avez complété le jeu en : ";
+                mousePoint = GetMousePosition();
+                btnActionMenu = false;
 
-                int minute = (frameTimer * 1000) /60;
+                std::string score = "Vous avez complété le jeu en : ";
+                std::string high;
+
+                int minute = frameTimer;
+                minute = (minute * 1000) /60;
                 int ms = minute % 1000;
                 minute = minute / 1000;
                 int sec = minute % 60;
@@ -653,36 +666,89 @@ int main(void)
 
                 score += strMin + ": " + strSec + ": " + strMS + ".\n";
 
-                std::fstream readFile;
-                std::fstream writeFile;
+                std::ifstream readFile;
+                std::ofstream writeFile;
                 std::string record;
                 char buffer;
-                bool edit = false;
 
-                readFile.open("../CyTechProject/CyTechProject/files/ressources/menu/highscore", std::ios::in);
-                if (!readFile) perror("Error opening file");
-                else
-                {
-                    while (!readFile.eof()) {
-                        readFile >> buffer;
-                        record += std::to_string(buffer);
-                    }             
+                if (checkHigh) {
+                    readFile.open("../CyTechProject/CyTechProject/files/ressources/menu/highscore", std::ios::in);
+                    if (!readFile) perror("Error opening file");
+                    else
+                    {
+                        readFile >> record;
+                    }
+                    readFile.close();
+
+                    writeFile.open("../CyTechProject/CyTechProject/files/ressources/menu/highscore", std::ios::out);
+
+                    if (record.size() == 0 || std::stoi(record) > frameTimer) {
+                        writeFile << std::to_string(frameTimer);
+                        edit = true;
+                    }
+                    else {
+                        writeFile << record;
+                        edit = false;
+                    }
+
+                    writeFile.close();
+
+                    if (record.size() == 0) {
+                        record = std::to_string(frameTimer);
+                    }
+
+                    int minute = (stoi(record) * 1000) / 60;
+                    int ms = minute % 1000;
+                    minute = minute / 1000;
+                    int sec = minute % 60;
+                    minute = minute / 60;
+
+                    strMin = std::to_string(minute);
+
+                    strSec = std::to_string(sec);
+
+                    strMS = std::to_string(ms);
+
+                    tmp = strMin + ": " + strSec + ": " + strMS + ".\n";
+
+                    checkHigh = false;
                 }
-                readFile.close();
-                writeFile.open("../CyTechProject/CyTechProject/files/ressources/menu/highscore", std::ios::out);
-                if (record.size() == 0 || std::stoi(record) > frameTimer) {
-                    writeFile << std::to_string(frameTimer);
+
+
+
+                if (edit) {
+                    high = "Bien joué pour votre record !!!";
                 }
                 else {
-                    writeFile << record;
+                    high = "Votre record est de : " + tmp;
                 }
-                writeFile.close();
-               
-            
+
+
+
+                if (CheckCollisionPointRec(mousePoint, { 650, 400, 300, 100 }))
+                {
+                    if (IsMouseButtonUp(MOUSE_BUTTON_LEFT)) btnStateMenu = true;
+
+                    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) btnActionMenu = true;
+                }
+                else btnStateMenu = false;
+
 
                 BeginDrawing();
                 DrawTexture(background, 0, 0, WHITE);
-                DrawText(score.c_str(), 600, 600, 20, BLACK);
+                if (btnActionMenu)
+                {
+                    window = 0;
+                }
+               
+                if (btnStateMenu) {
+                    DrawTextureRec(buttonMenuDown, btnBoundsStart, { 650, 400 }, WHITE);
+                }
+                else {
+                    DrawTextureRec(buttonMenuUp, btnBoundsStart, { 650, 400 }, WHITE);
+                }                
+                DrawText(score.c_str(), 100, 600, 50, BLACK);
+                DrawText(high.c_str(), 100, 700, 50, BLACK);
                 EndDrawing();
 
             }
