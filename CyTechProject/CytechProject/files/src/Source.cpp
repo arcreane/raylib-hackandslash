@@ -73,12 +73,6 @@ int main(void)
 
     Map maps[6];
 
-    Mob mobPassif[NB_MOB_PASSIF];
-    mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
-    mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
-    mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
-
-
     //      Map 1
     //  Load Background
     maps[1].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png"));
@@ -342,17 +336,6 @@ int main(void)
         player.updatePlayer(maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
        
 
-
-        for (int i = 0; i < NB_MOB_PASSIF; i++) {
-            if (CheckCollisionRecs(player.getRectangle(), mobPassif[i].getRectangle()) && mobPassif[i].getIsAlive()) {
-                mobPassif[i].setIsAlive(false);
-            }
-
-            if (mobPassif[i].getIsAlive()) {
-                //DrawRectangleRec(mobPassif[i].getRectangle(), GREEN);
-            }
-        }
-
         for (unsigned i = 0; i < itemC.size(); i++) {
             if (CheckCollisionRecs(player.getRectangle(), itemC[i]->getRectangle()) || IsKeyPressed(KEY_N)) {
                 if ((itemC[i]->getType() == "portail" && afficherPortail) || IsKeyPressed(KEY_N)) {
@@ -373,9 +356,6 @@ int main(void)
                     }
                     audio.UpdatePortail();
 
-                    //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
-                    //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
-                    //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
                     break;
                 }
 
@@ -410,9 +390,6 @@ int main(void)
                     mobC.push_back((*maps[indicMap].getMob(j)).copy());
                 }
 
-                //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
-                //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
-                //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
                 break;
             }
 
