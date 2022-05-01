@@ -348,11 +348,11 @@ int main(void)
         //--------------------------------------------------------------------------------------
         bool close = true;
         // Main game loop
-        while (!WindowShouldClose() && close)    // Detect window close button or ESC key
+        while (close)    // Detect window close button or ESC key
         {
 
             //Fenetre menu
-            while (window == 0 && !WindowShouldClose() && close) {
+            while (window == 0 && close) {
                 mousePoint = GetMousePosition();
                 btnActionStart = false;
                 btnActionQuit = false;
@@ -384,6 +384,7 @@ int main(void)
                 {
                     close = false;
                 }
+                if (WindowShouldClose()) close = false;
 
                 BeginDrawing();
 
@@ -424,7 +425,7 @@ int main(void)
 #pragma region MainGameLoop
 #pragma region Update
         //----------------------------------------------------------------------------------
-        while (window == 1 && !WindowShouldClose() && close) {
+        while (window == 1 && close) {
             if (startTimer) {
                 frameTimer = 0;
                 startTimer = false;
@@ -647,7 +648,7 @@ int main(void)
 
 
 #pragma region Joueur
-                    if (IsKeyPressed(KEY_ESCAPE)) close = false;
+                    if (WindowShouldClose()) close = false;
 
                     if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;
                     if (arme.getCd() > 0 && arme.getEtat() && arme.getActive() > 0 && arme.getDirection())
@@ -681,7 +682,7 @@ int main(void)
 
                 }
 
-            while (window == 2 && !WindowShouldClose()) {
+            while (window == 2 && close) {
                 // Game over
                 mousePoint = GetMousePosition();
                 btnActionMenu = false;
@@ -787,6 +788,7 @@ int main(void)
                 DrawText(score.c_str(), 100, 600, 50, BLACK);
                 DrawText(high.c_str(), 100, 700, 50, BLACK);
                 EndDrawing();
+                if (WindowShouldClose()) close = false;
 
             }
             
