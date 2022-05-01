@@ -11,10 +11,12 @@ protected:
 public:
 	Rectangle getRectangle();
 	std::string getType();
+	Item(Rectangle rec, std::string type);
 	Item(Rectangle rec);
 	Item();
 	virtual Item* copy();
 	float getX();
 	float getY();
+	void setItem(Rectangle rec);
 };
 

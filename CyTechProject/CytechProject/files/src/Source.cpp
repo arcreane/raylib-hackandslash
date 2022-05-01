@@ -5,13 +5,12 @@
 #include "../../ArmeCAC.h"
 #include "../../Scythe.h"
 #include "../../DeathTouch.h"
-#include "../../Portail.h"
+#include "../../Item.h"
 #include "../../RatKing.h"
 #include "../../Zombie.h"
 #include "../../Ghost.h"
 #include "../../Lave.h"
 #include "../../Arme.h"
-#include "../../Portail.h"
 #include "../../Animation_Joueur.h"
 #include "../../Map.h"
 #include "../../Animation_Zombie.h"
@@ -121,9 +120,9 @@ int main(void)
     maps[1].addMobMap(new Zombie({ 1400, 595, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
 
-    maps[1].addItemMap(new Portail({ 143,530,50,50 }, "portail"));
-    maps[1].addItemMap(new Portail({ 500 +22,360,16,49 }, "deathTouch"));
-    maps[1].addItemMap(new Portail({ 500    ,360,60,49 }, "scythe"));
+    maps[1].addItemMap(new Item({ 143,530,50,50 }, "portail"));
+    maps[1].addItemMap(new Item({ 500 +22,360,16,49 }, "deathTouch"));
+    maps[1].addItemMap(new Item({ 500    ,360,60,49 }, "scythe"));
 
     //      Map 2
     //  Load Background
@@ -165,7 +164,7 @@ int main(void)
     maps[2].addMobMap(new Zombie({ 300,815,34,40 }, true, & maps[2]));
     maps[2].addMobMap(new Zombie({ 450,815,34,40 }, true, & maps[2]));
 
-    maps[2].addItemMap(new Portail({1430,220,50,50}, "portail"));
+    maps[2].addItemMap(new Item({1430,220,50,50}, "portail"));
 
     //      Map 3
     //  Load Background
@@ -201,7 +200,7 @@ int main(void)
     maps[3].addMobMap(new Zombie({ 645,665 ,34,40 }, true, & maps[3]));
     maps[3].addMobMap(new Zombie({ 520,90 ,34 ,40 }, true, & maps[3]));
 
-    maps[3].addItemMap(new Portail({ 1090,85,50,50 }, "portail"));
+    maps[3].addItemMap(new Item({ 1090,85,50,50 }, "portail"));
 
     //      Map 4
     //  Load Background
@@ -239,7 +238,7 @@ int main(void)
     maps[4].addMobMap(new Zombie({ 700, 100 ,34,40 }, true, & maps[4]));
     maps[4].addMobMap(new Zombie({ 245, 220, 34 ,40 }, true, & maps[4]));
 
-    maps[4].addItemMap(new Portail({ 1175,790,50,50 }, "portail"));
+    maps[4].addItemMap(new Item({ 1175,790,50,50 }, "portail"));
 
     //      Map 5
     //  Load Background
@@ -281,7 +280,7 @@ int main(void)
     maps[5].addMobMap(new Zombie({ 1030, 275, 34 ,40 }, true, & maps[5]));
     maps[5].addMobMap(new Zombie({ 500, 545, 34 ,40 }, true, & maps[5]));
 
-    maps[5].addItemMap(new Portail({870,200,50,50 }, "portail"));
+    maps[5].addItemMap(new Item({870,200,50,50 }, "portail"));
 
 
     player.setPersonnage(maps[1].getSpawn());
