@@ -8,6 +8,7 @@ void DeathTouch::setArme()
 	this->time = 0;
 	this->active = false;
 	this->possede = false;
+	this->item.Init_animation_deathTouch();
 }
 
 void DeathTouch::setOn(Vector2 pos, Map* m)
@@ -58,7 +59,7 @@ void DeathTouch::updateArme(Joueur player, Map* m)
 				this->active = false;
 			}
 		}
-		DrawRectangleRec({ 60,20,20,20 }, RED);
+		this->item.drawItem({ 20,20 }, BLACK);
 		this->setCd();
 		if (this->getActive()) {
 			//DrawRectangleRec(this->getRectangle(), PINK);
@@ -71,12 +72,18 @@ void DeathTouch::updateArme(Joueur player, Map* m)
 			this->setOff();
 		}
 	}
-	else DrawRectangleRec({ 60,20,20,20 }, GREEN);
+	else this->item.drawItem({ 20,20 }, WHITE);
 }
 
 void DeathTouch::setPossetion(bool p)
 {
 	this->possede = p;
+	this->setOut();
+}
+
+void DeathTouch::resetTime()
+{
+	this->time = 0;
 }
 
 Rectangle DeathTouch::getRectangle() {
@@ -105,19 +112,3 @@ float DeathTouch::getY()
 bool DeathTouch::possetion() {
 	return this->possede;
 }
-
-//class item
-/*
-DeathTouch::DeathTouch(Rectangle rec)
-{
-	hitBox = rec;
-	this->type = "deathTouch";
-}
-
-void DeatTouch::setItem(Rectangle rec) {
-	this->hitBox = rec;
-}
-
-Item* DeathTouch::copy() {
-	return new DeatTouch(this->hitBox);
-}*/

@@ -27,7 +27,7 @@ public :
 	void addPlatformMap(Rectangle rec);
 	void addBoxMap(Rectangle rec);
 	void addMobMap(Mob* mob);
-	void addItemMap(Item* mob);
+	void addItemMap(Item* item);
 	void setSpawn(Rectangle rectangle);
 	Rectangle getSpawn();
 	std::vector<Platform> getPlatforms();

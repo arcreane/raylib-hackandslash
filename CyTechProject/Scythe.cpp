@@ -1,6 +1,6 @@
-#include "ArmeDistance.h"
+#include "Scythe.h"
 
-void ArmeDistance::setArme(float radius)
+void Scythe::setArme(float radius)
 {
 	this->hitBox = { 0, 0, radius };
 	this->cooldown = 500;
@@ -8,9 +8,10 @@ void ArmeDistance::setArme(float radius)
 	this->time = 0;
 	this->active = false;
 	this->possede = true;
+	this->item.Init_animation_scythe();
 }
 
-void ArmeDistance::setOn(Vector2 pos) {
+void Scythe::setOn(Vector2 pos) {
 	this->hitBox.x = pos.x;
 	this->hitBox.y = pos.y;
 	this->positionDepart.x = pos.x;
@@ -19,29 +20,29 @@ void ArmeDistance::setOn(Vector2 pos) {
 	this->active = true;
 }
 
-void ArmeDistance::setOut() {
+void Scythe::setOut() {
 	this->active = false;
 }
 
-void ArmeDistance::setOff() {
+void Scythe::setOff() {
 	this->etat = false;
 	this->active = false;
 	this->time = 0;
 }
 
-void ArmeDistance::updatePositon() {
+void Scythe::updatePositon() {
 	if (this->direction) this->hitBox.x = this->positionDepart.x + time * 5;
 	else this->hitBox.x = this->positionDepart.x - time * 5;
 	this->hitBox.y = this->positionDepart.y + (0.05 * (time * 5 - 300)) * (0.05 * (time * 5 - 300));
 }
 
-void ArmeDistance::updateArme(Joueur player) {
+void Scythe::updateArme(Joueur player) {
 	if (IsKeyDown(KEY_Y) && !this->etat) {
 		this->setOn(player.getPosition());
 		this->setDirection(player.getOrientation());
 	}
 	if (this->getEtat()) {
-		DrawRectangleRec({ 20,20,20,20 }, RED);
+		this->item.drawItem({ 20,20 }, BLACK);
 		this->setCd();
 		if (this->getActive()) {
 			// DrawCircle(this->getX(), this->getY(), this->getRadius(), PINK);
@@ -54,33 +55,43 @@ void ArmeDistance::updateArme(Joueur player) {
 			this->setOff();
 		}
 	}
-	else DrawRectangleRec({ 20,20,20,20 }, GREEN);
+	else this->item.drawItem({ 20,20 }, WHITE);
+}
+
+void Scythe::setPossetion(bool p)
+{
+	this->possede = p;
+	this->setOut();
+}
+
+void Scythe::resetTime() {
+	this->time = 0;
 }
 
 
-Vector2 ArmeDistance::getPosition() {
+Vector2 Scythe::getPosition() {
 	return { this->hitBox.x, this->hitBox.y };
 }
 
-float ArmeDistance::getX()
+float Scythe::getX()
 {
 	return this->hitBox.x;
 }
 
-float ArmeDistance::getY()
+float Scythe::getY()
 {
 	return this->hitBox.y;
 }
 
-float ArmeDistance::getRadius()
+float Scythe::getRadius()
 {
 	return this->hitBox.radius;
 }
 
-bool ArmeDistance::getActive() {
+bool Scythe::getActive() {
 	return this->active;
 }
 
-bool ArmeDistance::possetion() {
+bool Scythe::possetion() {
 	return this->possede;
 }
