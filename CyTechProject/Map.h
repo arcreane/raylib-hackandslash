@@ -1,4 +1,5 @@
 #include"Platform.h"
+#include"Item.h"
 #include"Ghost.h"
 #include"RatKing.h"
 #include"raylib.h"
@@ -14,6 +15,7 @@ private :
 	std::vector<Platform> platforms;
 	std::vector<Mob* > mobs;
 	std::vector<Platform> boxes;
+	std::vector<Item* > items;
 	Texture2D background;
 public :
 	Map(Texture2D bg);
@@ -24,9 +26,12 @@ public :
 	void addPlatformMap(Rectangle rec);
 	void addBoxMap(Rectangle rec);
 	void addMobMap(Mob* mob);
+	void addItemMap(Item* mob);
 	std::vector<Platform> getPlatforms();
 	std::vector<Platform> getBoxes();
 	std::vector<Mob*> getMobs();
+	std::vector<Item*> getItems();
 	Mob* getMob(int i);
+	Item* getItem(int i);
 };
 

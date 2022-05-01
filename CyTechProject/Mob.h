@@ -1,4 +1,3 @@
-#include "Personnage.h"
 #include "Joueur.h"
 #include <string>
 

@@ -37,8 +37,20 @@ Mob* Map::getMob(int i) {
 	return mobs[i];
 }
 
+std::vector<Item*> Map::getItems() {
+	return items;
+}
+
+Item* Map::getItem(int i) {
+	return items[i];
+}
+
 void Map::addMobMap(Mob* mob) {
 	mobs.push_back(mob);
+}
+
+void Map::addItemMap(Item* item) {
+	items.push_back(item);
 }
 
 Map::~Map() {

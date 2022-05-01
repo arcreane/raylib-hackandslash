@@ -2,15 +2,14 @@
 
 Portail::Portail(Rectangle rec)
 {
-	pos_dim = rec;
+	hitBox = rec;
 	this->type = "portail";
-	this->isKillable = false;
 }
 
-void Portail::setMob(Rectangle rec) {
-	this->pos_dim = rec;
+void Portail::setItem(Rectangle rec) {
+	this->hitBox = rec;
 }
 
-Mob* Portail::copy() {
-	return new Portail(this->pos_dim);
+Item* Portail::copy() {
+	return new Portail(this->hitBox);
 }

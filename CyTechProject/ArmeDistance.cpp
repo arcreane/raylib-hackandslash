@@ -7,7 +7,7 @@ void ArmeDistance::setArme(float radius)
 	this->etat = false;
 	this->time = 0;
 	this->active = false;
-	this->possede = false;
+	this->possede = true;
 }
 
 void ArmeDistance::setOn(Vector2 pos) {

@@ -5,6 +5,7 @@
 #include "../../ArmeCAC.h"
 #include "../../ArmeDistance.h"
 #include "../../DeathTouch.h"
+#include "../../Portail.h"
 #include "../../RatKing.h"
 #include "../../Zombie.h"
 #include "../../Ghost.h"
@@ -115,7 +116,8 @@ int main(void)
     maps[1].addMobMap(new Zombie({ 1150, 360, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1400, 600, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
-    maps[1].addMobMap(new Portail({ 143,530,50,50 }));
+
+    maps[1].addItemMap(new Portail({ 143,530,50,50 }));
 
     DeathTouch deathTouch;
     deathTouch.setArme();
@@ -157,7 +159,8 @@ int main(void)
     maps[2].addMobMap(new Zombie({ 55, 230, 34, 40 }, true, & maps[2]));
     maps[2].addMobMap(new Zombie({ 300,815,34,40 }, true, & maps[2]));
     maps[2].addMobMap(new Zombie({ 450,815,34,40 }, true, & maps[2]));
-    maps[2].addMobMap(new Portail({1430,220,50,50}));
+
+    maps[2].addItemMap(new Portail({1430,220,50,50}));
 
     //      Map 3
     //  Load Background
@@ -190,7 +193,8 @@ int main(void)
     maps[3].addMobMap(new Zombie({ 60, 410, 34, 40 }, true, & maps[3]));
     maps[3].addMobMap(new Zombie({ 645,665 ,34,40 }, true, & maps[3]));
     maps[3].addMobMap(new Zombie({ 520,90 ,34 ,40 }, true, & maps[3]));
-    maps[3].addMobMap(new Portail({ 1090,85,50,50 }));
+
+    maps[3].addItemMap(new Portail({ 1090,85,50,50 }));
 
     //      Map 4
     //  Load Background
@@ -225,7 +229,8 @@ int main(void)
     maps[4].addMobMap(new Zombie({ 460, 360, 34, 40 }, true, & maps[4]));
     maps[4].addMobMap(new Zombie({ 700, 100 ,34,40 }, true, & maps[4]));
     maps[4].addMobMap(new Zombie({ 245, 220, 34 ,40 }, true, & maps[4]));
-    maps[4].addMobMap(new Portail({ 1175,790,50,50 }));
+
+    maps[4].addItemMap(new Portail({ 1175,790,50,50 }));
 
     //      Map 5
     //  Load Background
@@ -264,17 +269,24 @@ int main(void)
     maps[5].addMobMap(new Zombie({ 1100, 415, 34 ,40 }, true, & maps[5]));
     maps[5].addMobMap(new Zombie({ 1030, 275, 34 ,40 }, true, & maps[5]));
     maps[5].addMobMap(new Zombie({ 500, 545, 34 ,40 }, true, & maps[5]));
-    maps[5].addMobMap(new Portail({870,200,50,50 }));
+
+    maps[5].addItemMap(new Portail({870,200,50,50 }));
 
 
     int indicMap = 1;
     int indicLim = 5;
 
     std::vector<Mob* >mobC;
+    std::vector<Item* >itemC;
 
     mobC.clear();
     for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
         mobC.push_back((*maps[indicMap].getMob(j)).copy());
+    }
+
+    itemC.clear();
+    for (unsigned k = 0; k < maps[indicMap].getItems().size(); k++) {
+        itemC.push_back((*maps[indicMap].getItem(k)).copy());
     }
 
     Camera2D camera = { 0 };
@@ -329,6 +341,33 @@ int main(void)
             }
         }
 
+        for (unsigned i = 0; i < itemC.size(); i++) {
+            if (CheckCollisionRecs(player.getRectangle(), itemC[i]->getRectangle()) || IsKeyPressed(KEY_N)) {
+                if ((itemC[i]->getType() == "portail" && afficherPortail) || IsKeyPressed(KEY_N)) {
+                    if (indicMap == indicLim) {
+                        indicMap = 0;
+                    }
+                    indicMap += 1;
+                }
+                else {
+                    player.setIsAlive(false);
+                }
+                if (!(itemC[i]->getType() == "portail") || afficherPortail || IsKeyPressed(KEY_N)) {
+                    player.setPersonnage({ 300, 100, 28, 40 });
+
+                    itemC.clear();
+                    for (unsigned j = 0; j < maps[indicMap].getItems().size(); j++) {
+                        itemC.push_back((*maps[indicMap].getItem(j)).copy());
+                    }
+
+                    //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
+                    //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
+                    //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
+                    break;
+                }
+            }
+        }
+
         for (unsigned i = 0; i < mobC.size(); i++) {            
             if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
                 if ((mobC[i]->getType() == "portail" && afficherPortail) || IsKeyPressed(KEY_N)) {
@@ -354,9 +393,6 @@ int main(void)
                     break;
                 }
             }
-            
-
-            
 
             if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);

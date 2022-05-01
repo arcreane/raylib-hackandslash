@@ -7,7 +7,7 @@ void DeathTouch::setArme()
 	this->etat = false;
 	this->time = 0;
 	this->active = false;
-	this->possede = true;
+	this->possede = false;
 }
 
 void DeathTouch::setOn(Vector2 pos, Map* m)

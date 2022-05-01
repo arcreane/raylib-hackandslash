@@ -1,10 +1,12 @@
+#include "Item.h"
+
 #pragma once
-#include "Mob.h"
-class Portail : public Mob
+
+class Portail : public Item
 {
 public:
 	Portail(Rectangle rec);
-	void setMob(Rectangle rec) override;
-	Mob* copy() override;
+	void setItem(Rectangle rec);
+	Item* copy() override;
 };
 
