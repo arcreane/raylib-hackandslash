@@ -11,6 +11,9 @@ public:
 	void UpdateAudio();
 	void UpdateScythe();
 	void UpdateDeathTouch();
+	void MortZombie();
+	void MortGhost();
+	void MortRatKing();
 	void Free();
 
 
@@ -21,4 +24,7 @@ private:
 	Sound portail;
 	Sound scythe;
 	Sound deathTouch;
+	Sound mortZombie;
+	Sound mortGhost;
+	Sound mortRatKing;
 };
