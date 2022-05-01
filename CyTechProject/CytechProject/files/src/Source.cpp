@@ -195,6 +195,7 @@ int main(void)
     maps[3].addMobMap(new Zombie({ 520,90 ,34 ,40 }, true, & maps[3]));
 
     maps[3].addItemMap(new Portail({ 1090,85,50,50 }));
+    //maps[3].addItemMap(new DeatTouch({ 1000,500,50,50 }));
 
     //      Map 4
     //  Load Background
@@ -347,9 +348,7 @@ int main(void)
                         indicMap = 0;
                     }
                     indicMap += 1;
-                }
 
-                if ((itemC[i]->getType() == "portail") && afficherPortail || IsKeyPressed(KEY_N)) {
                     player.setPersonnage({ 300, 100, 28, 40 });
 
                     itemC.clear();
@@ -366,9 +365,14 @@ int main(void)
                     //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
                     break;
                 }
+                /*if (itemC[i]->getType() == "deathTouch" && IsKeyPressed(KEY_H)) {
+                    item.setPossetion(true);
+                    ArmeDistance.setPossetion(false);
+                }*/
             }
         }
 
+        DrawRectangleRec({ 1000,500,50,50 }, PINK);
 
         afficherPortail = true;
 

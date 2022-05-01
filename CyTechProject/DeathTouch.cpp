@@ -74,6 +74,11 @@ void DeathTouch::updateArme(Joueur player, Map* m)
 	else DrawRectangleRec({ 60,20,20,20 }, GREEN);
 }
 
+void DeathTouch::setPossetion(bool p)
+{
+	this->possede = p;
+}
+
 Rectangle DeathTouch::getRectangle() {
 	return this->hitBox;
 }
@@ -100,3 +105,19 @@ float DeathTouch::getY()
 bool DeathTouch::possetion() {
 	return this->possede;
 }
+
+//class item
+/*
+DeathTouch::DeathTouch(Rectangle rec)
+{
+	hitBox = rec;
+	this->type = "deathTouch";
+}
+
+void DeatTouch::setItem(Rectangle rec) {
+	this->hitBox = rec;
+}
+
+Item* DeathTouch::copy() {
+	return new DeatTouch(this->hitBox);
+}*/

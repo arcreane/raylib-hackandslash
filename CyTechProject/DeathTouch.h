@@ -1,7 +1,8 @@
 #include "Arme.h"
+#include "Item.h"
 
 #pragma once
-class DeathTouch : public Arme
+class DeathTouch : public Arme, public Item
 {
 private:
 	Rectangle hitBox;
@@ -14,6 +15,7 @@ public:
 	void setOff();
 	void updatePositon();
 	void updateArme(Joueur player, Map* m);
+	void setPossetion(bool p);
 
 	Rectangle getRectangle();
 	Vector2 getPosition();
@@ -21,5 +23,12 @@ public:
 	float getX();
 	float getY();
 	bool possetion();
+
+	// class portail
+	/*
+	DeathTouch(Rectangle rec);
+	void setItem(Rectangle rec);
+	Item* copy() override;
+	*/
 };
 
