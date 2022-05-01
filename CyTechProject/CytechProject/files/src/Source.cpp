@@ -107,11 +107,13 @@ int main(void)
     maps[1].addBoxMap({ 54,359,54,45 });
     //  Mobs depart et type
     maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
-    maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[1].addMobMap(new Ghost({ 1262, 47, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
-    maps[1].addMobMap(new Zombie({ 577,1,34,40 }, true, &maps[1]));
-    maps[1].addMobMap(new Zombie({ 1100,60,34,40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 577,1,34,35 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1426,577,34,35 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1100,60,34,35}, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 607,620,34,35 }, true, &maps[1]));
     maps[1].addMobMap(new Portail({ 143,530,50,50 }));
 
     //      Map 2
@@ -142,9 +144,17 @@ int main(void)
     a = 906;
     maps[2].addBoxMap({ a,673,screenWidth - a,88 });
     //  Mobs depart et type
-    maps[2].addMobMap(new Lave({ 0,855,1600,5 }));
-    maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[2].addMobMap(new Ghost({ 1500, 540, 32, 28 }));
+    maps[2].addMobMap(new RatKing({ 482, 280, 33, 48 }, true, 470, 800));
+    maps[2].addMobMap(new RatKing({ 500, 640, 33, 48 }, true, 500, 800));
+    maps[2].addMobMap(new RatKing({ 1200, 500, 33, 48 }, true, 1200, 1500));
     maps[2].addMobMap(new Portail({1430,220,50,50}));
+    maps[2].addMobMap(new Zombie({ 160,800,34,35 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 200,800,34,35 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 250,800,34,35 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 1200,250,34,35 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 0,370,34,35 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 68,84,34,35 }, true, & maps[2]));
 
     //      Map 3
     //  Load Background
@@ -153,7 +163,9 @@ int main(void)
     maps[3].addPlatformMap({ 0, 180, 317, 10 });
     maps[3].addPlatformMap({ 0,315,531,10 });
     maps[3].addPlatformMap({ 0,448,1013,10 });
-    maps[3].addPlatformMap({ 0,855,1600,10 });
+    a = 485;
+    maps[3].addPlatformMap({ 0,855,a,10 });
+    maps[3].addPlatformMap({ a,855,1600 - a,10 });
     maps[3].addPlatformMap({ 482,138,476,10 });
     a = 1226;
     maps[3].addPlatformMap({ a,450,1600 - a,10 });
@@ -167,7 +179,19 @@ int main(void)
     maps[3].addBoxMap({ 1494,361,53,44 });
     maps[3].addBoxMap({ 1440,406,106,44 });
     //  Mobs depart et type
-    maps[3].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[3].addMobMap(new Ghost({ 1500, 740, 32, 28 }));
+    maps[3].addMobMap(new Ghost({ 1500, 40, 32, 28 }));
+    maps[3].addMobMap(new Zombie({ 550,800,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 500,800,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 450,800,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 818,528,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 918,528,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 1256,411,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 522,84,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 30,265,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 52,400,34,35 }, true, & maps[3]));
+    maps[3].addMobMap(new RatKing({ 988, 72, 33, 48 }, true, 1000, 1300));
+    maps[3].addMobMap(new RatKing({ 300, 600, 33, 48 }, true, 300, 600));
     maps[3].addMobMap(new Portail({ 1090,85,50,50 }));
 
     //      Map 4
@@ -179,6 +203,8 @@ int main(void)
     maps[4].addPlatformMap({ a,855,1600 - a,10 });
     maps[4].addPlatformMap({ 213, 270, 53 * 5, 10 });
     maps[4].addPlatformMap({ 639, 136, 53 * 6, 10 });
+    maps[4].addPlatformMap({ 0,540,53 * 4,10 });
+    maps[4].addPlatformMap({ 215,630,53 * 4,10 });
     //  Boxes
     maps[4].addBoxMap({ 0,540,53*4,44*2 });
     maps[4].addBoxMap({ 215,630,53 * 4,44 * 2 });
@@ -193,8 +219,23 @@ int main(void)
     maps[4].addBoxMap({ 1474,475,20,44 / 2 });
     maps[4].addBoxMap({ 1494,497,53,44 / 2 });
     //  Mobs depart et type
-    maps[4].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[4].addMobMap(new Ghost({ 1500, 740, 32, 28 }));
+    maps[4].addMobMap(new Ghost({ 1500, 40, 32, 28 }));
+    maps[4].addMobMap(new Zombie({ 700,75,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 474,360,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 700,75,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 0,500,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 550,800,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 800,800,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 1200,800,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 238,487,34,35 }, true, & maps[4]));
+    maps[4].addMobMap(new RatKing({ 1175, 700, 33, 48 }, true, 1000, 1500));
+    maps[4].addMobMap(new RatKing({ 975, 300, 33, 48 }, true, 900, 1200));
+    maps[4].addMobMap(new RatKing({ 1300, 300, 33, 48 }, true, 1200, 1500));
+    maps[4].addMobMap(new RatKing({ 1200, 370, 33, 48 }, true, 1000, 1350));
     maps[4].addMobMap(new Portail({ 1175,790,50,50 }));
+    maps[4].addMobMap(new Lave({ 907,837,204,5 }));
+    maps[4].addMobMap(new Lave({ 1438,837,204,5 }));
 
     //      Map 5
     //  Load Background
@@ -205,7 +246,9 @@ int main(void)
     maps[5].addPlatformMap({ 53, 450, 480, 10 });
     maps[5].addPlatformMap({ 639, 450, 320, 10 });
     maps[5].addPlatformMap({ 1067, 450, 480, 10 });
-    maps[5].addPlatformMap({ 0,855,1600,10 });
+    maps[5].addPlatformMap({ 0,855,480,10 });
+    a = 800;
+    maps[5].addPlatformMap({ a,855,1600 - 800,10 });
     maps[5].addPlatformMap({ 1013, 315, 160, 10 });
     maps[5].addPlatformMap({ 480, 584, 53 * 5, 10 });
     //  Boxes
