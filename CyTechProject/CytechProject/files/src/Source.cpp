@@ -338,6 +338,7 @@ int main(void)
         //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
+
         audio.Update(player, arme);
         player.updatePlayer(maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
        
@@ -371,6 +372,7 @@ int main(void)
                     for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
                         mobC.push_back((*maps[indicMap].getMob(j)).copy());
                     }
+                    audio.UpdatePortail();
 
                     //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                     //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
@@ -383,7 +385,6 @@ int main(void)
                 }*/
             }
         }
-
         DrawRectangleRec({ 1000,500,50,50 }, PINK);
 
         afficherPortail = true;
