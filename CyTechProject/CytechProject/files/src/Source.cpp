@@ -691,7 +691,7 @@ int main(void)
                     mousePoint = GetMousePosition();
                     btnActionMenu = false;
 
-                    std::string score = "Vous avez complété le jeu en : ";
+                    std::string score = "Vous avez complete le jeu en : ";
                     std::string high;
 
                     int minute = frameTimer;
@@ -718,7 +718,6 @@ int main(void)
                         else
                         {
                             readFile >> record;
-                            printf("%s de taille %d",record.c_str(), record.size());
                         }
                         readFile.close();
 
@@ -760,7 +759,7 @@ int main(void)
 
 
                     if (edit) {
-                        high = "Bien joué pour votre record !!!";
+                        high = "Bien joue pour votre record !!!";
                     }
                     else {
                         high = "Votre record est de : " + tmp;
