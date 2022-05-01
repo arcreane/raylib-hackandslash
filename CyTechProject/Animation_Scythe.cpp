@@ -12,6 +12,8 @@ void Animation_Scythe::Init_animation_scythe()
     this->Loop5 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin05.png");
     this->Loop6 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin06.png");
     this->Loop7 = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scytheLargeSpin07.png");
+
+    this->Item = LoadTexture("../CyTechProject/CyTechProject/files/ressources/items/scythe/scythe00.png");
 }
 
 
@@ -37,4 +39,8 @@ void Animation_Scythe::animation_loop_gauche(Vector2 position, int currentFrame)
     if (currentFrame == 5) DrawTextureRec(this->Loop5, this->frameRecGauche, position, WHITE);
     if (currentFrame == 6) DrawTextureRec(this->Loop6, this->frameRecGauche, position, WHITE);
     if (currentFrame == 7) DrawTextureRec(this->Loop7, this->frameRecGauche, position, WHITE);
+}
+
+void Animation_Scythe::drawItem(Vector2 position, Color c) {
+    DrawTextureRec(this->Item, this->frameRecDroite, position, c);
 }

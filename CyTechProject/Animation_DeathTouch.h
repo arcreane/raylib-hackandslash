@@ -14,5 +14,7 @@ public:
 	void animation_loop_droite(Vector2 position, int currentFrame);
 	void animation_loop_gauche(Vector2 position, int currentFrame);
 
+	void drawItem(Vector2 position, Color c);
+
 };
 

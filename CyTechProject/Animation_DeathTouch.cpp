@@ -24,3 +24,7 @@ void Animation_DeathTouch::animation_loop_gauche(Vector2 position, int currentFr
     if (currentFrame == 1) DrawTextureRec(this->Loop1, this->frameRecGauche, position, WHITE);
 
 }
+
+void Animation_DeathTouch::drawItem(Vector2 position, Color c) {
+    DrawTextureRec(this->Loop0, this->frameRecDroite, position, c);
+}

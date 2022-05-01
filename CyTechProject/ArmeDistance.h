@@ -1,4 +1,5 @@
 #include "Arme.h"
+#include "Animation_Scythe.h"
 
 #pragma once
 class ArmeDistance : public Arme
@@ -8,6 +9,7 @@ private:
 	Vector2 positionDepart;
 	bool active;
 	bool possede;
+	Animation_Scythe item;
 public:
 	void setArme(float radius);
 	void setOn(Vector2 pos);

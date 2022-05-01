@@ -109,10 +109,10 @@ int main(void)
     maps[1].addBoxMap({ 0,359,54,45 });
     maps[1].addBoxMap({ 54,359,54,45 });
     //  Mobs depart et type
-    //maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
-    //maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
-    //maps[1].addMobMap(new Ghost({ 1100, 715, 32, 28 }));
-    //maps[1].addMobMap(new Ghost({ 1550, 480, 32, 28 }));
+    maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
+    maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[1].addMobMap(new Ghost({ 1100, 715, 32, 28 }));
+    maps[1].addMobMap(new Ghost({ 1550, 480, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
     maps[1].addMobMap(new Zombie({ 577 ,1, 34, 40 }, true, &maps[1]));
@@ -122,8 +122,8 @@ int main(void)
     maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
 
     maps[1].addItemMap(new Portail({ 143,530,50,50 }, "portail"));
-    maps[1].addItemMap(new Portail({ 500,360,50,50 }, "deathTouch"));
-    maps[1].addItemMap(new Portail({ 500,360,50,50 }, "scythe"));
+    maps[1].addItemMap(new Portail({ 500 +22,360,16,49 }, "deathTouch"));
+    maps[1].addItemMap(new Portail({ 500    ,360,60,49 }, "scythe"));
 
     //      Map 2
     //  Load Background
@@ -380,19 +380,24 @@ int main(void)
                     break;
                 }
 
-                if (itemC[i]->getType() == "scythe" && IsKeyPressed(KEY_H) && !scythe.possetion()) {
-                    deathTouch.setPossetion(false);
-                    scythe.setPossetion(true);
+                if (itemC[i]->getType() == "scythe" && !scythe.possetion()) {
+                    if (IsKeyPressed(KEY_H)) {
+                        deathTouch.setPossetion(false);
+                        scythe.setPossetion(true);
+                    }
+                    DrawText("Appuyez sur H pour ramasser l'arme Scythe", 20, 115, 20, BLACK);
                 }
-                if (itemC[i]->getType() == "deathTouch" && IsKeyPressed(KEY_K) && !deathTouch.possetion()) {
-                    scythe.setPossetion(false);
-                    deathTouch.setPossetion(true);
-                    //DrawRectangleRec({ 0,0,20,20 }, PINK);
+                if (itemC[i]->getType() == "deathTouch" && !deathTouch.possetion()) {
+                    if (IsKeyPressed(KEY_K)) {
+                        scythe.setPossetion(false);
+                        deathTouch.setPossetion(true);
+                    }
+                    DrawText("Appuyez sur K pour ramasser le sort Death Touch", 20, 115, 20, BLACK);
                 }
             }
         }
 
-        DrawRectangleRec({ 500,360,50,50 }, PINK);
+        DrawRectangleRec({ 500,360,60,49 }, PINK);
 
         afficherPortail = true;
 
@@ -530,6 +535,13 @@ int main(void)
         for (unsigned i = 0; i < itemC.size(); i++) {
             if (itemC[i]->getType() == "portail" && afficherPortail) {
                 animation_portail.animation_portail({ itemC[i]->getX() - 25, itemC[i]->getY() - 25 }, currentFramePortail);
+            }
+            if (itemC[i]->getType() == "scythe" && !scythe.possetion()) {
+                animation_scythe.drawItem({ itemC[i]->getX() -8, itemC[i]->getY() -6}, WHITE);
+            }
+
+            if (itemC[i]->getType() == "deathTouch" && !deathTouch.possetion()) {
+                animation_deathTouch.drawItem({ itemC[i]->getX(), itemC[i]->getY()}, WHITE);
             }
         }
 

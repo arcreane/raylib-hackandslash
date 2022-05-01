@@ -1,5 +1,5 @@
 #include "Arme.h"
-#include "Item.h"
+#include "Animation_DeathTouch.h"
 
 #pragma once
 class DeathTouch : public Arme, public Item
@@ -10,6 +10,7 @@ private:
 	Map* _m;
 	bool possede;
 	bool active;
+	Animation_DeathTouch item;
 public:
 	void setArme();
 	void setOn(Vector2 pos, Map* m);

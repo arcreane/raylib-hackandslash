@@ -39,6 +39,7 @@ void DeathTouch::updatePositon()
 
 void DeathTouch::updateArme(Joueur player, Map* m)
 {
+	this->item.Init_animation_deathTouch();
 	//std::vector<Platform> platforms = this->_m->getPlatforms();
 	if (IsKeyDown(KEY_Y) && !this->etat) {
 		this->setOn(player.getPosition(), m);
@@ -58,7 +59,7 @@ void DeathTouch::updateArme(Joueur player, Map* m)
 				this->active = false;
 			}
 		}
-		DrawRectangleRec({ 60,20,20,20 }, RED);
+		this->item.drawItem({ 20,20 }, BLACK);
 		this->setCd();
 		if (this->getActive()) {
 			//DrawRectangleRec(this->getRectangle(), PINK);
@@ -71,7 +72,7 @@ void DeathTouch::updateArme(Joueur player, Map* m)
 			this->setOff();
 		}
 	}
-	else DrawRectangleRec({ 60,20,20,20 }, GREEN);
+	else this->item.drawItem({ 20,20 }, WHITE);
 }
 
 void DeathTouch::setPossetion(bool p)

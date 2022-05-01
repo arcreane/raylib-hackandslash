@@ -36,12 +36,13 @@ void ArmeDistance::updatePositon() {
 }
 
 void ArmeDistance::updateArme(Joueur player) {
+	this->item.Init_animation_scythe();
 	if (IsKeyDown(KEY_Y) && !this->etat) {
 		this->setOn(player.getPosition());
 		this->setDirection(player.getOrientation());
 	}
 	if (this->getEtat()) {
-		DrawRectangleRec({ 20,20,20,20 }, RED);
+		this->item.drawItem({ 20,20 }, BLACK);
 		this->setCd();
 		if (this->getActive()) {
 			// DrawCircle(this->getX(), this->getY(), this->getRadius(), PINK);
@@ -54,7 +55,7 @@ void ArmeDistance::updateArme(Joueur player) {
 			this->setOff();
 		}
 	}
-	else DrawRectangleRec({ 20,20,20,20 }, GREEN);
+	else this->item.drawItem({ 20,20 }, WHITE);
 }
 
 void ArmeDistance::setPossetion(bool p)
