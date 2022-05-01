@@ -427,7 +427,7 @@ int main(void)
 #pragma region MainGameLoop
 #pragma region Update
         //----------------------------------------------------------------------------------
-        while (window == 1 && !WindowShouldClose()) {
+        while (window == 1 && !WindowShouldClose() && close) {
             if (startTimer) {
                 frameTimer = 0;
                 startTimer = false;
@@ -612,6 +612,8 @@ int main(void)
 
 
 #pragma region Joueur
+                    if (IsKeyPressed(KEY_ESCAPE)) close = false;
+
                     if (IsKeyPressed(KEY_J) && !arme.getEtat())currentFrameAttaque = 0;
                     if (arme.getCd() > 0 && arme.getEtat() && arme.getActive() > 0 && arme.getDirection())
                         animation_joueur.animation_attaque_droite(player.getPosition(), currentFrameAttaque);
