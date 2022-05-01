@@ -55,7 +55,7 @@ int main(void)
     const int screenWidth = 1600;
     const int screenHeight = 900;
 
-    InitWindow(screenWidth, screenHeight, "Jeu Vidéo GAMING");
+    InitWindow(screenWidth, screenHeight, "WishKnight");
     Texture2D background = LoadTexture("../CyTechProject/CyTechProject/files/ressources/menu/menu.png");   // Load button sound
     Texture2D gameOverBacground = LoadTexture("../CyTechProject/CyTechProject/files/ressources/menu/GameOver.png");
     Texture2D buttonStartDown = LoadTexture("../CyTechProject/CyTechProject/files/ressources/menu/Play Button.png"); // Load button texture
