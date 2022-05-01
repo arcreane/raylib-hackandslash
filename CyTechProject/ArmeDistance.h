@@ -7,6 +7,7 @@ private:
 	Circle hitBox;
 	Vector2 positionDepart;
 	bool active;
+	bool possede;
 public:
 	void setArme(float radius);
 	void setOn(Vector2 pos);
@@ -20,5 +21,6 @@ public:
 	float getY();
 	float getRadius();
 	bool getActive();
+	bool possetion();
 };
 

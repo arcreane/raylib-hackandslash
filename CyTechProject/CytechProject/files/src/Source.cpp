@@ -66,8 +66,6 @@ int main(void)
     arme.setArme({ 60, 40 }, 70, 35);
     ArmeDistance item;
     item.setArme(34);
-    DeathTouch deathTouch;
-    deathTouch.setArme();
 
 
 
@@ -107,14 +105,20 @@ int main(void)
     maps[1].addBoxMap({ 54,359,54,45 });
     //  Mobs depart et type
     maps[1].addMobMap(new RatKing({ 750, 200, 33, 48 }, true, 700, 800));
-    maps[1].addMobMap(new Ghost({ 1262, 47, 32, 28 }));
+    maps[1].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[1].addMobMap(new Ghost({ 1100, 715, 32, 28 }));
+    maps[1].addMobMap(new Ghost({ 1550, 480, 32, 28 }));
     maps[1].addMobMap(new RatKing({ 375, 600, 33, 48 }, true, 300, 450));
     maps[1].addMobMap(new Lave({ 0,855,1600,5 }));
-    maps[1].addMobMap(new Zombie({ 577,1,34,35 }, true, &maps[1]));
-    maps[1].addMobMap(new Zombie({ 1426,577,34,35 }, true, &maps[1]));
-    maps[1].addMobMap(new Zombie({ 1100,60,34,35}, true, &maps[1]));
-    maps[1].addMobMap(new Zombie({ 607,620,34,35 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 577 ,1, 34, 40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1300, 60, 34,40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1150, 360, 34, 40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1400, 600, 34, 40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Portail({ 143,530,50,50 }));
+
+    DeathTouch deathTouch;
+    deathTouch.setArme();
 
     //      Map 2
     //  Load Background
@@ -144,10 +148,15 @@ int main(void)
     a = 906;
     maps[2].addBoxMap({ a,673,screenWidth - a,88 });
     //  Mobs depart et type
-    maps[2].addMobMap(new Ghost({ 1500, 540, 32, 28 }));
-    maps[2].addMobMap(new RatKing({ 482, 280, 33, 48 }, true, 470, 800));
-    maps[2].addMobMap(new RatKing({ 500, 640, 33, 48 }, true, 500, 800));
-    maps[2].addMobMap(new RatKing({ 1200, 500, 33, 48 }, true, 1200, 1500));
+    maps[2].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[2].addMobMap(new Ghost({ 1280, 120, 32, 28 }));
+    maps[2].addMobMap(new Ghost({ 530, 720, 32, 28 }));
+    maps[2].addMobMap(new RatKing({ 455, 36, 33, 48 }, true, 430, 550));
+    maps[2].addMobMap(new RatKing({ 1250, 150 , 33, 48 }, true, 1100, 1350));
+    maps[2].addMobMap(new Zombie({ 55, 90, 34,40 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 55, 230, 34, 40 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 300,815,34,40 }, true, & maps[2]));
+    maps[2].addMobMap(new Zombie({ 450,815,34,40 }, true, & maps[2]));
     maps[2].addMobMap(new Portail({1430,220,50,50}));
     maps[2].addMobMap(new Zombie({ 160,800,34,35 }, true, & maps[2]));
     maps[2].addMobMap(new Zombie({ 200,800,34,35 }, true, & maps[2]));
@@ -179,19 +188,16 @@ int main(void)
     maps[3].addBoxMap({ 1494,361,53,44 });
     maps[3].addBoxMap({ 1440,406,106,44 });
     //  Mobs depart et type
-    maps[3].addMobMap(new Ghost({ 1500, 740, 32, 28 }));
-    maps[3].addMobMap(new Ghost({ 1500, 40, 32, 28 }));
-    maps[3].addMobMap(new Zombie({ 550,800,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 500,800,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 450,800,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 818,528,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 918,528,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 1256,411,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 522,84,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 30,265,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new Zombie({ 52,400,34,35 }, true, & maps[3]));
-    maps[3].addMobMap(new RatKing({ 988, 72, 33, 48 }, true, 1000, 1300));
-    maps[3].addMobMap(new RatKing({ 300, 600, 33, 48 }, true, 300, 600));
+    maps[3].addMobMap(new Ghost({ 40, 40, 32, 28 }));
+    maps[3].addMobMap(new Ghost({ 830, 300, 32, 28 }));
+    maps[3].addMobMap(new Ghost({ 1500, 80, 32, 28 }));
+    maps[3].addMobMap(new Ghost({ 1400, 740, 32, 28 }));
+    maps[3].addMobMap(new RatKing({ 80, 550, 33, 48 }, true, 70, 400));
+    maps[3].addMobMap(new RatKing({ 1085, 65 , 33, 48 }, true, 1000, 1550));
+    maps[3].addMobMap(new Zombie({ 30, 120, 34,40 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 60, 410, 34, 40 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 645,665 ,34,40 }, true, & maps[3]));
+    maps[3].addMobMap(new Zombie({ 520,90 ,34 ,40 }, true, & maps[3]));
     maps[3].addMobMap(new Portail({ 1090,85,50,50 }));
 
     //      Map 4
@@ -219,20 +225,16 @@ int main(void)
     maps[4].addBoxMap({ 1474,475,20,44 / 2 });
     maps[4].addBoxMap({ 1494,497,53,44 / 2 });
     //  Mobs depart et type
-    maps[4].addMobMap(new Ghost({ 1500, 740, 32, 28 }));
-    maps[4].addMobMap(new Ghost({ 1500, 40, 32, 28 }));
-    maps[4].addMobMap(new Zombie({ 700,75,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new Zombie({ 474,360,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new Zombie({ 700,75,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new Zombie({ 0,500,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new Zombie({ 550,800,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new Zombie({ 800,800,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new Zombie({ 1200,800,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new Zombie({ 238,487,34,35 }, true, & maps[4]));
-    maps[4].addMobMap(new RatKing({ 1175, 700, 33, 48 }, true, 1000, 1500));
-    maps[4].addMobMap(new RatKing({ 975, 300, 33, 48 }, true, 900, 1200));
-    maps[4].addMobMap(new RatKing({ 1300, 300, 33, 48 }, true, 1200, 1500));
-    maps[4].addMobMap(new RatKing({ 1200, 370, 33, 48 }, true, 1000, 1350));
+    maps[4].addMobMap(new Ghost({ 100, 100, 32, 28 }));
+    maps[4].addMobMap(new Ghost({ 80, 800, 32, 28 }));
+    maps[4].addMobMap(new Ghost({ 1500, 600, 32, 28 }));
+    maps[4].addMobMap(new RatKing({ 1200, 50, 33, 48 }, true, 1100, 1550));
+    maps[4].addMobMap(new RatKing({ 1100, 610, 33, 48 }, true, 990, 1400));
+    maps[4].addMobMap(new RatKing({ 1300, 280 , 33, 48 }, true, 950, 1500));
+    maps[4].addMobMap(new Zombie({ 600, 805, 34,40 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 460, 360, 34, 40 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 700, 100 ,34,40 }, true, & maps[4]));
+    maps[4].addMobMap(new Zombie({ 245, 220, 34 ,40 }, true, & maps[4]));
     maps[4].addMobMap(new Portail({ 1175,790,50,50 }));
     maps[4].addMobMap(new Lave({ 907,837,204,5 }));
     maps[4].addMobMap(new Lave({ 1438,837,204,5 }));
@@ -260,7 +262,22 @@ int main(void)
     maps[5].addBoxMap({ 1388,766,54*2,44*2 });
     maps[5].addBoxMap({ 1494,722,53*2,44*3 });
     //  Mobs depart et type
-    maps[5].addMobMap(new Ghost({ 500, 40, 32, 28 }));
+    maps[5].addMobMap(new Ghost({ 50, 50, 32, 28 }));
+    maps[5].addMobMap(new Ghost({ 500, 50, 32, 28 }));
+    maps[5].addMobMap(new Ghost({ 1000, 50, 32, 28 }));
+    maps[5].addMobMap(new Ghost({ 1450, 50, 32, 28 }));
+    maps[5].addMobMap(new Ghost({ 1500, 300, 32, 28 }));
+    maps[5].addMobMap(new Ghost({ 1550, 650, 32, 28 }));
+    maps[5].addMobMap(new RatKing({ 920, 735, 33, 48 }, true, 840, 1300));
+    maps[5].addMobMap(new RatKing({ 175, 740, 33, 48 }, true, 50, 420));
+    maps[5].addMobMap(new RatKing({ 750, 175 , 33, 48 }, true, 50, 1500));
+    maps[5].addMobMap(new Zombie({ 15, 140, 34,40 }, true, & maps[5]));
+    maps[5].addMobMap(new Zombie({ 15, 280, 34, 40 }, true, & maps[5]));
+    maps[5].addMobMap(new Zombie({ 90, 415 ,34,40 }, true, & maps[5]));
+    maps[5].addMobMap(new Zombie({ 680, 415, 34 ,40 }, true, & maps[5]));
+    maps[5].addMobMap(new Zombie({ 1100, 415, 34 ,40 }, true, & maps[5]));
+    maps[5].addMobMap(new Zombie({ 1030, 275, 34 ,40 }, true, & maps[5]));
+    maps[5].addMobMap(new Zombie({ 500, 545, 34 ,40 }, true, & maps[5]));
     maps[5].addMobMap(new Portail({870,200,50,50 }));
 
 
@@ -328,7 +345,7 @@ int main(void)
 
         for (unsigned i = 0; i < mobC.size(); i++) {            
             if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
-                if (mobC[i]->getType() == "portail" || IsKeyPressed(KEY_N)) {
+                if ((mobC[i]->getType() == "portail" && afficherPortail) || IsKeyPressed(KEY_N)) {
                     if (indicMap == indicLim) {
                         indicMap = 0;
                     }
@@ -337,17 +354,19 @@ int main(void)
                 else {
                     player.setIsAlive(false);
                 }
-                player.setPersonnage({ 300, 100, 28, 40 });
+                if (!(mobC[i]->getType() == "portail") || afficherPortail || IsKeyPressed(KEY_N)) {
+                    player.setPersonnage({ 300, 100, 28, 40 });
 
-                mobC.clear();
-                for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
-                    mobC.push_back((*maps[indicMap].getMob(j)).copy());
+                    mobC.clear();
+                    for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
+                        mobC.push_back((*maps[indicMap].getMob(j)).copy());
+                    }
+
+                    //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
+                    //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
+                    //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
+                    break;
                 }
-
-                mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
-                mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
-                mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
-                break;
             }
             
 
@@ -361,7 +380,7 @@ int main(void)
                 if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
             }
 
-            if (CheckCollisionRecs(deathTouch.getRectangle(), mobC[i]->getRectangle()) && deathTouch.getActive()) {
+            if (CheckCollisionRecs(deathTouch.getRectangle(), mobC[i]->getRectangle()) && deathTouch.getActive() && mobC[i]->getIsAlive()) {
                 if (mobC[i]->getIsKillable()) {
                     mobC[i]->setIsAlive(false);
                     deathTouch.setOut();
@@ -491,8 +510,8 @@ int main(void)
 #pragma endregion Joueur
 
         arme.updateArme(player);
-        item.updateArme(player);
-        deathTouch.updateArme(player);
+        if (item.possetion()) item.updateArme(player);
+        else deathTouch.updateArme(player, &maps[indicMap]);
 
 #pragma endregion DrawAnimation
 

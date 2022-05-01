@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Joueur.h"
+#include "Map.h"
 #include "Struct.h"
 #include <string>
 
