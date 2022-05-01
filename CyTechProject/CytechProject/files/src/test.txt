@@ -1,0 +1,3 @@
+map;test;ok
+spawn;cool
+mob;ici;lourd

@@ -23,6 +23,8 @@
 #include "../../Struct.h"
 #include <vector>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 
 //JB was here
@@ -72,6 +74,46 @@ int main(void)
 
 
     Map maps[6];
+
+    //Opening a file buffer and a file
+    std::ifstream file;
+    file.open("test.txt");
+
+    //Checking if errors occured
+    if (!file)
+    {
+        std::cerr << "Error : Can't open the file" << std::endl;
+    }
+    else
+    {
+        //Creating a word string
+        std::string word;
+        //Creating a vector of string for file content
+        std::vector<std::string> file_content;
+
+        int count = 0;
+
+        while (file >> word)
+        {
+            //Adding every words to the file content
+            file_content.push_back(word);
+            //Increasing the word counter;
+            count++;
+        }
+
+        //Printing file content
+        for (int i = 0; i < count; i++)
+        {
+            std::cout << file_content[i];
+        }
+
+        std::cout << std::endl;
+    }
+
+    std::cout << "Camarchepas";
+
+    //Closing the file
+    file.close();
 
     Mob mobPassif[NB_MOB_PASSIF];
     mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
