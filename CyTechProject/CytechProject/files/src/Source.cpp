@@ -115,8 +115,6 @@ int main(void)
     maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
 
     maps[1].addItemMap(new Item({ 143,530,50,50 }, "portail"));
-    maps[1].addItemMap(new Item({ 500 +22,360,16,49 }, "deathTouch"));
-    maps[1].addItemMap(new Item({ 500    ,360,60,49 }, "scythe"));
 
     //      Map 2
     //  Load Background
@@ -195,6 +193,8 @@ int main(void)
     maps[3].addMobMap(new Zombie({ 520,90 ,34 ,40 }, true, & maps[3]));
 
     maps[3].addItemMap(new Item({ 1090,85,50,50 }, "portail"));
+    maps[3].addItemMap(new Item({ 24 + 22,626,16,49 }, "deathTouch"));
+    maps[3].addItemMap(new Item({ 24    ,626,60,49 }, "scythe"));
 
     //      Map 4
     //  Load Background
