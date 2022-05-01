@@ -17,6 +17,7 @@ private :
 	std::vector<Platform> boxes;
 	std::vector<Item* > items;
 	Texture2D background;
+	Rectangle spawn;
 public :
 	Map(Texture2D bg);
 	Map();
@@ -27,6 +28,8 @@ public :
 	void addBoxMap(Rectangle rec);
 	void addMobMap(Mob* mob);
 	void addItemMap(Item* mob);
+	void setSpawn(Rectangle rectangle);
+	Rectangle getSpawn();
 	std::vector<Platform> getPlatforms();
 	std::vector<Platform> getBoxes();
 	std::vector<Mob*> getMobs();

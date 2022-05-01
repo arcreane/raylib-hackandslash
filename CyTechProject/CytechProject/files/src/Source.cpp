@@ -61,7 +61,7 @@ int main(void)
     Audio audio;
 
     Joueur player;
-    player.setPersonnage({ 300, 100, 28, 40 });
+
 
     ArmeCAC arme;
     arme.setArme({ 60, 40 }, 70, 35);
@@ -83,6 +83,8 @@ int main(void)
     //      Map 1
     //  Load Background
     maps[1].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map1.png"));
+    //  Spawn
+    maps[1].setSpawn({ 140, 365, 28, 40 });
     //  Platforms
     float a;
     maps[1].addPlatformMap({ 0, 405, 905, 10 });
@@ -95,7 +97,7 @@ int main(void)
     maps[1].addPlatformMap({ a,275,(screenWidth - a),10 });
     maps[1].addPlatformMap({ 430,93,315,10 });
     a = 1386;
-    maps[1].addPlatformMap({ a, 630, (screenWidth - a), 10 });
+    maps[1].addPlatformMap({ a, 628, (screenWidth - a), 10 });
     maps[1].addPlatformMap({ 963, 540, 318, 10 });
     maps[1].addPlatformMap( { 587, 676, 213, 10 });
     maps[1].addPlatformMap( { 415, 617, 70, 10 });
@@ -116,7 +118,7 @@ int main(void)
     maps[1].addMobMap(new Zombie({ 577 ,1, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1300, 60, 34,40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 1150, 360, 34, 40 }, true, &maps[1]));
-    maps[1].addMobMap(new Zombie({ 1400, 600, 34, 40 }, true, &maps[1]));
+    maps[1].addMobMap(new Zombie({ 1400, 595, 34, 40 }, true, &maps[1]));
     maps[1].addMobMap(new Zombie({ 600, 640, 34, 40 }, true, &maps[1]));
 
     maps[1].addItemMap(new Portail({ 143,530,50,50 }, "portail"));
@@ -126,6 +128,8 @@ int main(void)
     //      Map 2
     //  Load Background
     maps[2].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map2.png"));
+    //  Spawn
+    maps[2].setSpawn({ 1400, 650, 28, 40 });
     //  Platforms
     maps[2].addPlatformMap({ 160, 855, 640, 10 });
     maps[2].addPlatformMap({ 0,138,316,10 });
@@ -166,6 +170,8 @@ int main(void)
     //      Map 3
     //  Load Background
     maps[3].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map3.png"));
+    //  Spawn
+    maps[3].setSpawn({ 1100, 815, 28, 40 });
     //  Platforms
     maps[3].addPlatformMap({ 0, 180, 317, 10 });
     maps[3].addPlatformMap({ 0,315,531,10 });
@@ -200,6 +206,8 @@ int main(void)
     //      Map 4
     //  Load Background
     maps[4].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map4.png"));
+    //  Spawn
+    maps[4].setSpawn({ 1180, 375, 28, 40 });
     //  Platforms
     maps[4].addPlatformMap({ 428, 406, 53*5, 10 });
     a = 534;
@@ -236,6 +244,8 @@ int main(void)
     //      Map 5
     //  Load Background
     maps[5].setMap(LoadTexture("../CyTechProject/CyTechProject/files/ressources/map/map5.png"));
+    //  Spawn
+    maps[5].setSpawn({ 1050, 815, 28, 40 });
     //  Platforms
     maps[5].addPlatformMap({ 0, 180, 53 * 2, 10 });
     maps[5].addPlatformMap({ 0, 315, 53 * 2, 10 });
@@ -273,6 +283,8 @@ int main(void)
 
     maps[5].addItemMap(new Portail({870,200,50,50 }, "portail"));
 
+
+    player.setPersonnage(maps[1].getSpawn());
 
     int indicMap = 1;
     int indicLim = 5;
@@ -326,6 +338,7 @@ int main(void)
         //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
         //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
+
         audio.Update(player, arme);
         player.updatePlayer(maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
        
@@ -349,7 +362,7 @@ int main(void)
                     }
                     indicMap += 1;
 
-                    player.setPersonnage({ 300, 100, 28, 40 });
+                    player.setPersonnage(maps[indicMap].getSpawn());
 
                     itemC.clear();
                     for (unsigned j = 0; j < maps[indicMap].getItems().size(); j++) {
@@ -359,6 +372,7 @@ int main(void)
                     for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
                         mobC.push_back((*maps[indicMap].getMob(j)).copy());
                     }
+                    audio.UpdatePortail();
 
                     //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
                     //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
@@ -383,9 +397,9 @@ int main(void)
         afficherPortail = true;
 
         for (unsigned i = 0; i < mobC.size(); i++) {            
-            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
+            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()))  {
                 player.setIsAlive(false);
-                player.setPersonnage({ 300, 100, 28, 40 });
+                player.setPersonnage(maps[indicMap].getSpawn());
 
                 mobC.clear();
                 for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
@@ -461,8 +475,10 @@ int main(void)
         ClearBackground(LIGHTGRAY);
 
 
-
-        //DrawText("Test", 20, 20, 20, DARKGRAY);
+        DrawText("Utilisez les fleches directionnelles pour vous deplacer",20,65, 20, BLACK);
+        DrawText("Appuyez sur J pour Attaquer", 20, 40, 20, BLACK);
+        DrawText("Appuyez sur Y pour utiliser votre objet", 20, 90, 20, BLACK);
+        
 
 
 
