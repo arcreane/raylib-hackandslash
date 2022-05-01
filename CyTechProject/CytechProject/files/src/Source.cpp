@@ -126,7 +126,7 @@ int main(void)
     maps[2].addPlatformMap({ 0,138,316,10 });
     maps[2].addPlatformMap({ 0,271,209,10 });
     maps[2].addPlatformMap({ 0,407,52,10 });
-    maps[2].addPlatformMap({ 0,495,905,10 });
+    maps[2].addPlatformMap({ 0,495,850,10 });
     maps[2].addPlatformMap({ 693,450,212,10 });
     maps[2].addPlatformMap({ 745, 405, 54, 10 });
     maps[2].addPlatformMap({ 1067, 313, 1438 - 1067, 10 });
@@ -138,8 +138,7 @@ int main(void)
     //  Boxes
     maps[2].addBoxMap({ 150,676,10,180 });
     maps[2].addBoxMap({ 160,666,266,10 });
-    maps[2].addBoxMap({ 734,496,170,90 });
-    maps[2].addBoxMap({ 693,451,210,40 });
+    maps[2].addBoxMap({ 693,451,211,135 });
     maps[2].addBoxMap({ 746,404,52,44 });
     maps[2].addBoxMap({ 798,810,10,44 });
     maps[2].addBoxMap({ 854,764,10,44 });
@@ -328,8 +327,8 @@ int main(void)
 
         maps[indicMap].afficheBackground();
 
-        //for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
-        //for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
+        for (int i = 0; i < maps[indicMap].getPlatforms().size(); i++) DrawRectangleRec(maps[indicMap].getPlatforms()[i].getRectangle(), GRAY);
+        for (int i = 0; i < maps[indicMap].getBoxes().size(); i++) DrawRectangleRec(maps[indicMap].getBoxes()[i].getRectangle(), PURPLE);
 
 
         audio.Update(player, arme);
@@ -380,7 +379,7 @@ int main(void)
 
         afficherPortail = true;
 
-        for (unsigned i = 0; i < mobC.size(); i++) {            
+        for (unsigned i = 0; i < mobC.size(); i++) {
             if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()))  {
                 player.setIsAlive(false);
                 player.setPersonnage(maps[indicMap].getSpawn());
