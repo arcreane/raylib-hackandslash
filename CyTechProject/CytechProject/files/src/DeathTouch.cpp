@@ -1,4 +1,4 @@
-#include "DeathTouch.h"
+#include "../includes/DeathTouch.h"
 
 void DeathTouch::setArme()
 {
@@ -54,11 +54,11 @@ void DeathTouch::updateArme(Joueur player, Map* m)
 
 	if (this->getEtat()) {
 		std::vector<Platform> boxes = this->_m->getBoxes();
-		/*for (int i = 0; i < boxes.size(); i++) {
+		for (int i = 0; i < boxes.size(); i++) {
 			if (CheckCollisionRecs(this->hitBox, boxes[i].getRectangle())) {
 				this->active = false;
 			}
-		}*/
+		}
 		this->item.drawItem({ 20,20 }, BLACK);
 		this->setCd();
 		if (this->getActive()) {
