@@ -327,7 +327,6 @@ int main(void)
 
         audio.Update(player, arme);
         player.updatePlayer(maps[indicMap].getPlatforms(), maps[indicMap].getBoxes(), deltaTime);
-        afficherPortail = true;
        
 
 
@@ -349,39 +348,14 @@ int main(void)
                     }
                     indicMap += 1;
                 }
-                else {
-                    player.setIsAlive(false);
-                }
-                if (!(itemC[i]->getType() == "portail") || afficherPortail || IsKeyPressed(KEY_N)) {
+
+                if ((itemC[i]->getType() == "portail") && afficherPortail || IsKeyPressed(KEY_N)) {
                     player.setPersonnage({ 300, 100, 28, 40 });
 
                     itemC.clear();
                     for (unsigned j = 0; j < maps[indicMap].getItems().size(); j++) {
                         itemC.push_back((*maps[indicMap].getItem(j)).copy());
                     }
-
-                    //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
-                    //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
-                    //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
-                    break;
-                }
-            }
-        }
-
-        for (unsigned i = 0; i < mobC.size(); i++) {            
-            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
-                if ((mobC[i]->getType() == "portail" && afficherPortail) || IsKeyPressed(KEY_N)) {
-                    if (indicMap == indicLim) {
-                        indicMap = 0;
-                    }
-                    indicMap += 1;
-                }
-                else {
-                    player.setIsAlive(false);
-                }
-                if (!(mobC[i]->getType() == "portail") || afficherPortail || IsKeyPressed(KEY_N)) {
-                    player.setPersonnage({ 300, 100, 28, 40 });
-
                     mobC.clear();
                     for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
                         mobC.push_back((*maps[indicMap].getMob(j)).copy());
@@ -392,6 +366,26 @@ int main(void)
                     //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
                     break;
                 }
+            }
+        }
+
+
+        afficherPortail = true;
+
+        for (unsigned i = 0; i < mobC.size(); i++) {            
+            if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()) || IsKeyPressed(KEY_N)) {
+                player.setIsAlive(false);
+                player.setPersonnage({ 300, 100, 28, 40 });
+
+                mobC.clear();
+                for (unsigned j = 0; j < maps[indicMap].getMobs().size(); j++) {
+                    mobC.push_back((*maps[indicMap].getMob(j)).copy());
+                }
+
+                //mobPassif[0].setPersonnage({ 450, 300, 50, 50 });
+                //mobPassif[1].setPersonnage({ 0, 200, 50, 50 });
+                //mobPassif[2].setPersonnage({ 300, 600, 50, 50 });
+                break;
             }
 
             if (CheckCollisionRecs(arme.getRectangle(), mobC[i]->getRectangle()) && arme.getActive() > 0 && arme.getEtat()) {
@@ -504,9 +498,12 @@ int main(void)
                     else
                         animation_zombie.animation_run_gauche(mobC[i]->getPosition(), currentFrameZombie);
                 }
-                if (mobC[i]->getType() == "portail" && afficherPortail) {
-                    animation_portail.animation_portail({ mobC[i]->getX()-25, mobC[i]->getY() - 25}, currentFramePortail);
-                }
+            }
+        }
+
+        for (unsigned i = 0; i < itemC.size(); i++) {
+            if (itemC[i]->getType() == "portail" && afficherPortail) {
+                animation_portail.animation_portail({ itemC[i]->getX() - 25, itemC[i]->getY() - 25 }, currentFramePortail);
             }
         }
 

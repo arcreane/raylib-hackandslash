@@ -21,3 +21,13 @@ Item::Item() {
 Item* Item::copy() {
     return new Item(this->hitBox);
 }
+
+float Item::getX()
+{
+    return this->hitBox.x;
+}
+
+float Item::getY()
+{
+    return this->hitBox.y;
+}

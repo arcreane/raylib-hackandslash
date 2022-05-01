@@ -14,5 +14,7 @@ public:
 	Item(Rectangle rec);
 	Item();
 	virtual Item* copy();
+	float getX();
+	float getY();
 };
 
