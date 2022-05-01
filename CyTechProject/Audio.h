@@ -14,6 +14,7 @@ public:
 	void MortZombie();
 	void MortGhost();
 	void MortRatKing();
+	void MortJoueur();
 	void Free();
 
 
@@ -27,4 +28,5 @@ private:
 	Sound mortZombie;
 	Sound mortGhost;
 	Sound mortRatKing;
+	Sound mortJoueur;
 };

@@ -450,6 +450,7 @@ int main(void)
                         indicMap = 0;
                         window = 2;
                     }
+
                     indicMap += 1;
 
                     player.setPersonnage(maps[indicMap].getSpawn());
@@ -490,6 +491,7 @@ int main(void)
 
         for (unsigned i = 0; i < mobC.size(); i++) {
             if ((CheckCollisionRecs(player.getRectangle(), mobC[i]->getRectangle()) && mobC[i]->getIsAlive()))  {
+                audio.MortJoueur();
                 player.setIsAlive(false);
                 player.setPersonnage(maps[indicMap].getSpawn());
                 scythe.setOff();
@@ -540,9 +542,11 @@ int main(void)
                     }
 
 
-        if(!scythe.getActive()) audio.UpdateScythe();
+        if(!scythe.getActive() && window == 1) 
+            audio.UpdateScythe();
 
-        if (!deathTouch.getActive()) audio.UpdateDeathTouch();
+        if (!deathTouch.getActive() && window == 1)
+            audio.UpdateDeathTouch();
 
 #pragma region UpdateAnimation
                     framesCounter++;

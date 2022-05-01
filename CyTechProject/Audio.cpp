@@ -15,6 +15,7 @@ void Audio::Init() {
     this->mortZombie = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/mortZombie.wav");
     this->mortGhost = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/mortGhost.wav");
     this->mortRatKing = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/mortRatKing.wav");
+    this->mortJoueur = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/mortJoueur.wav");
 }
 
 void Audio::Update(Joueur player, ArmeCAC arme) {
@@ -60,6 +61,11 @@ void Audio::MortRatKing()
     PlaySoundMulti(mortRatKing);
 }
 
+void Audio::MortJoueur()
+{
+    PlaySound(mortJoueur);
+}
+
 void Audio::Free() {
     StopSoundMulti();
     UnloadSound(this->attack);
@@ -69,6 +75,7 @@ void Audio::Free() {
     UnloadSound(this->mortZombie);
     UnloadSound(this->mortGhost);
     UnloadSound(this->mortRatKing);
+    UnloadSound(this->mortJoueur);
     UnloadMusicStream(this->music);   
 
     CloseAudioDevice();        
