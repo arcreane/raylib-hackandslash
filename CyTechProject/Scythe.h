@@ -2,7 +2,7 @@
 #include "Animation_Scythe.h"
 
 #pragma once
-class ArmeDistance : public Arme
+class Scythe : public Arme
 {
 private:
 	Circle hitBox;

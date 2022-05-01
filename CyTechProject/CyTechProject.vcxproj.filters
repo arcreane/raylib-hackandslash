@@ -57,7 +57,7 @@
     <ClCompile Include="ArmeCAC.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="ArmeDistance.cpp">
+    <ClCompile Include="Scythe.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="lave.cpp">
@@ -137,7 +137,7 @@
     <ClInclude Include="ArmeCAC.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ArmeDistance.h">
+    <ClInclude Include="Scythe.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Lave.h">

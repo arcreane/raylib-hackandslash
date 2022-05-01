@@ -3,7 +3,7 @@
 #include "../../Joueur.h"
 #include "../../Platform.h"
 #include "../../ArmeCAC.h"
-#include "../../ArmeDistance.h"
+#include "../../Scythe.h"
 #include "../../DeathTouch.h"
 #include "../../Portail.h"
 #include "../../RatKing.h"
@@ -65,7 +65,7 @@ int main(void)
 
     ArmeCAC arme;
     arme.setArme({ 60, 40 }, 70, 35);
-    ArmeDistance scythe;
+    Scythe scythe;
     scythe.setArme(34);
     DeathTouch deathTouch;
     deathTouch.setArme();
