@@ -366,14 +366,14 @@ int main(void)
                         deathTouch.setPossetion(false);
                         scythe.setPossetion(true);
                     }
-                    DrawText("Appuyez sur H pour ramasser l'arme Scythe", 20, 115, 20, BLACK);
+                    DrawText("Appuyez sur H pour ramasser l'arme Scythe", 20, 145, 20, BLACK);
                 }
                 if (itemC[i]->getType() == "deathTouch" && !deathTouch.possetion()) {
                     if (IsKeyPressed(KEY_K)) {
                         scythe.setPossetion(false);
                         deathTouch.setPossetion(true);
                     }
-                    DrawText("Appuyez sur K pour ramasser le sort Death Touch", 20, 115, 20, BLACK);
+                    DrawText("Appuyez sur K pour ramasser le sort Death Touch", 20, 145, 20, BLACK);
                 }
             }
         }
@@ -473,9 +473,9 @@ int main(void)
         ClearBackground(LIGHTGRAY);
 
 
-        DrawText("Utilisez les fleches directionnelles pour vous deplacer",20,65, 20, BLACK);
-        DrawText("Appuyez sur J pour Attaquer", 20, 40, 20, BLACK);
-        DrawText("Appuyez sur Y pour utiliser votre objet", 20, 90, 20, BLACK);
+        DrawText("Utilisez les fleches directionnelles pour vous deplacer",20,95, 20, BLACK);
+        DrawText("Appuyez sur J pour Attaquer", 20, 70, 20, BLACK);
+        DrawText("Appuyez sur Y pour utiliser votre objet", 20, 120, 20, BLACK);
         
 
 
