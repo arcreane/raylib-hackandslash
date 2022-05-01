@@ -10,6 +10,7 @@ void Audio::Init() {
     this->attack = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/attack.wav");
     this->jump = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/jump.wav");
     this->portail = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/portail.wav");
+    this->scythe = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/scythe.wav");
 }
 
 void Audio::Update(Joueur player, ArmeCAC arme) {
@@ -24,11 +25,23 @@ void Audio::UpdatePortail()
         PlaySound(this->portail);
 }
 
+void Audio::UpdateAudio()
+{
+    PlaySoundMulti(this->jump);
+}
+
+void Audio::UpdateScythe()
+{
+    PlaySound(this->scythe);
+
+}
+
 void Audio::Free() {
     StopSoundMulti();
     UnloadSound(this->attack);
     UnloadSound(this->jump);
     UnloadSound(this->portail);
+    UnloadSound(this->scythe);
     UnloadMusicStream(this->music);   
 
     CloseAudioDevice();        

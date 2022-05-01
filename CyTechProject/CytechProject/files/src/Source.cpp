@@ -442,6 +442,7 @@ int main(void)
                 //DrawRectangleRec(tmp, RED);
             }
         }
+        if(!scythe.getActive()) audio.UpdateScythe();
 
 #pragma region UpdateAnimation
         framesCounter++;

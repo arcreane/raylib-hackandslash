@@ -9,6 +9,8 @@ public:
 	void Init();
 	void Update(Joueur player, ArmeCAC arme);
 	void UpdatePortail();
+	void UpdateAudio();
+	void UpdateScythe();
 	void Free();
 
 
@@ -17,4 +19,5 @@ private:
 	Sound attack;
 	Sound jump;
 	Sound portail;
+	Sound scythe;
 };
