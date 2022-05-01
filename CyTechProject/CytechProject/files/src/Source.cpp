@@ -523,8 +523,7 @@ int main(void)
                     if (mobC[i]->getType() == "zombie" && mobC[i]->getIsAlive()) audio.MortZombie();
                     if (mobC[i]->getType() == "ghost" && mobC[i]->getIsAlive()) audio.MortGhost();
                     if (mobC[i]->getType() == "ratKing" && mobC[i]->getIsAlive()) audio.MortRatKing();
-                    mobC[i]->setIsAlive(false);
-                    deathTouch.setOut();
+                    if (mobC[i]->getIsKillable()) mobC[i]->setIsAlive(false);
                 }
             }
 
