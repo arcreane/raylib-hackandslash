@@ -449,6 +449,7 @@ int main(void)
                     if (indicMap == indicLim) {
                         indicMap = 0;
                         window = 2;
+                        checkHigh = true;
                     }
 
                     indicMap += 1;
@@ -685,116 +686,116 @@ int main(void)
 
                 }
 
-            while (window == 2 && close) {
-                // Game over
-                mousePoint = GetMousePosition();
-                btnActionMenu = false;
+                while (window == 2 && !WindowShouldClose()) {
+                    // Game over
+                    mousePoint = GetMousePosition();
+                    btnActionMenu = false;
 
-                std::string score = "Vous avez complété le jeu en : ";
-                std::string high;
+                    std::string score = "Vous avez complété le jeu en : ";
+                    std::string high;
 
-                int minute = frameTimer;
-                minute = (minute * 1000) /60;
-                int ms = minute % 1000;
-                minute = minute / 1000;
-                int sec = minute % 60;
-                minute = minute / 60;
-                std::string strMin = std::to_string(minute);
-
-                std::string strSec = std::to_string(sec);
-
-                std::string strMS = std::to_string(ms);
-
-                score += strMin + ": " + strSec + ": " + strMS + ".\n";
-
-                std::ifstream readFile;
-                std::ofstream writeFile;
-                std::string record;
-                char buffer;
-
-                if (checkHigh) {
-                    readFile.open("../CyTechProject/CyTechProject/files/ressources/menu/highscore", std::ios::in);
-                    if (!readFile) perror("Error opening file");
-                    else
-                    {
-                        readFile >> record;
-                    }
-                    readFile.close();
-
-                    writeFile.open("../CyTechProject/CyTechProject/files/ressources/menu/highscore", std::ios::out);
-
-                    if (std::stoi(record) == 0 || std::stoi(record) > frameTimer) {
-                        writeFile << std::to_string(frameTimer);
-                        edit = true;
-                    }
-                    else {
-                        writeFile << record;
-                        edit = false;
-                    }
-
-                    writeFile.close();
-
-                    if (record.size() == 0) {
-                        record = std::to_string(frameTimer);
-                    }
-
-                    int minute = (stoi(record) * 1000) / 60;
+                    int minute = frameTimer;
+                    minute = (minute * 1000) / 60;
                     int ms = minute % 1000;
                     minute = minute / 1000;
                     int sec = minute % 60;
                     minute = minute / 60;
+                    std::string strMin = std::to_string(minute);
 
-                    strMin = std::to_string(minute);
+                    std::string strSec = std::to_string(sec);
 
-                    strSec = std::to_string(sec);
+                    std::string strMS = std::to_string(ms);
 
-                    strMS = std::to_string(ms);
+                    score += strMin + ": " + strSec + ": " + strMS + ".\n";
 
-                    tmp = strMin + ": " + strSec + ": " + strMS + ".\n";
+                    std::ifstream readFile;
+                    std::ofstream writeFile;
+                    std::string record;
 
-                    checkHigh = false;
+                    if (checkHigh) {
+                        readFile.open("../CyTechProject/CytechProject/files/ressources/menu/HighScore", std::ios::in);
+                        if (!readFile) perror("Error opening file");
+                        else
+                        {
+                            readFile >> record;
+                            printf("%s de taille %d",record.c_str(), record.size());
+                        }
+                        readFile.close();
+
+                        writeFile.open("../CyTechProject/CyTechProject/files/ressources/menu/HighScore", std::ios::out);
+
+                        if (record.size() == 0 || std::stoi(record) > frameTimer) {
+                            writeFile << std::to_string(frameTimer);
+                            edit = true;
+                        }
+                        else {
+                            writeFile << record;
+                            edit = false;
+                        }
+
+                        writeFile.close();
+
+                        if (record.size() == 0) {
+                            record = std::to_string(frameTimer);
+                            printf(record.c_str());
+                        }
+
+                        int minute = (stoi(record) * 1000) / 60;
+                        int ms = minute % 1000;
+                        minute = minute / 1000;
+                        int sec = minute % 60;
+                        minute = minute / 60;
+
+                        strMin = std::to_string(minute);
+
+                        strSec = std::to_string(sec);
+
+                        strMS = std::to_string(ms);
+
+                        tmp = strMin + ": " + strSec + ": " + strMS + ".\n";
+
+                        checkHigh = false;
+                    }
+
+
+
+                    if (edit) {
+                        high = "Bien joué pour votre record !!!";
+                    }
+                    else {
+                        high = "Votre record est de : " + tmp;
+                    }
+
+
+
+                    if (CheckCollisionPointRec(mousePoint, { 650, 400, 300, 100 }))
+                    {
+                        if (IsMouseButtonUp(MOUSE_BUTTON_LEFT)) btnStateMenu = true;
+
+                        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) btnActionMenu = true;
+                    }
+                    else btnStateMenu = false;
+
+
+                    BeginDrawing();
+                    DrawTexture(background, 0, 0, WHITE);
+                    if (btnActionMenu)
+                    {
+                        window = 0;
+                    }
+
+                    if (btnStateMenu) {
+                        DrawTextureRec(buttonMenuDown, btnBoundsStart, { 650, 400 }, WHITE);
+                    }
+                    else {
+                        DrawTextureRec(buttonMenuUp, btnBoundsStart, { 650, 400 }, WHITE);
+                    }
+                    DrawText(score.c_str(), 100, 600, 50, BLACK);
+                    DrawText(high.c_str(), 100, 700, 50, BLACK);
+                    EndDrawing();
+                    if (WindowShouldClose()) close = false;
                 }
 
-
-
-                if (edit) {
-                    high = "Bien joué pour votre record !!!";
-                }
-                else {
-                    high = "Votre record est de : " + tmp;
-                }
-
-
-
-                if (CheckCollisionPointRec(mousePoint, { 650, 400, 300, 100 }))
-                {
-                    if (IsMouseButtonUp(MOUSE_BUTTON_LEFT)) btnStateMenu = true;
-
-                    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) btnActionMenu = true;
-                }
-                else btnStateMenu = false;
-
-
-                BeginDrawing();
-                DrawTexture(background, 0, 0, WHITE);
-                if (btnActionMenu)
-                {
-                    window = 0;
-                }
-               
-                if (btnStateMenu) {
-                    DrawTextureRec(buttonMenuDown, btnBoundsStart, { 650, 400 }, WHITE);
-                }
-                else {
-                    DrawTextureRec(buttonMenuUp, btnBoundsStart, { 650, 400 }, WHITE);
-                }                
-                DrawText(score.c_str(), 100, 600, 50, BLACK);
-                DrawText(high.c_str(), 100, 700, 50, BLACK);
-                EndDrawing();
-                if (WindowShouldClose()) close = false;
-
-            }
-            
         }
 #pragma endregion MainGameLoop
 
