@@ -11,6 +11,7 @@ void Audio::Init() {
     this->jump = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/jump.wav");
     this->portail = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/portail.wav");
     this->scythe = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/scythe.wav");
+    this->deathTouch = LoadSound("../CyTechProject/CyTechProject/files/ressources/son/deathTouch.wav");
 }
 
 void Audio::Update(Joueur player, ArmeCAC arme) {
@@ -34,6 +35,11 @@ void Audio::UpdateScythe()
 {
     PlaySound(this->scythe);
 
+}
+
+void Audio::UpdateDeathTouch()
+{
+    PlaySound(this->deathTouch);
 }
 
 void Audio::Free() {

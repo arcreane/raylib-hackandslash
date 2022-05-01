@@ -419,7 +419,11 @@ int main(void)
                 //DrawRectangleRec(tmp, RED);
             }
         }
+
+
         if(!scythe.getActive()) audio.UpdateScythe();
+
+        if (!deathTouch.getActive()) audio.UpdateDeathTouch();
 
 #pragma region UpdateAnimation
         framesCounter++;

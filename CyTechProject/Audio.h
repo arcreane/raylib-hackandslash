@@ -10,6 +10,7 @@ public:
 	void UpdatePortail();
 	void UpdateAudio();
 	void UpdateScythe();
+	void UpdateDeathTouch();
 	void Free();
 
 
@@ -19,4 +20,5 @@ private:
 	Sound jump;
 	Sound portail;
 	Sound scythe;
+	Sound deathTouch;
 };
