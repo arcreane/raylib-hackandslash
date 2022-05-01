@@ -376,8 +376,6 @@ int main(void)
             }
         }
 
-        DrawRectangleRec({ 500,360,60,49 }, PINK);
-
         afficherPortail = true;
 
         for (unsigned i = 0; i < mobC.size(); i++) {            
