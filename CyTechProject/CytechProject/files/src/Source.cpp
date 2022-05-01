@@ -345,6 +345,8 @@ int main(void)
                     indicMap += 1;
 
                     player.setPersonnage(maps[indicMap].getSpawn());
+                    scythe.setOff();
+                    deathTouch.setOff();
 
                     itemC.clear();
                     for (unsigned j = 0; j < maps[indicMap].getItems().size(); j++) {
