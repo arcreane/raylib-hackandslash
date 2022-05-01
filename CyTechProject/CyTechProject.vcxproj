@@ -37,6 +37,7 @@
   <ItemGroup>
     <ClCompile Include="Animation_DeathTouch.cpp" />
     <ClCompile Include="Animation_Ghost.cpp" />
+    <ClCompile Include="Animation_Portail.cpp" />
     <ClCompile Include="Animation_RatKing.cpp" />
     <ClCompile Include="Animation_Zombie.cpp" />
     <ClCompile Include="Arme.cpp" />
@@ -68,6 +69,7 @@
   <ItemGroup>
     <ClInclude Include="Animation_DeathTouch.h" />
     <ClInclude Include="Animation_Ghost.h" />
+    <ClInclude Include="Animation_Portail.h" />
     <ClInclude Include="Animation_RatKing.h" />
     <ClInclude Include="Animation_Zombie.h" />
     <ClInclude Include="Arme.h" />
