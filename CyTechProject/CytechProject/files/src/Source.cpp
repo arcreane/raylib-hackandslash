@@ -707,7 +707,6 @@ int main(void)
                     std::ifstream readFile;
                     std::ofstream writeFile;
                     std::string record;
-                    char buffer;
 
                     if (checkHigh) {
                         readFile.open("../CyTechProject/CytechProject/files/ressources/menu/HighScore", std::ios::in);
